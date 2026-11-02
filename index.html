@@ -5,8 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Conversor iene ↔ real com a cotação de hoje</title>
 <meta name="description" content="Converta ienes em reais e reais em ienes com a cotação do dia. Rápido, sem cadastro.">
+<link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Radar Nihon">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://andreyoshimura.github.io/remessa-japao/">
 <meta property="og:title" content="Conversor iene ↔ real">
 <meta property="og:description" content="Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro.">
+<meta property="og:image" content="https://andreyoshimura.github.io/remessa-japao/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Conversor iene ↔ real: cotação do dia, sem cadastro">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1E3557">
 <meta name="google-site-verification" content="BanQ_ppxaXERI9g8SKpXYfudEKwdMDiMg2NF3ZrcAw0" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -496,7 +507,8 @@ body.embed main{margin-top:0;padding-top:12px}
   // ---------- COMPARTILHAR ----------
   $("share").addEventListener("click", function(){
     // utm_* faz o GA atribuir a visita ao compartilhamento no WhatsApp
-    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento" +
+    // v= muda o link quando a prévia muda, para o WhatsApp não reaproveitar a prévia antiga do cache
+    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento&v=2" +
               (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
     if (EMBED && document.referrer) url = document.referrer;
     var t = DIR === "jpy"
