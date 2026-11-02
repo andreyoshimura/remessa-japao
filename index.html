@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Quanto o banco fica da sua remessa? Calculadora iene → real</title>
-<meta name="description" content="Descubra quanto da sua remessa do Japão para o Brasil fica com o banco. Cotação do dia, sem cadastro.">
-<meta property="og:title" content="Quanto o banco fica da sua remessa?">
-<meta property="og:description" content="Calculadora iene → real com a cotação do dia. Veja quanto você perde por mês e por ano.">
+<title>Conversor iene ↔ real com a cotação de hoje</title>
+<meta name="description" content="Converta ienes em reais e reais em ienes com a cotação do dia. Rápido, sem cadastro.">
+<meta property="og:title" content="Conversor iene ↔ real">
+<meta property="og:description" content="Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
-   CONFIGURAÇÃO — edite aqui ou passe pela URL:
-   ?aff=LINK_AFILIADO&hook=URL_WEBHOOK_N8N&ref=CODIGO_DO_PARCEIRO
+   CONFIGURAÇÃO — edite o bloco CONFIG no script ou passe pela URL:
+   ?aff=LINK_AFILIADO&hook=URL_WEBHOOK_N8N&ref=CODIGO_DO_PARCEIRO&ga=G-XXXX
    ===================================================================== */
 :root{
   --indigo:#1E3557;      /* ai-zome: azul índigo japonês */
@@ -22,8 +22,8 @@
   --ink:#16202C;
   --muted:#5B6878;
   --line:#D5DDE7;
-  --gain:#1F7A4D;        /* o que chega */
-  --loss:#C23B2A;        /* o que o banco fica */
+  --gain:#1F7A4D;
+  --loss:#C23B2A;
   --card:#FFFFFF;
   --focus:#F2B705;
   color-scheme: light;
@@ -54,13 +54,13 @@ main{max-width:480px;margin:0 auto;padding:20px 18px 28px}
 h1{font-size:1.65rem;line-height:1.2;font-weight:900;margin:0 0 6px;letter-spacing:-.01em;color:var(--indigo)}
 .sub{color:var(--muted);margin:0 0 20px;font-size:.95rem}
 label{display:block;font-weight:700;font-size:.95rem;margin-bottom:6px}
-.yen-field{
+.amount{
   display:flex;align-items:center;border:2px solid var(--indigo);border-radius:14px;background:var(--card);
   padding:4px 14px;
 }
-.yen-field span{font-size:1.8rem;font-weight:900;color:var(--indigo);margin-right:6px}
-.yen-field input{
-  border:0;background:transparent;color:var(--ink);font:inherit;font-size:2rem;font-weight:900;width:100%;
+.amount span{font-size:1.8rem;font-weight:900;color:var(--indigo);margin-right:6px;white-space:nowrap}
+.amount input{
+  border:0;background:transparent;color:var(--ink);font:inherit;font-size:2rem;font-weight:900;width:100%;min-width:0;
   padding:8px 0;outline:none;
 }
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
@@ -70,20 +70,19 @@ label{display:block;font-weight:700;font-size:.95rem;margin-bottom:6px}
 }
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
-/* resultado: a barra que divide o envio */
-.result{margin:24px 0 8px}
-.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--line)}
-.bar .arrive{background:var(--gain);transition:flex-basis .4s ease}
-.bar .kept{background:var(--loss);transition:flex-basis .4s ease}
-.rows{margin-top:12px;display:grid;gap:6px}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-.row .k{color:var(--muted);font-size:.92rem}
-.row .v{font-weight:700}
-.big{margin:18px 0 0;padding:16px;border-radius:14px;background:var(--indigo-soft)}
-.big p{margin:0}
-.big .lost{font-size:2.1rem;font-weight:900;color:var(--loss);line-height:1.1;margin:4px 0}
-.big .year{font-size:.95rem}
-.big .year b{color:var(--loss)}
+.swap-wrap{display:flex;justify-content:center;margin:16px 0}
+.swap{
+  font:inherit;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;
+  border:2px solid var(--indigo);color:var(--indigo);background:transparent;border-radius:999px;
+  padding:8px 18px;cursor:pointer;
+}
+.swap svg{width:18px;height:18px}
+
+.result{padding:16px;border-radius:14px;background:var(--indigo-soft)}
+.result p{margin:0}
+.result .k{color:var(--muted);font-size:.92rem}
+.result .v{font-size:2.3rem;font-weight:900;color:var(--indigo);line-height:1.15;margin:4px 0;word-break:break-all}
+.result .unit{font-size:.92rem}
 
 .cta{
   display:block;text-align:center;text-decoration:none;font-weight:900;font-size:1.05rem;
@@ -92,13 +91,13 @@ label{display:block;font-weight:700;font-size:.95rem;margin-bottom:6px}
 .disclosure{font-size:.78rem;color:var(--muted);margin:0 0 6px}
 .share{
   display:block;width:100%;font:inherit;font-weight:700;border:2px solid var(--gain);color:var(--gain);
-  background:transparent;border-radius:12px;padding:12px;cursor:pointer;margin-top:10px;
+  background:transparent;border-radius:12px;padding:12px;cursor:pointer;margin-top:16px;
 }
 
 details{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
 summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;align-items:end}
-.grid2 input, .lead input, .lead select{
+.grid2 input, .lead input{
   width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
   background:var(--card);color:var(--ink);
 }
@@ -117,7 +116,6 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 .msg.ok{color:var(--gain)} .msg.err{color:var(--loss)}
 
 .src{font-size:.78rem;color:var(--muted);margin-top:20px}
-.src a{color:inherit}
 .cookie{
   position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:10;
   max-width:456px;margin:0 auto;background:var(--card);color:var(--ink);border:1px solid var(--line);
@@ -128,69 +126,52 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 .cookie button{flex:1;font:inherit;font-weight:700;border-radius:10px;padding:9px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
 .cookie button.yes{background:var(--indigo);color:var(--paper);border-color:var(--indigo)}
 .hidden{display:none !important}
-@media (prefers-reduced-motion: reduce){ .bar .arrive,.bar .kept{transition:none} }
 </style>
 </head>
 <body>
 <main>
-  <h1>Quanto o banco fica da sua remessa?</h1>
-  <p class="sub">Digite quanto você manda para o Brasil. A cotação é a de hoje.</p>
+  <h1>Conversor iene ↔ real</h1>
+  <p class="sub">Digite o valor e veja na hora, pela cotação de hoje.</p>
 
-  <label for="yen">Valor que você envia</label>
-  <div class="yen-field">
-    <span aria-hidden="true">¥</span>
-    <input id="yen" inputmode="numeric" autocomplete="off" value="100.000" aria-describedby="rateInfo">
+  <label for="amt" id="amtLabel">Valor em ienes</label>
+  <div class="amount">
+    <span aria-hidden="true" id="amtSym">¥</span>
+    <input id="amt" inputmode="decimal" autocomplete="off" value="100.000" aria-describedby="rateInfo">
   </div>
-  <div class="chips" role="group" aria-label="Valores comuns">
-    <button type="button" data-v="50000">¥50 mil</button>
-    <button type="button" data-v="100000">¥100 mil</button>
-    <button type="button" data-v="200000">¥200 mil</button>
-    <button type="button" data-v="300000">¥300 mil</button>
+  <div class="chips" id="chips" role="group" aria-label="Valores comuns"></div>
+
+  <div class="swap-wrap">
+    <button type="button" class="swap" id="swap" aria-label="Inverter a conversão">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg>
+      <span id="swapTxt">Converter reais em ienes</span>
+    </button>
   </div>
 
   <section class="result" aria-live="polite">
-    <div class="bar" aria-hidden="true"><div class="arrive" id="barA" style="flex-basis:95%"></div><div class="kept" id="barK" style="flex-basis:5%"></div></div>
-    <div class="rows">
-      <div class="row"><span class="k">Pelo câmbio de hoje chegaria</span><span class="v" id="fair">—</span></div>
-      <div class="row"><span class="k">Pelo banco chega (estimativa)</span><span class="v" id="bank">—</span></div>
-    </div>
-    <div class="big">
-      <p>Fica com o banco nesta remessa</p>
-      <p class="lost" id="lost">—</p>
-      <p class="year">Mandando todo mês, são <b id="year">—</b> por ano.</p>
-    </div>
+    <p class="k" id="resLabel">Equivale a</p>
+    <p class="v" id="res">—</p>
+    <p class="unit" id="unit">—</p>
   </section>
 
   <a class="cta hidden" id="cta" href="#" target="_blank" rel="sponsored noopener">Ver quanto chega pela Wise</a>
   <p class="disclosure hidden" id="disc">Link de afiliado: se você abrir conta por ele, recebemos uma comissão, e você não paga nada a mais.</p>
 
-  <button type="button" class="share" id="share">Mandar este cálculo no WhatsApp</button>
+  <button type="button" class="share" id="share">Mandar esta conversão no WhatsApp</button>
 
   <details>
-    <summary>Ajustar com os dados do seu banco</summary>
-    <div class="grid2">
-      <div>
-        <label for="fee">Tarifa por envio (¥)</label>
-        <input id="fee" inputmode="numeric" value="700">
-      </div>
-      <div>
-        <label for="margin">Margem no câmbio (%)</label>
-        <input id="margin" inputmode="decimal" value="5,14">
-      </div>
-    </div>
-    <p class="hint">Valores iniciais: Banco do Brasil, envio Japão→Brasil, segundo o Banco Mundial (coleta de 2017). Troque pelos números do seu comprovante para um resultado exato.</p>
+    <summary>Usar outra cotação</summary>
     <div class="grid2">
       <div>
         <label for="rate">Cotação ¥1 em R$</label>
         <input id="rate" inputmode="decimal">
       </div>
     </div>
-    <p class="hint">Preenchida sozinha. Se quiser, digite outra.</p>
+    <p class="hint">Preenchida sozinha com a cotação de hoje. Se quiser, digite a do seu banco ou casa de câmbio.</p>
   </details>
 
   <form class="lead hidden" id="lead" novalidate>
     <h2>Me avise quando o iene subir</h2>
-    <p>Você escolhe o valor. Quando ¥100 mil chegarem a esse valor em reais, a gente te avisa. Também mandamos o guia gratuito para gastar menos com remessa.</p>
+    <p>Você escolhe o valor. Quando ¥100 mil chegarem a esse valor em reais, a gente te avisa.</p>
     <div class="f">
       <label for="alvo">Avisar quando ¥100 mil valerem (R$)</label>
       <input id="alvo" inputmode="decimal">
@@ -203,7 +184,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
       <label for="contato">WhatsApp ou e-mail</label>
       <input id="contato" autocomplete="email" placeholder="+81 90… ou voce@email.com">
     </div>
-    <label class="consent"><input type="checkbox" id="ok"> Aceito receber o alerta e o guia. Posso cancelar quando quiser.</label>
+    <label class="consent"><input type="checkbox" id="ok"> Aceito receber o alerta. Posso cancelar quando quiser.</label>
     <button type="submit" id="send">Quero o aviso</button>
     <p class="msg" id="msg" role="status"></p>
   </form>
@@ -225,8 +206,8 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   var CONFIG = {
     AFFILIATE_URL: "",   // ex.: "https://wise.prf.hn/click/camref:SEU_CODIGO" (aparece só se preenchido)
     WEBHOOK_URL:   "",   // ex.: "https://SEU-N8N/webhook/leads-cambio" (formulário aparece só se preenchido)
-    REF:           "github-pages", // de onde veio o lead (site, wordpress-parceiro-x, instagram…)
-    GA_ID:         "G-HRC1WBVL2V"    // ex.: "G-XXXXXXXXXX" (ID de medição do GA4; não é segredo)
+    REF:           "github-pages", // de onde veio o visitante (site, wordpress-parceiro-x, instagram…)
+    GA_ID:         "G-HRC1WBVL2V"  // ID de medição do GA4 (não é segredo)
   };
   var q = new URLSearchParams(location.search);
   if (q.get("ga"))   CONFIG.GA_ID         = q.get("ga");
@@ -238,8 +219,17 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 
   var $ = function(id){ return document.getElementById(id); };
   var brl = new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
-  var jpy = new Intl.NumberFormat("ja-JP");
-  var state = { rate:null, source:"", when:"" };
+  var brlN = new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  // ienes no formato brasileiro (¥29.028): o formato japonês (29,028) parece decimal para quem lê em pt-BR
+  var jpy = new Intl.NumberFormat("pt-BR",{maximumFractionDigits:0});
+  var jpyN = jpy;
+
+  // direção: "jpy" = ienes → reais; "brl" = reais → ienes
+  var DIR = q.get("de") === "brl" ? "brl" : "jpy";
+  var CHIPS = {
+    jpy: [[10000,"¥10 mil"],[50000,"¥50 mil"],[100000,"¥100 mil"],[200000,"¥200 mil"]],
+    brl: [[100,"R$ 100"],[500,"R$ 500"],[1000,"R$ 1.000"],[5000,"R$ 5.000"]]
+  };
 
   function num(s){
     s = String(s||"").replace(/[^\d.,\-]/g,"");
@@ -249,6 +239,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     return isFinite(n) ? n : 0;
   }
   function fmtRate(r){ return r.toLocaleString("pt-BR",{minimumFractionDigits:4,maximumFractionDigits:5}); }
+  function fmtIn(n){ return DIR === "jpy" ? jpyN.format(n) : brlN.format(n); }
 
   // ---------- GOOGLE ANALYTICS (GA4 + Consent Mode) ----------
   // Sem aceite: o GA só recebe sinais sem cookies (modelagem). Com aceite: medição normal.
@@ -271,13 +262,14 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.GA_ID);
     document.head.appendChild(s);
     if (!ck && !EMBED) $("cookie").classList.remove("hidden");
-    function answer(v){
+    var answer = function(v){
       setConsent(v); $("cookie").classList.add("hidden");
       gtag("consent","update",{ analytics_storage: v });
-    }
+    };
     $("ckYes").addEventListener("click", function(){ answer("granted"); });
     $("ckNo").addEventListener("click", function(){ answer("denied"); });
   }
+  // faixa sempre medida em ienes, nas duas direções
   function faixa(y){
     return y < 50000 ? "ate_50mil" : y < 100000 ? "50_100mil" : y < 200000 ? "100_200mil" : y < 300000 ? "200_300mil" : "300mil_mais";
   }
@@ -298,8 +290,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     var tries = [];
     for (var i=0;i<6;i++){
       var d = new Date(Date.now() - i*864e5);
-      var s = ("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+"-"+d.getFullYear();
-      tries.push(s);
+      tries.push(("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+"-"+d.getFullYear());
     }
     var base = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)?@moeda='JPY'&@dataCotacao='";
     function next(k){
@@ -314,51 +305,67 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   }
   function loadRate(){
     fromAwesome().catch(fromPtax).then(function(r){
-      state = r; $("rate").value = fmtRate(r.rate);
-      $("rateInfo").textContent = "Cotação: ¥1 = R$ "+fmtRate(r.rate)+" · fonte: "+r.source+(r.when?" ("+String(r.when).slice(0,16)+")":"")+". A margem e a tarifa do banco são estimativas que você pode ajustar.";
+      $("rate").value = fmtRate(r.rate);
+      $("rateInfo").textContent = "Cotação de referência: ¥1 = R$ "+fmtRate(r.rate)+" · fonte: "+r.source+(r.when?" ("+String(r.when).slice(0,16)+")":"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
       calc();
     }).catch(function(){
-      $("rateInfo").textContent = "Não consegui buscar a cotação agora. Abra “Ajustar com os dados do seu banco” e digite a cotação do dia.";
+      $("rateInfo").textContent = "Não consegui buscar a cotação agora. Abra “Usar outra cotação” e digite a cotação do dia.";
       document.querySelector("details").open = true;
     });
   }
 
+  // ---------- DIREÇÃO ----------
+  function paintDir(){
+    var j = DIR === "jpy";
+    $("amtLabel").textContent = j ? "Valor em ienes" : "Valor em reais";
+    $("amtSym").textContent = j ? "¥" : "R$";
+    $("swapTxt").textContent = j ? "Converter reais em ienes" : "Converter ienes em reais";
+    $("resLabel").textContent = j ? "Equivale a (em reais)" : "Equivale a (em ienes)";
+    var box = $("chips"); box.innerHTML = "";
+    CHIPS[DIR].forEach(function(c){
+      var b = document.createElement("button"); b.type = "button"; b.textContent = c[1];
+      b.addEventListener("click", function(){ $("amt").value = fmtIn(c[0]); calc(); track("chip_valor"); });
+      box.appendChild(b);
+    });
+  }
+
   // ---------- CÁLCULO ----------
-  var last = {};
+  var last = {}, calcTimer, lastKey = null;
   function calc(){
-    var yen = num($("yen").value), rate = num($("rate").value);
-    var fee = num($("fee").value), margin = num($("margin").value)/100;
-    if (!(rate>0) || !(yen>0)) return;
-    var fair = yen*rate;
-    var bank = Math.max(0,(yen-fee)*rate*(1-margin));
-    var lost = fair-bank;
-    $("fair").textContent = brl.format(fair);
-    $("bank").textContent = brl.format(bank);
-    $("lost").textContent = brl.format(lost);
-    $("year").textContent = brl.format(lost*12);
-    var pk = Math.min(100,Math.max(0,lost/fair*100));
-    $("barK").style.flexBasis = pk+"%"; $("barA").style.flexBasis = (100-pk)+"%";
+    var v = num($("amt").value), rate = num($("rate").value);
+    if (!(rate>0)) return;
+    var yen, reais;
+    if (DIR === "jpy"){ yen = v; reais = v*rate; $("res").textContent = brl.format(reais); }
+    else { reais = v; yen = v/rate; $("res").textContent = "¥" + jpy.format(Math.round(yen)); }
+    $("unit").textContent = "¥1 = R$ "+fmtRate(rate)+"  ·  R$ 1 = ¥"+(1/rate).toLocaleString("pt-BR",{maximumFractionDigits:2});
     if (!$("alvo").value) $("alvo").value = (100000*rate*1.03).toFixed(0);
-    last = {yen:yen, rate:rate, fair:fair, bank:bank, lost:lost};
+    last = {yen:yen, reais:reais, rate:rate};
     resize();
-    // evento "calculo": só depois que a pessoa para de digitar, e só se a faixa mudou
+    // evento "conversao": só depois que a pessoa para de digitar, e só se a faixa ou a direção mudou
     clearTimeout(calcTimer);
+    if (!(v>0)) return;
     calcTimer = setTimeout(function(){
-      var f = faixa(yen);
-      if (f !== lastFaixa){ lastFaixa = f; ga("event","calculo",{ faixa_ienes:f, ref:CONFIG.REF }); }
+      var key = DIR+"|"+faixa(yen);
+      if (key !== lastKey){ lastKey = key; ga("event","conversao",{ direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes:faixa(yen), ref:CONFIG.REF }); }
     }, 1500);
   }
-  var calcTimer, lastFaixa = null;
 
   // ---------- ENTRADAS ----------
-  $("yen").addEventListener("input", calc);
-  $("yen").addEventListener("blur", function(){ var n=num(this.value); if(n>0) this.value = jpy.format(n); });
-  ["fee","margin","rate"].forEach(function(id){ $(id).addEventListener("input", calc); });
-  $("rate").addEventListener("input", function(){ $("rateInfo").textContent = "Cotação digitada por você: ¥1 = R$ "+this.value+". A margem e a tarifa do banco são estimativas que você pode ajustar."; });
-  document.querySelectorAll(".chips button").forEach(function(b){
-    b.addEventListener("click", function(){ $("yen").value = jpy.format(+b.dataset.v); calc(); track("chip_valor"); });
+  $("amt").addEventListener("input", calc);
+  $("amt").addEventListener("blur", function(){ var n=num(this.value); if(n>0) this.value = fmtIn(n); });
+  $("rate").addEventListener("input", function(){
+    $("rateInfo").textContent = "Cotação digitada por você: ¥1 = R$ "+this.value+".";
+    calc();
   });
-  document.querySelector("details").addEventListener("toggle", function(){ if (this.open) track("abrir_ajustes"); });
+  $("swap").addEventListener("click", function(){
+    // o resultado atual vira o novo valor digitado
+    var carry = DIR === "jpy" ? Math.round((last.reais||0)*100)/100 : Math.round(last.yen||0);
+    DIR = DIR === "jpy" ? "brl" : "jpy";
+    paintDir();
+    if (carry > 0) $("amt").value = fmtIn(carry);
+    calc(); track("inverter");
+  });
+  document.querySelector("details").addEventListener("toggle", function(){ if (this.open) track("outra_cotacao"); resize(); });
 
   // ---------- AFILIADO ----------
   if (CONFIG.AFFILIATE_URL){
@@ -372,22 +379,25 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento" +
               (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
     if (EMBED && document.referrer) url = document.referrer;
-    var t = "Fiz a conta: mandando ¥"+jpy.format(last.yen||0)+" pelo banco, ficam uns "+brl.format(last.lost||0)+
-            " com eles. Em um ano dá "+brl.format((last.lost||0)*12)+". Faz a sua conta: "+url;
+    var t = DIR === "jpy"
+      ? "¥"+jpy.format(Math.round(last.yen||0))+" hoje valem "+brl.format(last.reais||0)+". Converta aqui: "+url
+      : brl.format(last.reais||0)+" hoje valem ¥"+jpy.format(Math.round(last.yen||0))+". Converta aqui: "+url;
     window.open("https://wa.me/?text="+encodeURIComponent(t), "_blank", "noopener");
     track("compartilhar_whatsapp");
   });
 
-  // ---------- LEADS (n8n) ----------
+  // ---------- EVENTOS (GA + webhook) ----------
   function post(data){
     // form-urlencoded = requisição simples, sem preflight de CORS
     return fetch(CONFIG.WEBHOOK_URL,{method:"POST",body:new URLSearchParams(data)});
   }
   function track(evento){
-    ga("event", evento, { faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF });
+    ga("event", evento, { direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF });
     if (!CONFIG.WEBHOOK_URL) return;
-    try{ post({tipo:"evento", evento:evento, ref:CONFIG.REF, valor_ienes:String(last.yen||""), pagina:location.href, data:new Date().toISOString()}).catch(function(){}); }catch(e){}
+    try{ post({tipo:"evento", evento:evento, ref:CONFIG.REF, valor_ienes:String(Math.round(last.yen||0)), pagina:location.href, data:new Date().toISOString()}).catch(function(){}); }catch(e){}
   }
+
+  // ---------- LEADS (n8n) ----------
   if (CONFIG.WEBHOOK_URL){
     $("lead").classList.remove("hidden");
     $("lead").addEventListener("submit", function(e){
@@ -401,9 +411,8 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
       $("send").disabled = true;
       post({
         tipo:"lead", nome:$("nome").value.trim(), contato:contato, canal:isMail?"email":"whatsapp",
-        alvo_100mil_brl:String(num($("alvo").value)), valor_ienes:String(last.yen||""),
-        cotacao_atual:String(last.rate||""), perda_estimada_brl:(last.lost||0).toFixed(2),
-        ref:CONFIG.REF, origem:EMBED?"embed":"pagina", pagina:location.href,
+        alvo_100mil_brl:String(num($("alvo").value)), valor_ienes:String(Math.round(last.yen||0)),
+        cotacao_atual:String(last.rate||""), ref:CONFIG.REF, origem:EMBED?"embed":"pagina", pagina:location.href,
         consentimento:"sim", data:new Date().toISOString()
       }).then(function(r){
         if(!r.ok) throw new Error(r.status);
@@ -421,11 +430,11 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     try{ parent.postMessage({ccj:"height", h:document.documentElement.scrollHeight}, "*"); }catch(e){}
   }
   window.addEventListener("load", resize);
-  document.querySelector("details").addEventListener("toggle", resize);
 
+  if (DIR === "brl") $("amt").value = "1.000,00";
+  paintDir();
   loadRate();
 })();
 </script>
 </body>
 </html>
-

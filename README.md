@@ -1,9 +1,10 @@
-# Calculadora de remessa Japão → Brasil
+# Conversor iene ↔ real
 
-Mostra quanto da remessa em ienes fica com o banco, com a cotação do dia.
+Converte ienes em reais e reais em ienes com a cotação do dia (AwesomeAPI, com a PTAX do Banco Central como reserva).
 
 Site: https://andreyoshimura.github.io/remessa-japao/
 
-Para ativar o botão de afiliado e o formulário de leads, preencha `AFFILIATE_URL` e `WEBHOOK_URL` no bloco `CONFIG` do `index.html`.
+- Abrir já na direção reais → ienes: `?de=brl`
+- Para ativar o botão de afiliado e o formulário de alerta de câmbio, preencha `AFFILIATE_URL` e `WEBHOOK_URL` no bloco `CONFIG` do `index.html`.
 
-O Google Analytics 4 (`GA_ID` no `CONFIG`) só grava cookies depois que o visitante aceita o aviso. Eventos enviados: `calculo`, `chip_valor`, `abrir_ajustes`, `compartilhar_whatsapp` e `clique_afiliado`, com os parâmetros `faixa_ienes` e `ref`. O link compartilhado no WhatsApp leva `utm_source=whatsapp&utm_medium=compartilhamento`.
+O Google Analytics 4 (`GA_ID` no `CONFIG`) só grava cookies depois que o visitante aceita o aviso. Eventos enviados: `conversao`, `chip_valor`, `inverter`, `outra_cotacao`, `compartilhar_whatsapp` e `clique_afiliado`, com os parâmetros `direcao`, `faixa_ienes` e `ref`. O link compartilhado no WhatsApp leva `utm_source=whatsapp&utm_medium=compartilhamento`.
