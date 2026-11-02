@@ -361,7 +361,16 @@ body.embed main{margin-top:0;padding-top:12px}
       analytics_storage: ck === "granted" ? "granted" : "denied"
     });
     gtag("js", new Date());
-    gtag("config", CONFIG.GA_ID, { ref: CONFIG.REF, origem: EMBED ? "embed" : "pagina" });
+    // ?interno=1 marca este navegador como tráfego interno (filtrado no GA); ?interno=0 desmarca
+    var INT = "ccj_interno";
+    try{
+      if (q.get("interno") === "1") localStorage.setItem(INT, "1");
+      if (q.get("interno") === "0") localStorage.removeItem(INT);
+    }catch(e){}
+    var interno = false; try{ interno = localStorage.getItem(INT) === "1"; }catch(e){}
+    var cfg = { ref: CONFIG.REF, origem: EMBED ? "embed" : "pagina" };
+    if (interno) cfg.traffic_type = "internal";
+    gtag("config", CONFIG.GA_ID, cfg);
     var s = document.createElement("script");
     s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.GA_ID);
     document.head.appendChild(s);
@@ -369,6 +378,7 @@ body.embed main{margin-top:0;padding-top:12px}
     var answer = function(v){
       setConsent(v); $("cookie").classList.add("hidden");
       gtag("consent","update",{ analytics_storage: v });
+      gtag("event", v === "granted" ? "cookies_aceitos" : "cookies_recusados");
     };
     $("ckYes").addEventListener("click", function(){ answer("granted"); });
     $("ckNo").addEventListener("click", function(){ answer("denied"); });
@@ -415,6 +425,7 @@ body.embed main{margin-top:0;padding-top:12px}
       $("rateInfo").textContent = "Fonte: "+r.source+(r.when?", "+String(r.when).slice(0,16):"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
       calc();
     }).catch(function(){
+      ga("event","cotacao_erro");
       $("rateInfo").textContent = "Não consegui buscar a cotação agora. Abra “Usar outra cotação” e digite a cotação do dia.";
       document.querySelector("details").open = true;
     });
@@ -453,7 +464,7 @@ body.embed main{margin-top:0;padding-top:12px}
     if (!(v>0)) return;
     calcTimer = setTimeout(function(){
       var key = DIR+"|"+faixa(yen);
-      if (key !== lastKey){ lastKey = key; ga("event","conversao",{ direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes:faixa(yen), ref:CONFIG.REF }); }
+      if (key !== lastKey){ lastKey = key; ga("event","conversao",{ direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes:faixa(yen), valor_ienes:Math.round(yen), ref:CONFIG.REF }); }
     }, 1500);
   }
 
@@ -501,6 +512,7 @@ body.embed main{margin-top:0;padding-top:12px}
   }
   function track(evento, extra){
     var p = { direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF };
+    if (last.yen) p.valor_ienes = Math.round(last.yen);
     if (extra) for (var k in extra) p[k] = extra[k];
     ga("event", evento, p);
     if (!CONFIG.WEBHOOK_URL) return;
