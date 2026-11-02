@@ -12,8 +12,8 @@
 <meta property="og:url" content="https://andreyoshimura.github.io/remessa-japao/">
 <meta property="og:title" content="Conversor iene ⇄ real">
 <meta property="og:description" content="Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro.">
-<meta property="og:image" content="https://andreyoshimura.github.io/remessa-japao/og.jpg">
-<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image" content="https://andreyoshimura.github.io/remessa-japao/og.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Conversor iene ⇄ real: cotação do dia, sem cadastro">
@@ -236,7 +236,7 @@ body.embed main{margin-top:0;padding-top:12px}
     <div class="out" aria-live="polite">
       <p class="v" id="res">—</p>
     </div>
-    <p class="unit"><span class="live" aria-hidden="true"></span><span id="unit">—</span></p>
+    <p class="unit"><span class="live hidden" id="liveDot" aria-hidden="true"></span><span id="unit">—</span></p>
   </section>
 
   <a class="cta hidden" id="cta" href="#" target="_blank" rel="sponsored noopener">Ver quanto chega pela Wise</a>
@@ -284,7 +284,7 @@ body.embed main{margin-top:0;padding-top:12px}
 </footer>
 
 <div class="cookie hidden" id="cookie" role="dialog" aria-label="Aviso de cookies">
-  <p>Usamos o Google Analytics para contar visitas e cliques, sem identificar você. Pode aceitar os cookies?</p>
+  <p>Usamos o Google Analytics para contar visitas e cliques, sem saber seu nome nem seu contato. Pode aceitar os cookies?</p>
   <div class="btns">
     <button type="button" id="ckNo">Recusar</button>
     <button type="button" class="yes" id="ckYes">Aceitar</button>
@@ -434,10 +434,12 @@ body.embed main{margin-top:0;padding-top:12px}
   function loadRate(){
     fromAwesome().catch(fromPtax).then(function(r){
       $("rate").value = fmtRate(r.rate);
+      $("liveDot").classList.remove("hidden");
       $("rateInfo").textContent = "Fonte: "+r.source+(r.when?", "+String(r.when).slice(0,16):"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
       calc();
     }).catch(function(){
       ga("event","cotacao_erro");
+      $("liveDot").classList.add("hidden");
       $("rateInfo").textContent = "Não consegui buscar a cotação agora. Abra “Usar outra cotação” e digite a cotação do dia.";
       document.querySelector("details").open = true;
     });
@@ -484,6 +486,7 @@ body.embed main{margin-top:0;padding-top:12px}
   $("amt").addEventListener("input", calc);
   $("amt").addEventListener("blur", function(){ var n=num(this.value); if(n>0) this.value = fmtIn(n); });
   $("rate").addEventListener("input", function(){
+    $("liveDot").classList.add("hidden");
     $("rateInfo").textContent = "Cotação digitada por você: ¥1 = R$ "+this.value+".";
     calc();
   });
@@ -508,7 +511,7 @@ body.embed main{margin-top:0;padding-top:12px}
   $("share").addEventListener("click", function(){
     // utm_* faz o GA atribuir a visita ao compartilhamento no WhatsApp
     // v= muda o link quando a prévia muda, para o WhatsApp não reaproveitar a prévia antiga do cache
-    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento&v=3" +
+    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento&v=4" +
               (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
     if (EMBED && document.referrer) url = document.referrer;
     var t = DIR === "jpy"

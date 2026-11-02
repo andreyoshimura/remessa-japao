@@ -41,7 +41,8 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 | Arquivo | O que é |
 |---|---|
 | `index.html` | O site inteiro: HTML, CSS e JavaScript, sem dependências além da fonte do Google Fonts. |
-| `og.jpg` | Imagem de prévia de links (1200×630, ~127 KB) usada por WhatsApp, Facebook, Instagram e X. |
+| `og.png` | Imagem de prévia do link (1200×630, PNG, ~33 KB) usada por WhatsApp, Facebook, Instagram e X. |
+| `og.jpg` | Imagem de prévia anterior. Fica no repositório para não quebrar prévias antigas em cache. |
 | `docs/analytics.md` | GA4, Search Console, prévia de links e validação. |
 | `.gitignore` | Mantém fora do repositório o arquivo de instrução original e a pasta `.claude`. |
 
@@ -115,7 +116,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://andreyoshimura.github.io/remess
 Antes de publicar:
 - `AFFILIATE_URL` e `WEBHOOK_URL` vazios, a menos que seja de propósito.
 - **Não remover** a meta tag `google-site-verification`, porque o Search Console perde a verificação.
-- Se mudar título, descrição ou `og.jpg`, aumente o `v=` do link do WhatsApp no código (hoje `v=3`).
+- Se mudar título, descrição ou `og.png`, aumente o `v=` do link do WhatsApp no código (hoje `v=4`).
 
 ## Privacidade
 
@@ -137,3 +138,4 @@ Antes de publicar:
 | 2026-11-02 | `9481d0c` | Verificação do Google Search Console. |
 | 2026-11-02 | `dfc426b` | Imagem de prévia (`og.jpg`) e tags Open Graph completas. |
 | 2026-11-02 | `0ca3500` | `⇄` no título da prévia, porque o Facebook mostrava `↔` como emoji quebrado. |
+| 2026-11-02 | (este) | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |

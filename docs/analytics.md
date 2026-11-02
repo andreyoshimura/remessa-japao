@@ -117,7 +117,7 @@ Tags Open Graph no `<head>`:
 |---|---|
 | `og:title` | Conversor iene ⇄ real |
 | `og:description` | Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro. |
-| `og:image` | `https://andreyoshimura.github.io/remessa-japao/og.jpg` (1200×630, JPEG, ~127 KB) |
+| `og:image` | `https://andreyoshimura.github.io/remessa-japao/og.png` (1200×630, PNG, ~33 KB) |
 | `og:url` / canonical | `https://andreyoshimura.github.io/remessa-japao/` |
 | `og:site_name` | Radar Nihon |
 | `twitter:card` | `summary_large_image` |
