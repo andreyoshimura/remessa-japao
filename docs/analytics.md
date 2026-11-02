@@ -63,7 +63,7 @@ Feita à mão em 2026-11-02.
 | 〃 | Dimensão **Faixa de ienes** → `faixa_ienes` (Evento) | ✅ |
 | 〃 | Dimensão **Origem** → `ref` (Evento) | ✅ |
 | 〃 | Dimensão **Rede Social** → `rede` (Evento) | ✅ |
-| 〃 | Métrica **Valor em ienes** → `valor_ienes` (Evento, Padrão) | ⏳ confirmar. Foi criada como dimensão por engano: arquivar a dimensão e criar como métrica. |
+| 〃 | Métrica **Valor em ienes** → `valor_ienes` (Evento, Padrão) | ✅ criada (2026-11-02). Se a dimensão "Valor ienes" criada por engano ainda existir, arquivar. |
 | Coleta e modificação de dados → Filtros de dados | **Internal Traffic**: excluir `traffic_type = internal`, estado **Ativo** | ✅ |
 | Vínculos de produtos → Links do Search Console | Vínculo com `https://andreyoshimura.github.io/remessa-japao/` e o fluxo Site Github Pages | ✅ |
 | Exibição de dados → Eventos | ⭐ evento principal em `compartilhar_whatsapp` e `clique_rede_social` | ⏳ os eventos só aparecem na lista ~24 h depois do primeiro disparo |
@@ -157,7 +157,8 @@ No Depurador do Facebook, depois de "Extrair novamente", devem aparecer a imagem
 ## Pendências
 
 - [ ] Marcar ⭐ em `compartilhar_whatsapp` e `clique_rede_social` em **Administrador → Eventos**, depois que aparecerem (~24 h).
-- [ ] Confirmar a métrica **Valor em ienes** (`valor_ienes`) e o arquivamento da dimensão "Valor ienes".
+- [x] Métrica **Valor em ienes** (`valor_ienes`) criada.
+- [ ] Arquivar a dimensão "Valor ienes" criada por engano, se ainda existir.
 - [ ] Retenção de dados de eventos: **14 meses**.
 - [ ] Desligar o **Google Signals**.
 - [ ] Search Console: **Solicitar indexação**.
