@@ -7,6 +7,7 @@
 <meta name="description" content="Converta ienes em reais e reais em ienes com a cotação do dia. Rápido, sem cadastro.">
 <meta property="og:title" content="Conversor iene ↔ real">
 <meta property="og:description" content="Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro.">
+<meta name="theme-color" content="#1E3557">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -17,97 +18,140 @@
    ===================================================================== */
 :root{
   --indigo:#1E3557;      /* ai-zome: azul índigo japonês */
-  --indigo-soft:#E6ECF4;
-  --paper:#F6F8FA;
+  --indigo-soft:#E8EEF6;
+  --hero:#1E3557; --hero-2:#2B4A75; --hero-ink:#FFFFFF; --hero-muted:#C9D6E8;
+  --accent:#C8102E;      /* vermelho hinomaru, só em detalhes */
+  --paper:#F3F6F9;
   --ink:#16202C;
   --muted:#5B6878;
   --line:#D5DDE7;
   --gain:#1F7A4D;
   --loss:#C23B2A;
   --card:#FFFFFF;
+  --shadow:0 10px 30px rgba(22,32,44,.10), 0 2px 6px rgba(22,32,44,.06);
   --focus:#F2B705;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0F151D; --ink:#E8EDF3;
+    --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0E141B; --ink:#E8EDF3;
+    --hero:#122035; --hero-2:#1B3050; --hero-ink:#F2F5F9; --hero-muted:#9FB2CC; --accent:#F0657A;
     --muted:#9AA7B7; --line:#2A3646; --gain:#5CC28E; --loss:#F07A68; --card:#151D28;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"]{
-  --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0F151D; --ink:#E8EDF3;
+  --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0E141B; --ink:#E8EDF3;
+  --hero:#122035; --hero-2:#1B3050; --hero-ink:#F2F5F9; --hero-muted:#9FB2CC; --accent:#F0657A;
   --muted:#9AA7B7; --line:#2A3646; --gain:#5CC28E; --loss:#F07A68; --card:#151D28;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
   color-scheme: dark;
 }
 *{box-sizing:border-box}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html,body{margin:0}
 body{
   background:var(--paper); color:var(--ink);
   font-family:"Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   font-size:17px; line-height:1.5;
   font-variant-numeric: tabular-nums;
+  min-height:100vh; display:flex; flex-direction:column;
 }
-body.embed{background:transparent}
-main{max-width:480px;margin:0 auto;padding:20px 18px 28px}
-h1{font-size:1.65rem;line-height:1.2;font-weight:900;margin:0 0 6px;letter-spacing:-.01em;color:var(--indigo)}
-.sub{color:var(--muted);margin:0 0 20px;font-size:.95rem}
-label{display:block;font-weight:700;font-size:.95rem;margin-bottom:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* ---------- topo ---------- */
+.hero{
+  color:var(--hero-ink);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.2'%3E%3Ccircle cx='0' cy='24' r='22'/%3E%3Ccircle cx='0' cy='24' r='15'/%3E%3Ccircle cx='0' cy='24' r='8'/%3E%3Ccircle cx='48' cy='24' r='22'/%3E%3Ccircle cx='48' cy='24' r='15'/%3E%3Ccircle cx='48' cy='24' r='8'/%3E%3Ccircle cx='24' cy='12' r='22'/%3E%3Ccircle cx='24' cy='12' r='15'/%3E%3Ccircle cx='24' cy='12' r='8'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(160deg, var(--hero-2), var(--hero));
+  padding:calc(28px + env(safe-area-inset-top,0px)) 16px 76px;
+  text-align:center;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;letter-spacing:.04em;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;
+}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{font-size:clamp(1.7rem, 5.5vw, 2.4rem);line-height:1.15;font-weight:900;margin:14px 0 6px;letter-spacing:-.01em}
+.hero p{margin:0 auto;max-width:30ch;color:var(--hero-muted);font-size:1rem}
+
+main{width:100%;max-width:500px;margin:-52px auto 0;padding:0 16px 32px;flex:1}
+
+/* ---------- cartão do conversor ---------- */
+.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:20px 18px 18px;border:1px solid var(--line)}
+.rowhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.rowhead label, .rowhead .lbl{font-weight:700;font-size:.92rem;color:var(--muted)}
+.cur{
+  display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:900;letter-spacing:.05em;
+  border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--ink)
+}
+.cur i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.cur.jpy i{background:#C8102E} .cur.brl i{background:#169B62}
 .amount{
-  display:flex;align-items:center;border:2px solid var(--indigo);border-radius:14px;background:var(--card);
-  padding:4px 14px;
+  display:flex;align-items:center;border:2px solid var(--line);border-radius:16px;background:var(--card);
+  padding:4px 16px;transition:border-color .15s;
 }
-.amount span{font-size:1.8rem;font-weight:900;color:var(--indigo);margin-right:6px;white-space:nowrap}
+.amount:focus-within{border-color:var(--indigo)}
+.amount span{font-size:1.7rem;font-weight:900;color:var(--indigo);margin-right:8px;white-space:nowrap}
 .amount input{
   border:0;background:transparent;color:var(--ink);font:inherit;font-size:2rem;font-weight:900;width:100%;min-width:0;
   padding:8px 0;outline:none;
 }
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
 .chips button{
-  font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--card);color:var(--ink);
-  border-radius:999px;padding:6px 12px;cursor:pointer;
+  font:inherit;font-size:.85rem;font-weight:500;border:1px solid var(--line);background:transparent;color:var(--ink);
+  border-radius:999px;padding:6px 13px;cursor:pointer;transition:background .15s,border-color .15s;
 }
-:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.chips button:hover{border-color:var(--indigo);background:var(--indigo-soft)}
 
-.swap-wrap{display:flex;justify-content:center;margin:16px 0}
+.divider{position:relative;height:56px;display:flex;align-items:center;justify-content:center}
+.divider::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--line)}
 .swap{
-  font:inherit;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;
-  border:2px solid var(--indigo);color:var(--indigo);background:transparent;border-radius:999px;
-  padding:8px 18px;cursor:pointer;
+  position:relative;width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--indigo);color:var(--card);display:grid;place-items:center;
+  box-shadow:0 4px 12px rgba(30,53,87,.3);transition:transform .35s ease;
 }
-.swap svg{width:18px;height:18px}
+.swap:hover{transform:scale(1.06)}
+.swap.spin{transform:rotate(180deg)}
+.swap svg{width:22px;height:22px}
 
-.result{padding:16px;border-radius:14px;background:var(--indigo-soft)}
-.result p{margin:0}
-.result .k{color:var(--muted);font-size:.92rem}
-.result .v{font-size:2.3rem;font-weight:900;color:var(--indigo);line-height:1.15;margin:4px 0;word-break:break-all}
-.result .unit{font-size:.92rem}
+.out{border-radius:16px;background:var(--indigo-soft);padding:12px 16px 14px}
+.out .v{font-size:clamp(1.9rem, 8vw, 2.5rem);font-weight:900;color:var(--indigo);line-height:1.15;margin:0;word-break:break-word}
+.unit{margin:10px 2px 0;font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live{width:8px;height:8px;border-radius:50%;background:var(--gain);box-shadow:0 0 0 0 rgba(31,122,77,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(31,122,77,0)}100%{box-shadow:0 0 0 0 rgba(31,122,77,0)}}
 
+/* ---------- ações ---------- */
 .cta{
   display:block;text-align:center;text-decoration:none;font-weight:900;font-size:1.05rem;
-  background:var(--indigo);color:var(--paper);border-radius:12px;padding:14px;margin:16px 0 4px;
+  background:var(--indigo);color:var(--card);border-radius:14px;padding:14px;margin:16px 0 4px;
 }
 .disclosure{font-size:.78rem;color:var(--muted);margin:0 0 6px}
 .share{
-  display:block;width:100%;font:inherit;font-weight:700;border:2px solid var(--gain);color:var(--gain);
-  background:transparent;border-radius:12px;padding:12px;cursor:pointer;margin-top:16px;
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font:inherit;font-weight:700;font-size:1rem;
+  border:0;color:#fff;background:#1F8F55;border-radius:14px;padding:14px;cursor:pointer;margin-top:16px;
+  box-shadow:0 4px 14px rgba(31,143,85,.25);transition:filter .15s;
 }
+.share:hover{filter:brightness(1.07)}
+.share svg{width:22px;height:22px}
 
-details{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
-summary{cursor:pointer;font-weight:700;color:var(--indigo)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;align-items:end}
-.grid2 input, .lead input{
+details{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+summary{cursor:pointer;font-weight:700;color:var(--indigo);font-size:.95rem}
+details label{display:block;font-weight:700;font-size:.9rem;margin:10px 0 6px}
+details input, .lead input{
   width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
   background:var(--card);color:var(--ink);
 }
 .hint{font-size:.8rem;color:var(--muted);margin:6px 0 0}
 
-.lead{margin-top:22px;padding:16px;border:2px dashed var(--indigo);border-radius:14px}
+.lead{margin-top:18px;padding:16px;border:2px dashed var(--indigo);border-radius:14px;background:var(--card)}
 .lead h2{font-size:1.15rem;margin:0 0 4px;color:var(--indigo)}
 .lead p{margin:0 0 12px;font-size:.92rem;color:var(--muted)}
+.lead label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
 .lead .f{margin-bottom:10px}
-.consent{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin:6px 0 12px}
+.lead .consent{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;font-weight:400;color:var(--muted);margin:6px 0 12px}
 .consent input{width:auto;margin-top:3px}
 .lead button{
   width:100%;font:inherit;font-weight:900;background:var(--gain);color:#fff;border:0;border-radius:12px;padding:13px;cursor:pointer;
@@ -115,57 +159,86 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 .msg{font-size:.9rem;margin-top:10px}
 .msg.ok{color:var(--gain)} .msg.err{color:var(--loss)}
 
-.src{font-size:.78rem;color:var(--muted);margin-top:20px}
+.src{font-size:.78rem;color:var(--muted);margin:18px 2px 0}
+
+/* ---------- rodapé ---------- */
+footer{border-top:1px solid var(--line);padding:24px 16px calc(28px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--muted);font-size:.82rem}
+.social{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:0;list-style:none}
+.social a{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--indigo);
+  background:var(--card);border:1px solid var(--line);transition:background .15s,color .15s,transform .15s;
+}
+.social a:hover{background:var(--indigo);color:var(--card);transform:translateY(-2px)}
+.social svg{width:20px;height:20px}
+footer p{margin:4px auto;max-width:44ch}
+.linkbtn{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+
+/* ---------- aviso de cookies ---------- */
 .cookie{
   position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:10;
   max-width:456px;margin:0 auto;background:var(--card);color:var(--ink);border:1px solid var(--line);
-  border-radius:14px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.18);font-size:.85rem;
+  border-radius:16px;padding:14px;box-shadow:var(--shadow);font-size:.85rem;
 }
 .cookie p{margin:0 0 10px}
 .cookie .btns{display:flex;gap:8px}
 .cookie button{flex:1;font:inherit;font-weight:700;border-radius:10px;padding:9px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
-.cookie button.yes{background:var(--indigo);color:var(--paper);border-color:var(--indigo)}
+.cookie button.yes{background:var(--indigo);color:var(--card);border-color:var(--indigo)}
+
+body.embed{background:transparent}
+body.embed .hero, body.embed footer{display:none}
+body.embed main{margin-top:0;padding-top:12px}
 .hidden{display:none !important}
+@media (prefers-reduced-motion: reduce){ .swap,.live,.social a{transition:none;animation:none} }
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
+  <span class="badge"><i></i>Cotação do dia</span>
   <h1>Conversor iene ↔ real</h1>
-  <p class="sub">Digite o valor e veja na hora, pela cotação de hoje.</p>
+  <p>Digite o valor e veja na hora quanto vale na outra moeda.</p>
+</header>
 
-  <label for="amt" id="amtLabel">Valor em ienes</label>
-  <div class="amount">
-    <span aria-hidden="true" id="amtSym">¥</span>
-    <input id="amt" inputmode="decimal" autocomplete="off" value="100.000" aria-describedby="rateInfo">
-  </div>
-  <div class="chips" id="chips" role="group" aria-label="Valores comuns"></div>
+<main>
+  <section class="card" aria-label="Conversor">
+    <div class="rowhead">
+      <label for="amt" id="amtLabel">Você tem</label>
+      <span class="cur jpy" id="fromCur"><i></i>JPY</span>
+    </div>
+    <div class="amount">
+      <span aria-hidden="true" id="amtSym">¥</span>
+      <input id="amt" inputmode="decimal" autocomplete="off" value="100.000" aria-describedby="rateInfo">
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Valores comuns"></div>
 
-  <div class="swap-wrap">
-    <button type="button" class="swap" id="swap" aria-label="Inverter a conversão">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg>
-      <span id="swapTxt">Converter reais em ienes</span>
-    </button>
-  </div>
+    <div class="divider">
+      <button type="button" class="swap" id="swap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg>
+        <span class="sr" id="swapTxt">Converter reais em ienes</span>
+      </button>
+    </div>
 
-  <section class="result" aria-live="polite">
-    <p class="k" id="resLabel">Equivale a</p>
-    <p class="v" id="res">—</p>
-    <p class="unit" id="unit">—</p>
+    <div class="rowhead">
+      <span class="lbl" id="resLabel">Equivale a</span>
+      <span class="cur brl" id="toCur"><i></i>BRL</span>
+    </div>
+    <div class="out" aria-live="polite">
+      <p class="v" id="res">—</p>
+    </div>
+    <p class="unit"><span class="live" aria-hidden="true"></span><span id="unit">—</span></p>
   </section>
 
   <a class="cta hidden" id="cta" href="#" target="_blank" rel="sponsored noopener">Ver quanto chega pela Wise</a>
   <p class="disclosure hidden" id="disc">Link de afiliado: se você abrir conta por ele, recebemos uma comissão, e você não paga nada a mais.</p>
 
-  <button type="button" class="share" id="share">Mandar esta conversão no WhatsApp</button>
+  <button type="button" class="share" id="share">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>
+    Mandar esta conversão no WhatsApp
+  </button>
 
   <details>
     <summary>Usar outra cotação</summary>
-    <div class="grid2">
-      <div>
-        <label for="rate">Cotação ¥1 em R$</label>
-        <input id="rate" inputmode="decimal">
-      </div>
-    </div>
+    <label for="rate">Cotação ¥1 em R$</label>
+    <input id="rate" inputmode="decimal">
     <p class="hint">Preenchida sozinha com a cotação de hoje. Se quiser, digite a do seu banco ou casa de câmbio.</p>
   </details>
 
@@ -192,6 +265,12 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   <p class="src" id="rateInfo">Buscando a cotação…</p>
 </main>
 
+<footer>
+  <ul class="social hidden" id="social" aria-label="Redes sociais"></ul>
+  <p>Cotação de referência, para consulta. Não é oferta de câmbio.</p>
+  <p id="ckLine" class="hidden">Usamos o Google Analytics com o seu consentimento. <button type="button" class="linkbtn" id="ckOpen">Preferências de cookies</button></p>
+</footer>
+
 <div class="cookie hidden" id="cookie" role="dialog" aria-label="Aviso de cookies">
   <p>Usamos o Google Analytics para contar visitas e cliques, sem identificar você. Pode aceitar os cookies?</p>
   <div class="btns">
@@ -207,7 +286,15 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     AFFILIATE_URL: "",   // ex.: "https://wise.prf.hn/click/camref:SEU_CODIGO" (aparece só se preenchido)
     WEBHOOK_URL:   "",   // ex.: "https://SEU-N8N/webhook/leads-cambio" (formulário aparece só se preenchido)
     REF:           "github-pages", // de onde veio o visitante (site, wordpress-parceiro-x, instagram…)
-    GA_ID:         "G-HRC1WBVL2V"  // ID de medição do GA4 (não é segredo)
+    GA_ID:         "G-HRC1WBVL2V", // ID de medição do GA4 (não é segredo)
+    // Redes sociais do rodapé: cada uma só aparece se o link estiver preenchido.
+    SOCIAL: {
+      instagram: "https://www.instagram.com/radarnihon/",
+      facebook:  "",     // ex.: "https://facebook.com/SUA_PAGINA"
+      youtube:   "",     // ex.: "https://youtube.com/@SEU_CANAL"
+      tiktok:    "",     // ex.: "https://tiktok.com/@SEU_PERFIL"
+      whatsapp:  ""      // ex.: "https://wa.me/81XXXXXXXXXX" ou link do canal/grupo
+    }
   };
   var q = new URLSearchParams(location.search);
   if (q.get("ga"))   CONFIG.GA_ID         = q.get("ga");
@@ -222,7 +309,6 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   var brlN = new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
   // ienes no formato brasileiro (¥29.028): o formato japonês (29,028) parece decimal para quem lê em pt-BR
   var jpy = new Intl.NumberFormat("pt-BR",{maximumFractionDigits:0});
-  var jpyN = jpy;
 
   // direção: "jpy" = ienes → reais; "brl" = reais → ienes
   var DIR = q.get("de") === "brl" ? "brl" : "jpy";
@@ -239,7 +325,25 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     return isFinite(n) ? n : 0;
   }
   function fmtRate(r){ return r.toLocaleString("pt-BR",{minimumFractionDigits:4,maximumFractionDigits:5}); }
-  function fmtIn(n){ return DIR === "jpy" ? jpyN.format(n) : brlN.format(n); }
+  function fmtIn(n){ return DIR === "jpy" ? jpy.format(n) : brlN.format(n); }
+
+  // ---------- REDES SOCIAIS ----------
+  var ICONS = {
+    instagram:['Instagram','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'],
+    facebook:['Facebook','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1-1h2V2.5h-3c-3 0-4 2-4 4.5v1.5H7.5V12H10v9.5h4V12h2.8l.5-3.5z"/></svg>'],
+    youtube:['YouTube','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.5 12 5.5 12 5.5s-6 0-7.9.6A3 3 0 0 0 2 8.2 31 31 0 0 0 1.5 12a31 31 0 0 0 .5 3.8 3 3 0 0 0 2.1 2.1c1.9.6 7.9.6 7.9.6s6 0 7.9-.6a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-3.8 31 31 0 0 0-.5-3.8zM10 15.2V8.8l5.2 3.2z"/></svg>'],
+    tiktok:['TikTok','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.2a2.8 2.8 0 1 1-2.8-2.8c.3 0 .6 0 .8.1V9.1a6.1 6.1 0 1 0 5.3 6.1V8.6a7.7 7.7 0 0 0 4.4 1.4V6.7a4.5 4.5 0 0 1-4.4-4.7z"/></svg>'],
+    whatsapp:['WhatsApp','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>']
+  };
+  Object.keys(ICONS).forEach(function(k){
+    var url = CONFIG.SOCIAL[k];
+    if (!url || !/^https:\/\//.test(url)) return;
+    var li = document.createElement("li"), a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener"; a.setAttribute("aria-label", ICONS[k][0]); a.title = ICONS[k][0];
+    a.innerHTML = ICONS[k][1];
+    a.addEventListener("click", function(){ track("clique_rede_social", { rede:k }); });
+    li.appendChild(a); $("social").appendChild(li); $("social").classList.remove("hidden");
+  });
 
   // ---------- GOOGLE ANALYTICS (GA4 + Consent Mode) ----------
   // Sem aceite: o GA só recebe sinais sem cookies (modelagem). Com aceite: medição normal.
@@ -268,6 +372,8 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     };
     $("ckYes").addEventListener("click", function(){ answer("granted"); });
     $("ckNo").addEventListener("click", function(){ answer("denied"); });
+    $("ckLine").classList.remove("hidden");
+    $("ckOpen").addEventListener("click", function(){ $("cookie").classList.remove("hidden"); $("ckYes").focus(); });
   }
   // faixa sempre medida em ienes, nas duas direções
   function faixa(y){
@@ -306,7 +412,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   function loadRate(){
     fromAwesome().catch(fromPtax).then(function(r){
       $("rate").value = fmtRate(r.rate);
-      $("rateInfo").textContent = "Cotação de referência: ¥1 = R$ "+fmtRate(r.rate)+" · fonte: "+r.source+(r.when?" ("+String(r.when).slice(0,16)+")":"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
+      $("rateInfo").textContent = "Fonte: "+r.source+(r.when?", "+String(r.when).slice(0,16):"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
       calc();
     }).catch(function(){
       $("rateInfo").textContent = "Não consegui buscar a cotação agora. Abra “Usar outra cotação” e digite a cotação do dia.";
@@ -317,10 +423,11 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   // ---------- DIREÇÃO ----------
   function paintDir(){
     var j = DIR === "jpy";
-    $("amtLabel").textContent = j ? "Valor em ienes" : "Valor em reais";
     $("amtSym").textContent = j ? "¥" : "R$";
-    $("swapTxt").textContent = j ? "Converter reais em ienes" : "Converter ienes em reais";
-    $("resLabel").textContent = j ? "Equivale a (em reais)" : "Equivale a (em ienes)";
+    $("swapTxt").textContent = j ? "Inverter: converter reais em ienes" : "Inverter: converter ienes em reais";
+    $("swap").title = $("swapTxt").textContent;
+    $("fromCur").className = "cur " + (j ? "jpy" : "brl"); $("fromCur").lastChild.nodeValue = j ? "JPY" : "BRL";
+    $("toCur").className   = "cur " + (j ? "brl" : "jpy"); $("toCur").lastChild.nodeValue   = j ? "BRL" : "JPY";
     var box = $("chips"); box.innerHTML = "";
     CHIPS[DIR].forEach(function(c){
       var b = document.createElement("button"); b.type = "button"; b.textContent = c[1];
@@ -336,7 +443,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     if (!(rate>0)) return;
     var yen, reais;
     if (DIR === "jpy"){ yen = v; reais = v*rate; $("res").textContent = brl.format(reais); }
-    else { reais = v; yen = v/rate; $("res").textContent = "¥" + jpy.format(Math.round(yen)); }
+    else { reais = v; yen = v/rate; $("res").textContent = "¥ " + jpy.format(Math.round(yen)); }
     $("unit").textContent = "¥1 = R$ "+fmtRate(rate)+"  ·  R$ 1 = ¥"+(1/rate).toLocaleString("pt-BR",{maximumFractionDigits:2});
     if (!$("alvo").value) $("alvo").value = (100000*rate*1.03).toFixed(0);
     last = {yen:yen, reais:reais, rate:rate};
@@ -361,6 +468,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     // o resultado atual vira o novo valor digitado
     var carry = DIR === "jpy" ? Math.round((last.reais||0)*100)/100 : Math.round(last.yen||0);
     DIR = DIR === "jpy" ? "brl" : "jpy";
+    this.classList.toggle("spin");
     paintDir();
     if (carry > 0) $("amt").value = fmtIn(carry);
     calc(); track("inverter");
@@ -391,8 +499,10 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     // form-urlencoded = requisição simples, sem preflight de CORS
     return fetch(CONFIG.WEBHOOK_URL,{method:"POST",body:new URLSearchParams(data)});
   }
-  function track(evento){
-    ga("event", evento, { direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF });
+  function track(evento, extra){
+    var p = { direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF };
+    if (extra) for (var k in extra) p[k] = extra[k];
+    ga("event", evento, p);
     if (!CONFIG.WEBHOOK_URL) return;
     try{ post({tipo:"evento", evento:evento, ref:CONFIG.REF, valor_ienes:String(Math.round(last.yen||0)), pagina:location.href, data:new Date().toISOString()}).catch(function(){}); }catch(e){}
   }
