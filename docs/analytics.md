@@ -127,7 +127,7 @@ Tags Open Graph no `<head>`:
 - **Mantenha a imagem abaixo de ~300 KB.** O WhatsApp ignora imagens grandes.
 - **Cache:** WhatsApp e Facebook guardam a prévia por URL.
   - **Mensagens já enviadas** mantêm a prévia antiga para sempre.
-  - **Botão do site:** o link leva `&v=3`. Ao mudar título, descrição ou imagem, aumente esse número no código.
+  - **Botão do site:** o link leva `&v=4`. Ao mudar título, descrição ou imagem, aumente esse número no código.
   - **Link colado à mão:** adicione `?v=N` para forçar a prévia nova.
   - **Facebook e Instagram:** https://developers.facebook.com/tools/debug/ → **Extrair novamente**. O aviso "fb:app_id ausente" pode ser ignorado.
 

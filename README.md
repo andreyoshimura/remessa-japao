@@ -138,4 +138,4 @@ Antes de publicar:
 | 2026-11-02 | `9481d0c` | Verificação do Google Search Console. |
 | 2026-11-02 | `dfc426b` | Imagem de prévia (`og.jpg`) e tags Open Graph completas. |
 | 2026-11-02 | `0ca3500` | `⇄` no título da prévia, porque o Facebook mostrava `↔` como emoji quebrado. |
-| 2026-11-02 | (este) | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |
+| 2026-11-02 | `b09daed` | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |
