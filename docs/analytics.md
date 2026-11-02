@@ -67,7 +67,7 @@ Feita à mão em 2026-11-02.
 | Coleta e modificação de dados → Filtros de dados | **Internal Traffic**: excluir `traffic_type = internal`, estado **Ativo** | ✅ |
 | Vínculos de produtos → Links do Search Console | Vínculo com `https://andreyoshimura.github.io/remessa-japao/` e o fluxo Site Github Pages | ✅ |
 | Exibição de dados → Eventos | ⭐ evento principal em `compartilhar_whatsapp` e `clique_rede_social` | ⏳ os eventos só aparecem na lista ~24 h depois do primeiro disparo |
-| Coleta e modificação de dados → Retenção de dados | Eventos: **14 meses** (padrão é 2) | ⏳ confirmar |
+| Coleta e modificação de dados → Retenção de dados | Eventos: **14 meses** (padrão é 2) | ✅ (2026-11-02) |
 | Coleta e modificação de dados → Coleta de dados | **Google Signals desligado**: evita limites que escondem dados num site pequeno, e o site nega consentimento de anúncios de qualquer jeito | ⏳ confirmar |
 
 Os eventos principais `close_convert_lead` e `qualify_lead` foram criados automaticamente pelo objetivo "Gerar leads". O site não envia esses eventos, então dá para tirar a estrela deles.
@@ -159,7 +159,7 @@ No Depurador do Facebook, depois de "Extrair novamente", devem aparecer a imagem
 - [ ] Marcar ⭐ em `compartilhar_whatsapp` e `clique_rede_social` em **Administrador → Eventos**, depois que aparecerem (~24 h).
 - [x] Métrica **Valor em ienes** (`valor_ienes`) criada.
 - [ ] Arquivar a dimensão "Valor ienes" criada por engano, se ainda existir.
-- [ ] Retenção de dados de eventos: **14 meses**.
+- [x] Retenção de dados de eventos: **14 meses**.
 - [ ] Desligar o **Google Signals**.
 - [ ] Search Console: **Solicitar indexação**.
 - [ ] Abrir `?interno=1` em todos os seus navegadores e celulares.
