@@ -118,6 +118,15 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 
 .src{font-size:.78rem;color:var(--muted);margin-top:20px}
 .src a{color:inherit}
+.cookie{
+  position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:10;
+  max-width:456px;margin:0 auto;background:var(--card);color:var(--ink);border:1px solid var(--line);
+  border-radius:14px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.18);font-size:.85rem;
+}
+.cookie p{margin:0 0 10px}
+.cookie .btns{display:flex;gap:8px}
+.cookie button{flex:1;font:inherit;font-weight:700;border-radius:10px;padding:9px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.cookie button.yes{background:var(--indigo);color:var(--paper);border-color:var(--indigo)}
 .hidden{display:none !important}
 @media (prefers-reduced-motion: reduce){ .bar .arrive,.bar .kept{transition:none} }
 </style>
@@ -202,15 +211,25 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   <p class="src" id="rateInfo">Buscando a cotação…</p>
 </main>
 
+<div class="cookie hidden" id="cookie" role="dialog" aria-label="Aviso de cookies">
+  <p>Usamos o Google Analytics para contar visitas e cliques, sem identificar você. Pode aceitar os cookies?</p>
+  <div class="btns">
+    <button type="button" id="ckNo">Recusar</button>
+    <button type="button" class="yes" id="ckYes">Aceitar</button>
+  </div>
+</div>
+
 <script>
 (function(){
   // ---------- CONFIGURAÇÃO ----------
   var CONFIG = {
     AFFILIATE_URL: "",   // ex.: "https://wise.prf.hn/click/camref:SEU_CODIGO" (aparece só se preenchido)
     WEBHOOK_URL:   "",   // ex.: "https://SEU-N8N/webhook/leads-cambio" (formulário aparece só se preenchido)
-    REF:           "github-pages" // de onde veio o lead (site, wordpress-parceiro-x, instagram…)
+    REF:           "github-pages", // de onde veio o lead (site, wordpress-parceiro-x, instagram…)
+    GA_ID:         "G-HRC1WBVL2V"    // ex.: "G-XXXXXXXXXX" (ID de medição do GA4; não é segredo)
   };
   var q = new URLSearchParams(location.search);
+  if (q.get("ga"))   CONFIG.GA_ID         = q.get("ga");
   if (q.get("aff"))  CONFIG.AFFILIATE_URL = q.get("aff");
   if (q.get("hook")) CONFIG.WEBHOOK_URL   = q.get("hook");
   if (q.get("ref"))  CONFIG.REF           = q.get("ref");
@@ -230,6 +249,38 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     return isFinite(n) ? n : 0;
   }
   function fmtRate(r){ return r.toLocaleString("pt-BR",{minimumFractionDigits:4,maximumFractionDigits:5}); }
+
+  // ---------- GOOGLE ANALYTICS (GA4 + Consent Mode) ----------
+  // Sem aceite: o GA só recebe sinais sem cookies (modelagem). Com aceite: medição normal.
+  // Nunca envie nome, telefone ou e-mail para o GA (proibido pelas regras do Google).
+  var CK = "ccj_consent";
+  function getConsent(){ try{ return localStorage.getItem(CK); }catch(e){ return null; } }
+  function setConsent(v){ try{ localStorage.setItem(CK, v); }catch(e){} }
+  function ga(){ if (window.gtag) window.gtag.apply(null, arguments); }
+  if (CONFIG.GA_ID){
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    var ck = getConsent();
+    gtag("consent","default",{
+      ad_storage:"denied", ad_user_data:"denied", ad_personalization:"denied",
+      analytics_storage: ck === "granted" ? "granted" : "denied"
+    });
+    gtag("js", new Date());
+    gtag("config", CONFIG.GA_ID, { ref: CONFIG.REF, origem: EMBED ? "embed" : "pagina" });
+    var s = document.createElement("script");
+    s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.GA_ID);
+    document.head.appendChild(s);
+    if (!ck && !EMBED) $("cookie").classList.remove("hidden");
+    function answer(v){
+      setConsent(v); $("cookie").classList.add("hidden");
+      gtag("consent","update",{ analytics_storage: v });
+    }
+    $("ckYes").addEventListener("click", function(){ answer("granted"); });
+    $("ckNo").addEventListener("click", function(){ answer("denied"); });
+  }
+  function faixa(y){
+    return y < 50000 ? "ate_50mil" : y < 100000 ? "50_100mil" : y < 200000 ? "100_200mil" : y < 300000 ? "200_300mil" : "300mil_mais";
+  }
 
   // ---------- COTAÇÃO ----------
   function fetchJSON(url, ms){
@@ -290,7 +341,14 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     if (!$("alvo").value) $("alvo").value = (100000*rate*1.03).toFixed(0);
     last = {yen:yen, rate:rate, fair:fair, bank:bank, lost:lost};
     resize();
+    // evento "calculo": só depois que a pessoa para de digitar, e só se a faixa mudou
+    clearTimeout(calcTimer);
+    calcTimer = setTimeout(function(){
+      var f = faixa(yen);
+      if (f !== lastFaixa){ lastFaixa = f; ga("event","calculo",{ faixa_ienes:f, ref:CONFIG.REF }); }
+    }, 1500);
   }
+  var calcTimer, lastFaixa = null;
 
   // ---------- ENTRADAS ----------
   $("yen").addEventListener("input", calc);
@@ -298,8 +356,9 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
   ["fee","margin","rate"].forEach(function(id){ $(id).addEventListener("input", calc); });
   $("rate").addEventListener("input", function(){ $("rateInfo").textContent = "Cotação digitada por você: ¥1 = R$ "+this.value+". A margem e a tarifa do banco são estimativas que você pode ajustar."; });
   document.querySelectorAll(".chips button").forEach(function(b){
-    b.addEventListener("click", function(){ $("yen").value = jpy.format(+b.dataset.v); calc(); });
+    b.addEventListener("click", function(){ $("yen").value = jpy.format(+b.dataset.v); calc(); track("chip_valor"); });
   });
+  document.querySelector("details").addEventListener("toggle", function(){ if (this.open) track("abrir_ajustes"); });
 
   // ---------- AFILIADO ----------
   if (CONFIG.AFFILIATE_URL){
@@ -309,7 +368,9 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
 
   // ---------- COMPARTILHAR ----------
   $("share").addEventListener("click", function(){
-    var url = location.origin + location.pathname + (CONFIG.REF ? "?ref="+encodeURIComponent(CONFIG.REF) : "");
+    // utm_* faz o GA atribuir a visita ao compartilhamento no WhatsApp
+    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento" +
+              (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
     if (EMBED && document.referrer) url = document.referrer;
     var t = "Fiz a conta: mandando ¥"+jpy.format(last.yen||0)+" pelo banco, ficam uns "+brl.format(last.lost||0)+
             " com eles. Em um ano dá "+brl.format((last.lost||0)*12)+". Faz a sua conta: "+url;
@@ -323,6 +384,7 @@ summary{cursor:pointer;font-weight:700;color:var(--indigo)}
     return fetch(CONFIG.WEBHOOK_URL,{method:"POST",body:new URLSearchParams(data)});
   }
   function track(evento){
+    ga("event", evento, { faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF });
     if (!CONFIG.WEBHOOK_URL) return;
     try{ post({tipo:"evento", evento:evento, ref:CONFIG.REF, valor_ienes:String(last.yen||""), pagina:location.href, data:new Date().toISOString()}).catch(function(){}); }catch(e){}
   }
