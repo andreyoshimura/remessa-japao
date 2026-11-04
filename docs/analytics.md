@@ -125,7 +125,7 @@ O filtro descarta os dados **de vez**. Visitas internas não podem ser recuperad
   ```
   **Não remover.** O Google confere de tempos em tempos.
 - **Vínculo com o GA:** feito. Os dados aparecem em **Relatórios → Aquisição → Search Console** depois que o site começar a aparecer no Google.
-- **Recomendado:** em **Inspeção de URL → Solicitar indexação**, para acelerar a entrada no Google.
+- **Indexação:** a Inspeção de URL mostrou "O URL está no Google" em 2026-11-03. O Google indexou sozinho, sem precisar de "Solicitar indexação". Se o site mudar muito, dá para pedir de novo em **Inspeção de URL → Solicitar indexação**.
 
 ## Prévia de links (WhatsApp, Facebook, Instagram)
 
@@ -283,8 +283,8 @@ Variáveis opcionais: `GA_PROPERTY` (padrão `561947228`), `GA_QUOTA_PROJECT`, `
 - [x] Retenção de dados de eventos: **14 meses** (confirmado pela API).
 - [x] **Google Signals** desligado (confirmado pela API).
 - [x] `close_convert_lead` e `qualify_lead` deixaram de ser eventos principais.
-- [ ] Search Console: **Solicitar indexação**. Manual, no Search Console.
-- [ ] Abrir `?interno=1` em todos os seus navegadores e celulares. Manual, em cada aparelho.
+- [x] Search Console: o site já está no Google (confirmado na Inspeção de URL em 2026-11-03).
+- [x] `?interno=1` aberto no Firefox e no celular (2026-11-03). Repetir em navegador ou aparelho novo, ou depois de limpar os dados do navegador.
 - [ ] Conferir de vez em quando se o filtro **Internal Traffic** continua **Ativo**. Manual, porque não há API para isso.
 - [ ] (Opcional) Links de **YouTube** e **WhatsApp** para o rodapé.
 
