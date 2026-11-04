@@ -304,6 +304,8 @@ Os números **não ficam no repositório**, porque ele é público. O script ger
 
 **Como ler os números:**
 - Datas no fuso da propriedade (**Ásia/Tóquio**). O tráfego interno já vem excluído.
+- **Os números são um piso.** Quem recusa ou ignora o aviso de cookies envia ao GA só sinais anônimos (`gcs=G100`). Essas visitas **não aparecem no tempo real nem como pessoas** nos relatórios; servem apenas para estimativas, e só com volume grande. Navegadores com bloqueio (janela privada do Firefox, Brave, bloqueadores de anúncio) não enviam nada. O público real é maior que o mostrado.
+- **Para testar no tempo real:** aba anônima do **Chrome** (ou o celular de outra pessoa), clicar em **Aceitar**, interagir e esperar até 1 min. Navegador marcado com `?interno=1` não aparece, de propósito.
 - **"Média por conversão" é distorcida por valores muito altos.** Olhe também as **faixas**.
 - **Testes:** os primeiros dias (02 e 03/11) têm muitos testes de configuração, e alguns entraram antes de o filtro de tráfego interno ficar ativo. Visitas dos **Estados Unidos** nesse período são provavelmente o robô do Google (Search Console) ou do Facebook (depurador de prévia).
 - **Eventos principais** só contam a partir da criação (2026-11-03), sem efeito retroativo.
