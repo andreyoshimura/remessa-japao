@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Conversor iene ⇄ real com a cotação de hoje</title>
-<meta name="description" content="Converta ienes em reais e reais em ienes com a cotação do dia. Rápido, sem cadastro.">
+<title>Conversor iene ⇄ real hoje: ienes em reais e real para iene</title>
+<meta name="description" content="Converta ienes em reais e real para iene com a cotação de hoje. Feito para quem está no Japão: rápido, sem cadastro.">
 <link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Radar Nihon">
@@ -207,7 +207,7 @@ body.embed main{margin-top:0;padding-top:12px}
 <header class="hero">
   <span class="badge"><i></i>Cotação do dia</span>
   <h1>Conversor iene ↔ real</h1>
-  <p>Digite o valor e veja na hora quanto vale na outra moeda.</p>
+  <p>Ienes em reais ou reais em ienes, com a cotação de hoje.</p>
 </header>
 
 <main>
@@ -527,6 +527,7 @@ body.embed main{margin-top:0;padding-top:12px}
     // utm_* faz o GA atribuir a visita ao compartilhamento no WhatsApp
     // v= muda o link quando a prévia muda, para o WhatsApp não reaproveitar a prévia antiga do cache
     var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento&v=4" +
+              (DIR === "brl" ? "&de=brl" : "") +   // quem recebe abre na mesma direção
               (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
     if (EMBED && document.referrer) url = document.referrer;
     var t = DIR === "jpy"

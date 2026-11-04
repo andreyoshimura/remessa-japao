@@ -31,7 +31,7 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 - Botões de valor rápido: ¥10 mil a ¥200 mil, ou R$ 100 a R$ 5.000.
 - Mostra a cotação nos dois sentidos (¥1 = R$ … · R$ 1 = ¥ …) e a fonte usada.
 - **"Usar outra cotação"**: a pessoa pode digitar a cotação do banco dela.
-- **"Mandar esta conversão no WhatsApp"**: abre o WhatsApp com o texto da conversão e o link do site.
+- **"Mandar esta conversão no WhatsApp"**: abre o WhatsApp com o texto da conversão e o link do site. Se a pessoa estiver em reais → ienes, o link leva `&de=brl` e abre na mesma direção para quem recebe.
 - Rodapé com as redes sociais e o link "Preferências de cookies".
 - Funciona embutido em outro site (iframe ou `?embed=1`): esconde topo e rodapé e ajusta a altura do iframe.
 - Recursos prontos, mas **desligados**: botão de afiliado (Wise) e formulário "Me avise quando o iene subir" (leads via webhook).
