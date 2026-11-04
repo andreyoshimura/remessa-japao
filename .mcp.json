@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "analytics-mcp": {
+      "command": "${HOME}/.local/bin/analytics-mcp",
+      "args": [],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${HOME}/.config/radar-nihon/gcloud/application_default_credentials.json",
+        "GOOGLE_PROJECT_ID": "radar-nihon-analytics"
+      }
+    }
+  }
+}

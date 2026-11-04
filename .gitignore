@@ -1,2 +1,15 @@
 PROMPT-claude-code-remessa-japao.md
 .claude/
+
+# ---- Credenciais: nunca versionar (repositório público) ----
+# Todo JSON fica fora do Git, exceto o .mcp.json (que não tem segredos).
+*.json
+!.mcp.json
+client_secret*
+*credentials*
+*service-account*
+*.pem
+*.p12
+*.key
+.env
+.env.*

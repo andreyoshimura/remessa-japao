@@ -434,6 +434,7 @@ body.embed main{margin-top:0;padding-top:12px}
   function loadRate(){
     fromAwesome().catch(fromPtax).then(function(r){
       $("rate").value = fmtRate(r.rate);
+      FONTE = /PTAX/.test(r.source) ? "ptax" : "awesomeapi";
       $("liveDot").classList.remove("hidden");
       $("rateInfo").textContent = "Fonte: "+r.source+(r.when?", "+String(r.when).slice(0,16):"")+". Bancos e casas de câmbio cobram tarifa e margem, então o valor que chega pode ser menor.";
       calc();
@@ -456,13 +457,24 @@ body.embed main{margin-top:0;padding-top:12px}
     var box = $("chips"); box.innerHTML = "";
     CHIPS[DIR].forEach(function(c){
       var b = document.createElement("button"); b.type = "button"; b.textContent = c[1];
-      b.addEventListener("click", function(){ $("amt").value = fmtIn(c[0]); calc(); track("chip_valor"); });
+      b.addEventListener("click", function(){ TOCOU = true; $("amt").value = fmtIn(c[0]); calc(); track("chip_valor"); });
       box.appendChild(b);
     });
   }
 
   // ---------- CÁLCULO ----------
-  var last = {}, calcTimer, lastKey = null;
+  var last = {}, calcTimer, lastKey = null, FONTE = "", TOCOU = false;
+  // Valores da conversão enviados ao GA em todos os eventos: o valor nas duas moedas,
+  // a cotação usada e de onde ela veio (para reconstruir a conversão no futuro).
+  function valores(){
+    if (!(last.yen > 0)) return {};
+    return {
+      valor_ienes: Math.round(last.yen),
+      valor_reais: Math.round(last.reais*100)/100,
+      cotacao: Math.round(last.rate*1e6)/1e6,
+      cotacao_fonte: FONTE || "desconhecida"
+    };
+  }
   function calc(){
     var v = num($("amt").value), rate = num($("rate").value);
     if (!(rate>0)) return;
@@ -473,19 +485,22 @@ body.embed main{margin-top:0;padding-top:12px}
     if (!$("alvo").value) $("alvo").value = (100000*rate*1.03).toFixed(0);
     last = {yen:yen, reais:reais, rate:rate};
     resize();
-    // evento "conversao": só depois que a pessoa para de digitar, e só se a faixa ou a direção mudou
+    // evento "conversao": 1,5 s depois que a pessoa para de digitar, sempre que o valor
+    // (ou a direção, ou a cotação) mudar desde o último envio
     clearTimeout(calcTimer);
-    if (!(v>0)) return;
+    // só conta como conversão depois que a pessoa mexeu em algo (o valor que já vem na página não conta)
+    if (!(v>0) || !TOCOU) return;
     calcTimer = setTimeout(function(){
-      var key = DIR+"|"+faixa(yen);
-      if (key !== lastKey){ lastKey = key; ga("event","conversao",{ direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes:faixa(yen), valor_ienes:Math.round(yen), ref:CONFIG.REF }); }
+      var key = DIR+"|"+v+"|"+rate;
+      if (key !== lastKey){ lastKey = key; track("conversao"); }
     }, 1500);
   }
 
   // ---------- ENTRADAS ----------
-  $("amt").addEventListener("input", calc);
+  $("amt").addEventListener("input", function(){ TOCOU = true; calc(); });
   $("amt").addEventListener("blur", function(){ var n=num(this.value); if(n>0) this.value = fmtIn(n); });
   $("rate").addEventListener("input", function(){
+    FONTE = "manual"; TOCOU = true;
     $("liveDot").classList.add("hidden");
     $("rateInfo").textContent = "Cotação digitada por você: ¥1 = R$ "+this.value+".";
     calc();
@@ -493,7 +508,7 @@ body.embed main{margin-top:0;padding-top:12px}
   $("swap").addEventListener("click", function(){
     // o resultado atual vira o novo valor digitado
     var carry = DIR === "jpy" ? Math.round((last.reais||0)*100)/100 : Math.round(last.yen||0);
-    DIR = DIR === "jpy" ? "brl" : "jpy";
+    DIR = DIR === "jpy" ? "brl" : "jpy"; TOCOU = true;
     this.classList.toggle("spin");
     paintDir();
     if (carry > 0) $("amt").value = fmtIn(carry);
@@ -528,7 +543,7 @@ body.embed main{margin-top:0;padding-top:12px}
   }
   function track(evento, extra){
     var p = { direcao: DIR==="jpy"?"iene_para_real":"real_para_iene", faixa_ienes: last.yen ? faixa(last.yen) : "", ref: CONFIG.REF };
-    if (last.yen) p.valor_ienes = Math.round(last.yen);
+    var vs = valores(); for (var j in vs) p[j] = vs[j];
     if (extra) for (var k in extra) p[k] = extra[k];
     ga("event", evento, p);
     if (!CONFIG.WEBHOOK_URL) return;
