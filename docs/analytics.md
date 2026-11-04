@@ -13,8 +13,11 @@
 7. [Prévia de links](#prévia-de-links-whatsapp-facebook-instagram)
 8. [Como validar](#como-validar)
 9. [Conexão pela API (Claude Code e scripts)](#conexão-pela-api-claude-code-e-scripts)
-10. [Pendências](#pendências)
-11. [Possíveis próximos passos](#possíveis-próximos-passos)
+10. [Relatórios](#relatórios)
+11. [Validação completa](#validação-completa)
+12. [Vantagens do que foi feito](#vantagens-do-que-foi-feito)
+13. [Pendências](#pendências)
+14. [Possíveis próximos passos](#possíveis-próximos-passos)
 
 ---
 
@@ -44,7 +47,7 @@ O GA4 é carregado pelo próprio `index.html`, e não pelo snippet padrão do Go
 | `clique_rede_social` | Clique num ícone do rodapé | pacote da conversão + `rede` (`instagram`/`facebook`/`tiktok`/…) |
 | `clique_afiliado` | Clique no botão da Wise (quando ligado) | pacote da conversão |
 
-**Pacote da conversão:** `direcao`, `faixa_ienes`, `valor_ienes`, `valor_reais`, `cotacao`, `cotacao_fonte` e `ref`. Ele vai em todos os eventos acima, desde 2026-11-03.
+**Pacote da conversão:** `direcao`, `faixa_ienes`, `valor_ienes`, `valor_reais`, `cotacao`, `cotacao_fonte` e `ref`. Ele vai em todos os eventos acima desde 2026-11-04 no fuso do GA (Tóquio), que corresponde a 03/11 à noite no Brasil.
 | `cookies_aceitos` / `cookies_recusados` | Resposta ao aviso de cookies | — |
 | `cotacao_erro` | AwesomeAPI e PTAX falharam | — |
 
@@ -57,12 +60,12 @@ O GA4 é carregado pelo próprio `index.html`, e não pelo snippet padrão do Go
 - `cotacao_fonte`: `awesomeapi`, `ptax` (reserva do Banco Central) ou `manual` (a pessoa digitou a própria cotação).
 - `ref`: origem, `github-pages` por padrão, ou o valor de `?ref=`.
 
-**Dados anteriores a 2026-11-03:**
+**Dados anteriores a 2026-11-04 (fuso do GA):**
 - Toda visita gerava uma `conversao` de ¥100.000 sozinha, pelo valor que vem preenchido. Por isso há excesso de ¥100.000 nesse período.
 - Conversões repetidas na mesma faixa não eram registradas.
 - Não havia `valor_reais` nem `cotacao`.
 
-Para analisar valores, use dados a partir de 2026-11-03.
+Para analisar valores, use dados a partir de **2026-11-04**. O `scripts/ga-relatorio.py` já separa os dois períodos.
 
 **Atribuição do WhatsApp:** o link compartilhado leva `utm_source=whatsapp&utm_medium=compartilhamento`. Em **Aquisição → Aquisição de tráfego** essas visitas aparecem como `whatsapp / compartilhamento`.
 
@@ -254,7 +257,7 @@ O `.bashrc` e o `.profile` não foram alterados. O `~/.local/bin` já faz parte 
 
 ### Scripts
 
-Todos rodam em **modo simulação** por padrão e só alteram algo com `--aplicar`. Todos podem ser rodados de novo sem efeito colateral.
+Os scripts que alteram algo rodam em **modo simulação** por padrão e só mudam com `--aplicar`. Todos podem ser rodados de novo sem efeito colateral.
 
 | Script | O que faz |
 |---|---|
@@ -262,6 +265,7 @@ Todos rodam em **modo simulação** por padrão e só alteram algo com `--aplica
 | `scripts/ga-definicoes.sh [--aplicar]` | Cria as dimensões e métricas personalizadas que faltarem (lista no próprio script). Ao criar um parâmetro novo no site, acrescente-o lá e rode. |
 | `scripts/ga-eventos-principais.sh [--aplicar]` | Marca `compartilhar_whatsapp` e `clique_rede_social` como eventos principais (uma vez por evento). |
 | `scripts/ga-google-signals.sh [--aplicar]` | Desliga o Google Signals, se estiver ligado (Admin API v1alpha). |
+| `scripts/ga-relatorio.py [início] [fim]` | Só leitura (Data API): relatório completo em Markdown. Veja [Relatórios](#relatórios). |
 
 Variáveis opcionais: `GA_PROPERTY` (padrão `561947228`), `GA_QUOTA_PROJECT`, `CLOUDSDK_CONFIG` e `GCLOUD`.
 
@@ -274,6 +278,81 @@ Variáveis opcionais: `GA_PROPERTY` (padrão `561947228`), `GA_QUOTA_PROJECT`, `
 - **Repositório público:** credencial, token e cliente OAuth ficam só em `~/.config/radar-nihon/`. O `.gitignore` bloqueia `*.json` (exceto `.mcp.json`), `client_secret*`, `*credentials*`, `*service-account*`, chaves (`*.pem`, `*.p12`, `*.key`) e `.env*`.
 - **Revogar o acesso:** myaccount.google.com → Segurança → Apps de terceiros → "Radar Nihon Analytics (local)". Também dá para usar `gcloud-rn auth application-default revoke`.
 - **Login expirado ou revogado:** rode `radar-nihon-adc-login` de novo.
+
+## Relatórios
+
+```bash
+python3 -I scripts/ga-relatorio.py                    # desde o lançamento
+python3 -I scripts/ga-relatorio.py 7daysAgo           # últimos 7 dias
+python3 -I scripts/ga-relatorio.py 2026-11-04 today   # só com a captura nova do valor
+```
+
+**Seções do relatório:**
+- **Visão geral:** pessoas, pessoas novas, visitas, páginas, engajamento, tempo médio, eventos e eventos principais.
+- **Por dia** e **de onde vieram** (origem / mídia).
+- **Aparelho** e **país**.
+- **Cliques e ações:** todos os eventos, com vezes e pessoas, e as **redes sociais clicadas**.
+- **Valor convertido:**
+  - total e média em ienes, total em reais, por direção;
+  - um bloco separado só com a captura nova;
+  - **faixas de valor**;
+  - **valores dos botões rápidos**;
+  - **valor no momento do compartilhamento** no WhatsApp;
+  - **fonte e média da cotação**.
+
+Os números **não ficam no repositório**, porque ele é público. O script gera o relatório na hora. Pelo MCP (`analytics-mcp`), dá para pedir os mesmos dados em linguagem natural no Claude Code.
+
+**Como ler os números:**
+- Datas no fuso da propriedade (**Ásia/Tóquio**). O tráfego interno já vem excluído.
+- **"Média por conversão" é distorcida por valores muito altos.** Olhe também as **faixas**.
+- **Testes:** os primeiros dias (02 e 03/11) têm muitos testes de configuração, e alguns entraram antes de o filtro de tráfego interno ficar ativo. Visitas dos **Estados Unidos** nesse período são provavelmente o robô do Google (Search Console) ou do Facebook (depurador de prévia).
+- **Eventos principais** só contam a partir da criação (2026-11-03), sem efeito retroativo.
+- **Dimensões e métricas novas** levam até 24-48 h para aparecer.
+
+## Validação completa
+
+Feita em 2026-11-03. Para repetir, rode os comandos de cada linha.
+
+| Item | Como foi validado | Resultado |
+|---|---|---|
+| Site publicado | `curl` no endereço público e no `og.png`/`og.jpg` | ✅ HTTP 200. Conteúdo publicado idêntico ao `index.html` local. |
+| GitHub Pages | `gh api repos/andreyoshimura/remessa-japao/pages` | ✅ `built`, HTTPS forçado, branch `main` raiz, repositório público |
+| GA no site | Busca por `G-HRC1WBVL2V`, `traffic_type`, `valor_reais`, `cotacao_fonte` no HTML publicado | ✅ presentes |
+| Search Console | Meta tag no HTML publicado + Inspeção de URL | ✅ verificada; "O URL está no Google" |
+| Prévia de links | Depurador do Facebook | ✅ imagem e título corretos |
+| Segredos fora do Git | `git ls-files` + busca por tokens e chaves em **todo** o histórico (`git log -p --all`) | ✅ 0 ocorrências |
+| Credenciais locais | `ls -l ~/.config/radar-nihon` | ✅ pasta `700`, arquivos `600` |
+| `.gitignore` | `git check-ignore` com nomes de credencial de exemplo | ✅ bloqueia credenciais, deixa passar `.mcp.json` e `scripts/` |
+| Configuração do GA | `scripts/ga-status.sh` e `scripts/ga-definicoes.sh` | ✅ eventos principais, Signals desligado, retenção 14 meses, 5 dimensões e 3 métricas |
+| Captura do valor | Navegador sem tela, lendo o `dataLayer` | ✅ abrir sem mexer: 0 eventos. ¥100.000 → ¥150.000: 2 conversões com valor em ienes, reais e cotação. Cotação digitada: `cotacao_fonte = manual`. |
+| Data API | `scripts/ga-relatorio.py` | ✅ responde com os dados da propriedade |
+| MCP oficial | Conversa JSON-RPC direta com o `analytics-mcp` (9 ferramentas; `run_report` testado) | ✅ |
+| Filtro de tráfego interno | Painel do GA (não há API) | ✅ ativo. Firefox e celular marcados com `?interno=1`. |
+
+## Vantagens do que foi feito
+
+**Para o negócio**
+- **Saber quanto o público converte.** Valor em ienes e em reais por conversão, faixas, média e cotação. É a base para negociar com serviços de remessa (Wise e outros), escolher conteúdo e provar o tamanho do público.
+- **Saber o que traz gente.** Origem de cada visita (Instagram bio, Facebook, WhatsApp, Google), com os eventos principais medindo o que importa: compartilhar e seguir nas redes.
+- **Medir o boca a boca.** Cada compartilhamento no WhatsApp leva `utm_source=whatsapp`, então as visitas que ele gera aparecem separadas. O valor no momento do compartilhamento também é guardado.
+- **Aparecer no Google.** O Search Console está verificado, o site já está indexado, e as buscas que trazem gente vão aparecer no GA.
+
+**Para a qualidade dos dados**
+- **Dados limpos:**
+  - as suas visitas não contam (filtro de tráfego interno);
+  - o valor padrão da página não infla as conversões;
+  - o Google Signals desligado evita que o GA esconda números num site pequeno.
+- **Dados que não se perdem com o tempo:** retenção de 14 meses, e a cotação guardada em cada conversão permite comparar períodos de câmbio diferentes.
+
+**Para o trabalho do dia a dia**
+- **Sem abrir o painel.** Relatórios por script ou perguntando ao Claude Code (MCP oficial).
+- **Administração repetível.** Os scripts mostram antes o que vão mudar e podem ser rodados de novo sem estragar nada.
+- **Tudo documentado.** Passo a passo para refazer em outra máquina.
+
+**Para a segurança e a privacidade**
+- **Sem senha permanente.** Acesso pela API com token da sua conta (ADC com cliente OAuth interno), revogável a qualquer momento.
+- **Credenciais fora do repositório.** Elas nunca entram no repositório público, que tem bloqueio no `.gitignore` e foi verificado em todo o histórico.
+- **LGPD.** Aviso de cookies com Consent Mode v2. Nenhum dado pessoal vai para o GA, só valores e cliques.
 
 ## Pendências
 
