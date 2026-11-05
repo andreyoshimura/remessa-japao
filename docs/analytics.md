@@ -119,6 +119,15 @@ Serve para as suas próprias visitas não contarem nos relatórios.
 
 O filtro descarta os dados **de vez**. Visitas internas não podem ser recuperadas depois.
 
+**Atenção (análise de 2026-11-04):** 6 das 10 pessoas da primeira semana vieram da cidade de quem testa, em aparelhos
+ainda sem `?interno=1`. Abra o link em **todo** celular e navegador seu e de quem testa com você. Para ler os
+números sem essa cidade, use `GA_EXCLUIR_CIDADES` no relatório (veja [Relatórios](#relatórios)); o nome da cidade
+fica só no seu ambiente, nunca no repositório.
+
+**Robôs (desde 2026-11-04):** navegadores automatizados (`navigator.webdriver`) e agentes como `HeadlessChrome`,
+`bot`, `crawler`, `spider`, `Lighthouse`, `PageSpeed` e `facebookexternalhit` não carregam o GA. Eles apareciam
+como visitas falsas dos EUA (Chrome no Linux, em inglês, num data center).
+
 ## Google Search Console
 
 - **Propriedade:** prefixo de URL `https://andreyoshimura.github.io/remessa-japao/`. O tipo "Domínio" não funciona para `github.io`.
@@ -128,6 +137,9 @@ O filtro descarta os dados **de vez**. Visitas internas não podem ser recuperad
   ```
   **Não remover.** O Google confere de tempos em tempos.
 - **Vínculo com o GA:** feito. Os dados aparecem em **Relatórios → Aquisição → Search Console** depois que o site começar a aparecer no Google.
+- **Acesso pela API (2026-11-04):** `scripts/sc-relatorio.py` lê as buscas que mostram o site (consultas, países,
+  aparelho, dia), com filtro por país (`jpn` = Japão). Usa o mesmo ADC, com o escopo `webmasters.readonly`. O vínculo
+  com o GA mostra esses dados só no painel; a API do GA não os entrega.
 - **Indexação:** a Inspeção de URL mostrou "O URL está no Google" em 2026-11-03. O Google indexou sozinho, sem precisar de "Solicitar indexação". Se o site mudar muito, dá para pedir de novo em **Inspeção de URL → Solicitar indexação**.
 
 ## Prévia de links (WhatsApp, Facebook, Instagram)
@@ -183,9 +195,9 @@ Serve para ler relatórios sem abrir o painel (pelo MCP oficial) e para automati
 
 | Peça | O que é |
 |---|---|
-| Projeto do Google Cloud | `radar-nihon-analytics`, dedicado, dentro da organização do Workspace. APIs ativas: Google Analytics Data API, Google Analytics Admin API e Cloud Resource Manager API (necessária para o projeto de cota). |
+| Projeto do Google Cloud | `radar-nihon-analytics`, dedicado, dentro da organização do Workspace. APIs ativas: Google Analytics Data API, Google Analytics Admin API, Cloud Resource Manager API (necessária para o projeto de cota) e **Search Console API** (desde 2026-11-04). |
 | Autenticação | **ADC (Application Default Credentials) com cliente OAuth próprio**, do tipo "App para computador", com tela de consentimento **Interna**. |
-| Escopos | `analytics.readonly` (relatórios), `analytics.edit` (administração), `cloud-platform` (projeto de cota). |
+| Escopos | `analytics.readonly` (relatórios), `analytics.edit` (administração), `cloud-platform` (projeto de cota), `webmasters.readonly` (buscas do Search Console, desde 2026-11-04). |
 | MCP | [`analytics-mcp`](https://github.com/googleanalytics/google-analytics-mcp), oficial do Google, instalado com `pipx`. Só leitura. |
 | Scripts | `scripts/*.sh`, chamam a Admin API com o token do ADC. |
 
@@ -232,7 +244,7 @@ O `.bashrc` e o `.profile` não foram alterados. O `~/.local/bin` já faz parte 
    ```bash
    gcloud-rn projects create radar-nihon-analytics --organization=ID_DA_ORGANIZACAO
    gcloud-rn services enable analyticsdata.googleapis.com analyticsadmin.googleapis.com \
-     cloudresourcemanager.googleapis.com --project=radar-nihon-analytics
+     cloudresourcemanager.googleapis.com searchconsole.googleapis.com --project=radar-nihon-analytics
    ```
 5. **Cliente OAuth** (só na primeira vez), em https://console.cloud.google.com/auth/overview?project=radar-nihon-analytics:
    - Primeiros passos → público-alvo **Interno**.
@@ -243,7 +255,7 @@ O `.bashrc` e o `.profile` não foram alterados. O `~/.local/bin` já faz parte 
    ```sh
    gcloud-rn auth application-default login \
      --client-id-file="$HOME/.config/radar-nihon/oauth-client.json" \
-     --scopes="https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics.edit,https://www.googleapis.com/auth/cloud-platform"
+     --scopes="https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics.edit,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/webmasters.readonly"
    chmod 600 "$HOME/.config/radar-nihon/gcloud/application_default_credentials.json"
    gcloud-rn auth application-default set-quota-project radar-nihon-analytics
    ```
@@ -266,12 +278,13 @@ Os scripts que alteram algo rodam em **modo simulação** por padrão e só muda
 | `scripts/ga-eventos-principais.sh [--aplicar]` | Marca `compartilhar_whatsapp` e `clique_rede_social` como eventos principais (uma vez por evento). |
 | `scripts/ga-google-signals.sh [--aplicar]` | Desliga o Google Signals, se estiver ligado (Admin API v1alpha). |
 | `scripts/ga-relatorio.py [início] [fim]` | Só leitura (Data API): relatório completo em Markdown. Veja [Relatórios](#relatórios). |
+| `scripts/sc-relatorio.py [país] [início]` | Só leitura (Search Console API): consultas, países, aparelho e dia. `jpn` filtra o Japão. |
 
 Variáveis opcionais: `GA_PROPERTY` (padrão `561947228`), `GA_QUOTA_PROJECT`, `CLOUDSDK_CONFIG` e `GCLOUD`.
 
 **Limites da API:**
 - **Filtros de dados** (tráfego interno) não existem na Admin API, só no painel.
-- **Search Console** (indexação e verificação) não faz parte da API do GA.
+- **Search Console:** as buscas vêm pela Search Console API (`sc-relatorio.py`); indexação e verificação continuam só no painel.
 
 ### Segurança
 
@@ -285,12 +298,16 @@ Variáveis opcionais: `GA_PROPERTY` (padrão `561947228`), `GA_QUOTA_PROJECT`, `
 python3 -I scripts/ga-relatorio.py                    # desde o lançamento
 python3 -I scripts/ga-relatorio.py 7daysAgo           # últimos 7 dias
 python3 -I scripts/ga-relatorio.py 2026-11-04 today   # só com a captura nova do valor
+GA_EXCLUIR_CIDADES="Cidade A" python3 -I scripts/ga-relatorio.py   # também sem a(s) cidade(s) dos testadores
+python3 -I scripts/sc-relatorio.py jpn                # buscas no Google vindas do Japão (28 dias)
 ```
 
 **Seções do relatório:**
 - **Visão geral:** pessoas, pessoas novas, visitas, páginas, engajamento, tempo médio, eventos e eventos principais.
 - **Por dia** e **de onde vieram** (origem / mídia).
-- **Aparelho** e **país**.
+- **Aparelho**, **país** e **cidade**.
+- **Japão (métrica principal):** pessoas, visitas, engajamento e eventos principais só do Japão; com visitas, também origem, cidades e ações.
+- **Sem as cidades de `GA_EXCLUIR_CIDADES`** (opcional).
 - **Cliques e ações:** todos os eventos, com vezes e pessoas, e as **redes sociais clicadas**.
 - **Valor convertido:**
   - total e média em ienes, total em reais, por direção;
@@ -307,7 +324,7 @@ Os números **não ficam no repositório**, porque ele é público. O script ger
 - **Os números são um piso.** Quem recusa ou ignora o aviso de cookies envia ao GA só sinais anônimos (`gcs=G100`). Essas visitas **não aparecem no tempo real nem como pessoas** nos relatórios; servem apenas para estimativas, e só com volume grande. Navegadores com bloqueio (janela privada do Firefox, Brave, bloqueadores de anúncio) não enviam nada. O público real é maior que o mostrado.
 - **Para testar no tempo real:** aba anônima do **Chrome** (ou o celular de outra pessoa), clicar em **Aceitar**, interagir e esperar até 1 min. Navegador marcado com `?interno=1` não aparece, de propósito.
 - **"Média por conversão" é distorcida por valores muito altos.** Olhe também as **faixas**.
-- **Testes:** os primeiros dias (02 e 03/11) têm muitos testes de configuração, e alguns entraram antes de o filtro de tráfego interno ficar ativo. Visitas dos **Estados Unidos** nesse período são provavelmente o robô do Google (Search Console) ou do Facebook (depurador de prévia).
+- **Testes:** os primeiros dias (02 e 03/11) têm muitos testes de configuração, e alguns entraram antes de o filtro de tráfego interno ficar ativo. Visitas dos **Estados Unidos** nesse período são provavelmente robôs ou testes automatizados (Chrome no Linux, em inglês, em data center); desde 2026-11-04 o site não carrega o GA para eles.
 - **Eventos principais** só contam a partir da criação (2026-11-03), sem efeito retroativo.
 - **Dimensões e métricas novas** levam até 24-48 h para aparecer.
 
@@ -366,6 +383,9 @@ Feita em 2026-11-03. Para repetir, rode os comandos de cada linha.
 - [x] `close_convert_lead` e `qualify_lead` deixaram de ser eventos principais.
 - [x] Search Console: o site já está no Google (confirmado na Inspeção de URL em 2026-11-03).
 - [x] `?interno=1` aberto no Firefox e no celular (2026-11-03). Repetir em navegador ou aparelho novo, ou depois de limpar os dados do navegador.
+- [ ] Abrir `?interno=1` em **todos** os aparelhos de quem testa (a análise de 2026-11-04 achou visitas internas não marcadas).
+- [ ] (Depois do alerta/webhook) Contador anônimo de **aceite × recusa** dos cookies pelo webhook do n8n, sem dado pessoal, para saber o tamanho do "piso" do GA.
+- [x] Robôs fora do GA (2026-11-04). Seção **Japão** e `GA_EXCLUIR_CIDADES` no relatório. Search Console API ligada (`sc-relatorio.py`).
 - [ ] Conferir de vez em quando se o filtro **Internal Traffic** continua **Ativo**. Manual, porque não há API para isso.
 - [ ] (Opcional) Links de **YouTube** e **WhatsApp** para o rodapé.
 

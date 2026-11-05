@@ -364,7 +364,11 @@ body.embed main{margin-top:0;padding-top:12px}
   function getConsent(){ try{ return localStorage.getItem(CK); }catch(e){ return null; } }
   function setConsent(v){ try{ localStorage.setItem(CK, v); }catch(e){} }
   function ga(){ if (window.gtag) window.gtag.apply(null, arguments); }
-  if (CONFIG.GA_ID){
+  // Robôs e navegadores automatizados (testes, prévias de link, data centers) não carregam o GA:
+  // eles apareciam como visitas falsas dos EUA. Pessoas reais não são afetadas.
+  var ROBO = navigator.webdriver === true ||
+             /HeadlessChrome|bot|crawler|spider|Lighthouse|PageSpeed|facebookexternalhit/i.test(navigator.userAgent || "");
+  if (CONFIG.GA_ID && !ROBO){
     window.dataLayer = window.dataLayer || [];
     window.gtag = function(){ window.dataLayer.push(arguments); };
     var ck = getConsent();

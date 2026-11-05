@@ -44,7 +44,7 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 | `og.png` | Imagem de prévia do link (1200×630, PNG, ~33 KB) usada por WhatsApp, Facebook, Instagram e X. |
 | `og.jpg` | Imagem de prévia anterior. Fica no repositório para não quebrar prévias antigas em cache. |
 | `docs/analytics.md` | GA4, Search Console, prévia de links, validação e conexão pela API. |
-| `scripts/` | Scripts da Admin API do GA4 (`ga-status.sh`, `ga-definicoes.sh`, `ga-eventos-principais.sh`, `ga-google-signals.sh`) e o relatório `ga-relatorio.py`. Sem segredos. |
+| `scripts/` | Scripts da Admin API do GA4 (`ga-status.sh`, `ga-definicoes.sh`, `ga-eventos-principais.sh`, `ga-google-signals.sh`) os relatórios `ga-relatorio.py` (GA, com seção Japão) e `sc-relatorio.py` (buscas do Search Console). Sem segredos. |
 | `.mcp.json` | Configura o MCP oficial do Google Analytics no Claude Code. A credencial fica fora do repositório. |
 | `.gitignore` | Mantém fora do repositório o arquivo de instrução original, a pasta `.claude` e qualquer credencial (`*.json` exceto `.mcp.json`, `.env`, chaves). |
 

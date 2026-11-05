@@ -6,6 +6,9 @@ Uso:
   python3 -I scripts/ga-relatorio.py 7daysAgo        últimos 7 dias
   python3 -I scripts/ga-relatorio.py 2026-11-03 today
 
+Variável opcional GA_EXCLUIR_CIDADES="Cidade A,Cidade B": mostra também os números sem essas
+cidades (ex.: onde moram os testadores). Fica só no ambiente, nunca no repositório (público).
+
 Sem segredos: o token vem das Application Default Credentials guardadas fora do
 repositório (veja docs/analytics.md, "Conexão pela API"). Datas no fuso da
 propriedade (Ásia/Tóquio). O tráfego interno já vem excluído pelo filtro do GA.
@@ -100,6 +103,40 @@ tabela("Aparelho", ["Aparelho", "Pessoas", "Visitas"],
        [[d[0], n(m[0]), n(m[1])] for d, m in relatorio(["deviceCategory"], ["activeUsers", "sessions"], ordem=ordem_metrica("activeUsers"))])
 tabela("País", ["País", "Pessoas", "Visitas"],
        [[d[0], n(m[0]), n(m[1])] for d, m in relatorio(["country"], ["activeUsers", "sessions"], ordem=ordem_metrica("activeUsers"))])
+tabela("Cidade", ["Cidade", "País", "Pessoas", "Visitas"],
+       [[d[0], d[1], n(m[0]), n(m[1])] for d, m in
+        relatorio(["city", "country"], ["activeUsers", "sessions"], ordem=ordem_metrica("sessions"), limite=15)])
+
+# 4b. Japão: o público que faz o projeto faturar em iene
+JAPAO = {"filter": {"fieldName": "country", "stringFilter": {"value": "Japan"}}}
+def e_(*fs):
+    return {"andGroup": {"expressions": list(fs)}}
+t = relatorio([], ["activeUsers", "sessions", "engagementRate", "keyEvents"], filtro=JAPAO)
+mj = t[0][1] if t else [0, 0, 0, 0]
+tabela("Japão (métrica principal)", ["Métrica", "Valor"], [
+    ["Pessoas no Japão", n(mj[0])], ["Visitas do Japão", n(mj[1])],
+    ["Taxa de engajamento", n(mj[2] * 100, 1) + "%"], ["Eventos principais", n(mj[3])]])
+if mj[1]:
+    tabela("Japão: de onde vieram", ["Origem / mídia", "Visitas", "Pessoas"],
+           [[d[0], n(m[0]), n(m[1])] for d, m in
+            relatorio(["sessionSourceMedium"], ["sessions", "activeUsers"], filtro=JAPAO, ordem=ordem_metrica("sessions"))])
+    tabela("Japão: cidades", ["Cidade", "Pessoas", "Visitas"],
+           [[d[0], n(m[0]), n(m[1])] for d, m in
+            relatorio(["city"], ["activeUsers", "sessions"], filtro=JAPAO, ordem=ordem_metrica("sessions"), limite=15)])
+    tabela("Japão: ações", ["Evento", "Vezes", "Pessoas"],
+           [[d[0], n(m[0]), n(m[1])] for d, m in
+            relatorio(["eventName"], ["eventCount", "totalUsers"],
+                      filtro=e_(JAPAO, evento(["conversao", "inverter", "compartilhar_whatsapp", "clique_afiliado", "clique_rede_social"])),
+                      ordem=ordem_metrica("eventCount"))])
+
+# 4c. Sem as cidades dos testadores (opcional, via ambiente)
+EXCL = [c.strip() for c in os.environ.get("GA_EXCLUIR_CIDADES", "").split(",") if c.strip()]
+if EXCL:
+    SEM = {"notExpression": {"filter": {"fieldName": "city", "inListFilter": {"values": EXCL}}}}
+    t = relatorio([], ["activeUsers", "sessions", "keyEvents"], filtro=SEM)
+    ms = t[0][1] if t else [0, 0, 0]
+    tabela(f"Sem as {len(EXCL)} cidade(s) de GA_EXCLUIR_CIDADES", ["Métrica", "Valor"],
+           [["Pessoas", n(ms[0])], ["Visitas", n(ms[1])], ["Eventos principais", n(ms[2])]])
 
 # 5. Cliques e ações
 tabela("Cliques e ações", ["Evento", "Vezes", "Pessoas"],
