@@ -142,3 +142,4 @@ Antes de publicar:
 | 2026-11-02 | `0ca3500` | `⇄` no título da prévia, porque o Facebook mostrava `↔` como emoji quebrado. |
 | 2026-11-02 | `b09daed` | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |
 | 2026-11-04 | `f7656ba` | Título, descrição e subtítulo citam "real para iene" (busca nº 1 no Japão); link do WhatsApp mantém a direção (`&de=brl`). |
+| 2026-11-04 | `2aa57a2` | Robôs fora do GA; relatório com seção Japão e `GA_EXCLUIR_CIDADES`; `sc-relatorio.py` (Search Console API). |
