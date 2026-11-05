@@ -46,6 +46,8 @@ O GA4 é carregado pelo próprio `index.html`, e não pelo snippet padrão do Go
 | `compartilhar_whatsapp` | Clique em "Mandar esta conversão no WhatsApp" | pacote da conversão |
 | `clique_rede_social` | Clique num ícone do rodapé | pacote da conversão + `rede` (`instagram`/`facebook`/`tiktok`/…) |
 | `clique_afiliado` | Clique no botão da Wise (quando ligado) | pacote da conversão |
+| `checklist_visto` | `visto.html`: escolheu o tipo de visto | `visto` (`permanente`/`teijusha`/`conjuge`/`outro`) |
+| `checklist_resultado` | `visto.html`: clicou em "Ver meu resultado" | `visto`, `em_dia`, `conferir`, `resolver` (só contagens; as respostas não são enviadas) |
 
 **Pacote da conversão:** `direcao`, `faixa_ienes`, `valor_ienes`, `valor_reais`, `cotacao`, `cotacao_fonte` e `ref`. Ele vai em todos os eventos acima desde 2026-11-04 no fuso do GA (Tóquio), que corresponde a 03/11 à noite no Brasil.
 | `cookies_aceitos` / `cookies_recusados` | Resposta ao aviso de cookies | — |

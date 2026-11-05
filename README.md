@@ -34,6 +34,7 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 - **"Mandar esta conversão no WhatsApp"**: abre o WhatsApp com o texto da conversão e o link do site. Se a pessoa estiver em reais → ienes, o link leva `&de=brl` e abre na mesma direção para quem recebe.
 - Rodapé com as redes sociais e o link "Preferências de cookies".
 - Funciona embutido em outro site (iframe ou `?embed=1`): esconde topo e rodapé e ajusta a altura do iframe.
+- Rodapé com link para **`visto.html`**, o checklist "Estou em dia para renovar o visto?".
 - Recursos prontos, mas **desligados**: botão de afiliado (Wise) e formulário "Me avise quando o iene subir" (leads via webhook).
 
 ## Arquivos
@@ -41,6 +42,7 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 | Arquivo | O que é |
 |---|---|
 | `index.html` | O site inteiro: HTML, CSS e JavaScript, sem dependências além da fonte do Google Fonts. |
+| `visto.html` | Checklist "Estou em dia para renovar o visto?": tipo de visto, 6 perguntas (imposto residencial, seguro de saúde, nenkin, renda extra, endereço, cartão de residência), semáforo por item com onde resolver, documentos por visto e fontes oficiais da Imigração (conferidas em 05/11/2026). As respostas não saem do navegador; o GA recebe só o tipo de visto e a contagem de itens por cor. Reconferir as regras a cada 6 meses. |
 | `og.png` | Imagem de prévia do link (1200×630, PNG, ~33 KB) usada por WhatsApp, Facebook, Instagram e X. |
 | `og.jpg` | Imagem de prévia anterior. Fica no repositório para não quebrar prévias antigas em cache. |
 | `docs/analytics.md` | GA4, Search Console, prévia de links, validação e conexão pela API. |

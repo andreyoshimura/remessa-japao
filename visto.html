@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estou em dia para renovar o visto? Checklist para quem mora no Japão</title>
+<meta name="description" content="Imposto residencial, seguro de saúde, nenkin e cartão de residência: confira em 6 perguntas se está em dia para renovar o visto ou manter o permanente. Sem cadastro.">
+<link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/visto.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Radar Nihon">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://andreyoshimura.github.io/remessa-japao/visto.html">
+<meta property="og:title" content="Estou em dia para renovar o visto?">
+<meta property="og:description" content="6 perguntas sobre imposto, seguro, nenkin e cartão de residência. Para quem mora no Japão, sem cadastro.">
+<meta name="theme-color" content="#1E3557">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   CONFIGURAÇÃO — edite o bloco CONFIG no script ou passe pela URL:
+   ?aff=LINK_AFILIADO&hook=URL_WEBHOOK_N8N&ref=CODIGO_DO_PARCEIRO&ga=G-XXXX
+   ===================================================================== */
+:root{
+  --indigo:#1E3557;      /* ai-zome: azul índigo japonês */
+  --indigo-soft:#E8EEF6;
+  --hero:#1E3557; --hero-2:#2B4A75; --hero-ink:#FFFFFF; --hero-muted:#C9D6E8;
+  --accent:#C8102E;      /* vermelho hinomaru, só em detalhes */
+  --paper:#F3F6F9;
+  --ink:#16202C;
+  --muted:#5B6878;
+  --line:#D5DDE7;
+  --gain:#1F7A4D;
+  --loss:#C23B2A;
+  --card:#FFFFFF;
+  --shadow:0 10px 30px rgba(22,32,44,.10), 0 2px 6px rgba(22,32,44,.06);
+  --focus:#F2B705;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0E141B; --ink:#E8EDF3;
+    --hero:#122035; --hero-2:#1B3050; --hero-ink:#F2F5F9; --hero-muted:#9FB2CC; --accent:#F0657A;
+    --muted:#9AA7B7; --line:#2A3646; --gain:#5CC28E; --loss:#F07A68; --card:#151D28;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --indigo:#9DB7DD; --indigo-soft:#1C2A3D; --paper:#0E141B; --ink:#E8EDF3;
+  --hero:#122035; --hero-2:#1B3050; --hero-ink:#F2F5F9; --hero-muted:#9FB2CC; --accent:#F0657A;
+  --muted:#9AA7B7; --line:#2A3646; --gain:#5CC28E; --loss:#F07A68; --card:#151D28;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size:17px; line-height:1.5;
+  font-variant-numeric: tabular-nums;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* ---------- topo ---------- */
+.hero{
+  color:var(--hero-ink);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.2'%3E%3Ccircle cx='0' cy='24' r='22'/%3E%3Ccircle cx='0' cy='24' r='15'/%3E%3Ccircle cx='0' cy='24' r='8'/%3E%3Ccircle cx='48' cy='24' r='22'/%3E%3Ccircle cx='48' cy='24' r='15'/%3E%3Ccircle cx='48' cy='24' r='8'/%3E%3Ccircle cx='24' cy='12' r='22'/%3E%3Ccircle cx='24' cy='12' r='15'/%3E%3Ccircle cx='24' cy='12' r='8'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(160deg, var(--hero-2), var(--hero));
+  padding:calc(28px + env(safe-area-inset-top,0px)) 16px 76px;
+  text-align:center;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;letter-spacing:.04em;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;
+}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{font-size:clamp(1.7rem, 5.5vw, 2.4rem);line-height:1.15;font-weight:900;margin:14px 0 6px;letter-spacing:-.01em}
+.hero p{margin:0 auto;max-width:30ch;color:var(--hero-muted);font-size:1rem}
+
+main{width:100%;max-width:500px;margin:-52px auto 0;padding:0 16px 32px;flex:1}
+
+/* ---------- cartão do conversor ---------- */
+.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:20px 18px 18px;border:1px solid var(--line)}
+.rowhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.rowhead label, .rowhead .lbl{font-weight:700;font-size:.92rem;color:var(--muted)}
+.cur{
+  display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:900;letter-spacing:.05em;
+  border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--ink)
+}
+.cur i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.cur.jpy i{background:#C8102E} .cur.brl i{background:#169B62}
+.amount{
+  display:flex;align-items:center;border:2px solid var(--line);border-radius:16px;background:var(--card);
+  padding:4px 16px;transition:border-color .15s;
+}
+.amount:focus-within{border-color:var(--indigo)}
+.amount span{font-size:1.7rem;font-weight:900;color:var(--indigo);margin-right:8px;white-space:nowrap}
+.amount input{
+  border:0;background:transparent;color:var(--ink);font:inherit;font-size:2rem;font-weight:900;width:100%;min-width:0;
+  padding:8px 0;outline:none;
+}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+.chips button{
+  font:inherit;font-size:.85rem;font-weight:500;border:1px solid var(--line);background:transparent;color:var(--ink);
+  border-radius:999px;padding:6px 13px;cursor:pointer;transition:background .15s,border-color .15s;
+}
+.chips button:hover{border-color:var(--indigo);background:var(--indigo-soft)}
+
+.divider{position:relative;height:56px;display:flex;align-items:center;justify-content:center}
+.divider::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--line)}
+.swap{
+  position:relative;width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--indigo);color:var(--card);display:grid;place-items:center;
+  box-shadow:0 4px 12px rgba(30,53,87,.3);transition:transform .35s ease;
+}
+.swap:hover{transform:scale(1.06)}
+.swap.spin{transform:rotate(180deg)}
+.swap svg{width:22px;height:22px}
+
+.out{border-radius:16px;background:var(--indigo-soft);padding:12px 16px 14px}
+.out .v{font-size:clamp(1.9rem, 8vw, 2.5rem);font-weight:900;color:var(--indigo);line-height:1.15;margin:0;word-break:break-word}
+.unit{margin:10px 2px 0;font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live{width:8px;height:8px;border-radius:50%;background:var(--gain);box-shadow:0 0 0 0 rgba(31,122,77,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(31,122,77,0)}100%{box-shadow:0 0 0 0 rgba(31,122,77,0)}}
+
+/* ---------- ações ---------- */
+.cta{
+  display:block;text-align:center;text-decoration:none;font-weight:900;font-size:1.05rem;
+  background:var(--indigo);color:var(--card);border-radius:14px;padding:14px;margin:16px 0 4px;
+}
+.disclosure{font-size:.78rem;color:var(--muted);margin:0 0 6px}
+.share{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font:inherit;font-weight:700;font-size:1rem;
+  border:0;color:#fff;background:#1F8F55;border-radius:14px;padding:14px;cursor:pointer;margin-top:16px;
+  box-shadow:0 4px 14px rgba(31,143,85,.25);transition:filter .15s;
+}
+.share:hover{filter:brightness(1.07)}
+.share svg{width:22px;height:22px}
+
+details{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+summary{cursor:pointer;font-weight:700;color:var(--indigo);font-size:.95rem}
+details label{display:block;font-weight:700;font-size:.9rem;margin:10px 0 6px}
+details input, .lead input{
+  width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);
+}
+.hint{font-size:.8rem;color:var(--muted);margin:6px 0 0}
+
+.lead{margin-top:18px;padding:16px;border:2px dashed var(--indigo);border-radius:14px;background:var(--card)}
+.lead h2{font-size:1.15rem;margin:0 0 4px;color:var(--indigo)}
+.lead p{margin:0 0 12px;font-size:.92rem;color:var(--muted)}
+.lead label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
+.lead .f{margin-bottom:10px}
+.lead .consent{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;font-weight:400;color:var(--muted);margin:6px 0 12px}
+.consent input{width:auto;margin-top:3px}
+.lead button{
+  width:100%;font:inherit;font-weight:900;background:var(--gain);color:#fff;border:0;border-radius:12px;padding:13px;cursor:pointer;
+}
+.msg{font-size:.9rem;margin-top:10px}
+.msg.ok{color:var(--gain)} .msg.err{color:var(--loss)}
+
+.src{font-size:.78rem;color:var(--muted);margin:18px 2px 0}
+
+/* ---------- rodapé ---------- */
+footer{border-top:1px solid var(--line);padding:24px 16px calc(28px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--muted);font-size:.82rem}
+.social{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:0;list-style:none}
+.social a{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--indigo);
+  background:var(--card);border:1px solid var(--line);transition:background .15s,color .15s,transform .15s;
+}
+.social a:hover{background:var(--indigo);color:var(--card);transform:translateY(-2px)}
+.social svg{width:20px;height:20px}
+footer p{margin:4px auto;max-width:44ch}
+.linkbtn{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+
+/* ---------- aviso de cookies ---------- */
+.cookie{
+  position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:10;
+  max-width:456px;margin:0 auto;background:var(--card);color:var(--ink);border:1px solid var(--line);
+  border-radius:16px;padding:14px;box-shadow:var(--shadow);font-size:.85rem;
+}
+.cookie p{margin:0 0 10px}
+.cookie .btns{display:flex;gap:8px}
+.cookie button{flex:1;font:inherit;font-weight:700;border-radius:10px;padding:9px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.cookie button.yes{background:var(--indigo);color:var(--card);border-color:var(--indigo)}
+
+body.embed{background:transparent}
+body.embed .hero, body.embed footer{display:none}
+body.embed main{margin-top:0;padding-top:12px}
+.hidden{display:none !important}
+@media (prefers-reduced-motion: reduce){ .swap,.live,.social a{transition:none;animation:none} }
+/* ---------- F26: checklist do visto ---------- */
+.step{font-size:.78rem;font-weight:900;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;margin:0 0 6px}
+.card h2{font-size:1.15rem;margin:0 0 12px;line-height:1.3}
+.visas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.visas button,.opts button{
+  font:inherit;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:14px;padding:12px 10px;cursor:pointer;text-align:left;line-height:1.25;transition:border-color .15s,background .15s
+}
+.visas button small{display:block;font-weight:400;font-size:.78rem;color:var(--muted);margin-top:2px}
+.visas button[aria-pressed="true"],.opts button[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-soft)}
+.q{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.q p.t{font-weight:700;margin:0 0 4px}
+.q p.h{font-size:.84rem;color:var(--muted);margin:0 0 10px}
+.opts{display:flex;gap:8px}
+.opts button{flex:1;text-align:center;padding:10px 6px}
+.go{width:100%;font:inherit;font-weight:900;font-size:1.05rem;background:var(--indigo);color:var(--card);border:0;border-radius:14px;padding:14px;margin-top:18px;cursor:pointer}
+.go:disabled{opacity:.45;cursor:not-allowed}
+.sum{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.sum span{font-weight:900;font-size:.85rem;border-radius:999px;padding:4px 12px}
+.ok-bg{background:#E3F3EA;color:#16603B} .warn-bg{background:#FFF4D6;color:#7A5A00} .bad-bg{background:#FBE5E2;color:#9B2C1F}
+.item{border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:12px 14px;margin-top:10px}
+.item.ok{border-left-color:var(--gain)} .item.warn{border-left-color:var(--focus)} .item.bad{border-left-color:var(--loss)}
+.item .it{display:block;font-weight:700;margin-bottom:4px}
+.item p{margin:0;font-size:.9rem}
+.item p+p{margin-top:6px}
+.docs{margin:8px 0 0;padding-left:20px;font-size:.92rem}
+.docs li{margin:4px 0}
+.note{font-size:.84rem;color:var(--muted);background:var(--indigo-soft);border-radius:12px;padding:12px 14px;margin-top:14px}
+.srcs{font-size:.78rem;color:var(--muted);margin:16px 2px 0}
+.srcs a{color:var(--indigo)}
+.again{font:inherit;font-weight:700;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px;width:100%;margin-top:14px;cursor:pointer}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .ok-bg{background:#16362A;color:#7FD3A6}
+  :root:not([data-theme="light"]) .warn-bg{background:#3A3010;color:#F2CF6B}
+  :root:not([data-theme="light"]) .bad-bg{background:#3E1E1A;color:#F3A093}
+}
+@media print{ .hero,footer,.go,.again{display:none} main{margin-top:0} .card{box-shadow:none} }
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="badge"><i></i>Visto no Japão</span>
+  <h1>Estou em dia para renovar o visto?</h1>
+  <p>6 perguntas rápidas. Nada sai do seu celular.</p>
+</header>
+
+<main>
+  <section class="card" id="passo1" aria-labelledby="t1">
+    <p class="step">Passo 1 de 2</p>
+    <h2 id="t1">Qual é o seu visto?</h2>
+    <div class="visas" role="group" aria-label="Tipo de visto">
+      <button type="button" data-v="permanente" aria-pressed="false">Permanente<small>永住者</small></button>
+      <button type="button" data-v="teijusha" aria-pressed="false">Residente de longo prazo<small>定住者 (sansei, yonsei…)</small></button>
+      <button type="button" data-v="conjuge" aria-pressed="false">Cônjuge de japonês<small>日本人の配偶者等</small></button>
+      <button type="button" data-v="outro" aria-pressed="false">Outro visto<small>trabalho, estudo, família</small></button>
+    </div>
+  </section>
+
+  <section class="card hidden" id="passo2" aria-labelledby="t2" style="margin-top:16px">
+    <p class="step">Passo 2 de 2</p>
+    <h2 id="t2">Responda o que você sabe</h2>
+    <div id="perguntas"></div>
+    <button type="button" class="go" id="ver" disabled>Ver meu resultado</button>
+  </section>
+
+  <section class="card hidden" id="resultado" aria-live="polite" style="margin-top:16px">
+    <p class="step">Seu resultado</p>
+    <h2 id="rtitulo"></h2>
+    <div class="sum" id="rsum"></div>
+    <div id="ritens"></div>
+    <h2 style="margin-top:20px">Documentos que costumam pedir</h2>
+    <div id="rdocs"></div>
+    <p class="note">Isto informa, não substitui a Imigração nem um 行政書士 (gyōseishoshi, despachante oficial).
+      Cada caso é analisado pela Imigração. Para atendimento em português, procure o balcão de consulta para
+      estrangeiros da sua prefeitura ou associação internacional (国際交流協会). A central da Imigração
+      (<a href="https://www.moj.go.jp/isa/consultation/center/" target="_blank" rel="noopener">0570-013904</a>) atende em japonês e inglês.</p>
+    <button type="button" class="again" id="denovo">Refazer</button>
+  </section>
+
+  <p class="srcs">Regras conferidas em 05/11/2026 nas páginas oficiais da Agência de Imigração:
+    <a href="https://www.moj.go.jp/isa/10_00279.html" target="_blank" rel="noopener">diretriz do permanente</a>,
+    <a href="https://www.moj.go.jp/isa/deportation/resources/nyukan_nyukan85_00002.html" target="_blank" rel="noopener">diretriz de cancelamento</a> (<a href="https://www.moj.go.jp/isa/content/001416944.pdf" target="_blank" rel="noopener">texto de 01/10/2026</a>),
+    <a href="https://www.moj.go.jp/isa/immigration/faq/kanri_qa_00003.html" target="_blank" rel="noopener">perguntas e respostas</a>,
+    <a href="https://www.moj.go.jp/isa/applications/status/longtermresident01_ex02.html" target="_blank" rel="noopener">documentos do 定住者</a>.</p>
+</main>
+
+<footer>
+  <p>Feito pelo Radar Nihon para quem mora no Japão. Suas respostas não são enviadas nem guardadas.</p>
+  <p><a href="./" style="color:inherit">Conversor iene ⇄ real</a></p>
+  <p id="ckLine" class="hidden">Usamos o Google Analytics com o seu consentimento, só para contar visitas. <button type="button" class="linkbtn" id="ckOpen">Preferências de cookies</button></p>
+</footer>
+
+<div class="cookie hidden" id="cookie" role="dialog" aria-label="Aviso de cookies">
+  <p>Usamos o Google Analytics para contar visitas, sem saber seu nome nem suas respostas. Pode aceitar os cookies?</p>
+  <div class="btns">
+    <button type="button" id="ckNo">Recusar</button>
+    <button type="button" class="yes" id="ckYes">Aceitar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---------- GOOGLE ANALYTICS (mesma regra do conversor) ----------
+  // Só contagens: tipo de visto e quantos itens ficaram verdes, amarelos ou vermelhos. As respostas nunca saem daqui.
+  var q = new URLSearchParams(location.search), GA_ID = "G-HRC1WBVL2V", CK = "ccj_consent";
+  function getConsent(){ try{ return localStorage.getItem(CK); }catch(e){ return null; } }
+  function setConsent(v){ try{ localStorage.setItem(CK, v); }catch(e){} }
+  function track(ev, p){ if (window.gtag) window.gtag("event", ev, p || {}); }
+  var ROBO = navigator.webdriver === true ||
+             /HeadlessChrome|bot|crawler|spider|Lighthouse|PageSpeed|facebookexternalhit/i.test(navigator.userAgent || "");
+  if (!ROBO){
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    var ck = getConsent();
+    gtag("consent","default",{ ad_storage:"denied", ad_user_data:"denied", ad_personalization:"denied",
+      analytics_storage: ck === "granted" ? "granted" : "denied" });
+    gtag("js", new Date());
+    var INT = "ccj_interno";
+    try{ if (q.get("interno") === "1") localStorage.setItem(INT, "1"); if (q.get("interno") === "0") localStorage.removeItem(INT); }catch(e){}
+    var interno = false; try{ interno = localStorage.getItem(INT) === "1"; }catch(e){}
+    var cfg = { ref: q.get("ref") || "github-pages", origem: "visto" };
+    if (interno) cfg.traffic_type = "internal";
+    gtag("config", GA_ID, cfg);
+    var s = document.createElement("script"); s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(s);
+    if (!ck) document.getElementById("cookie").classList.remove("hidden");
+    var answer = function(v){ setConsent(v); document.getElementById("cookie").classList.add("hidden");
+      gtag("consent","update",{ analytics_storage: v }); gtag("event", v === "granted" ? "cookies_aceitos" : "cookies_recusados"); };
+    document.getElementById("ckYes").addEventListener("click", function(){ answer("granted"); });
+    document.getElementById("ckNo").addEventListener("click", function(){ answer("denied"); });
+    document.getElementById("ckLine").classList.remove("hidden");
+    document.getElementById("ckOpen").addEventListener("click", function(){ document.getElementById("cookie").classList.remove("hidden"); });
+  }
+
+  var PERGUNTAS = [
+    { id:"juminzei",
+      t:"O imposto residencial (住民税, juminzei) está pago no prazo?",
+      h:"Se é descontado do salário, em geral sim. Se chega carnê da prefeitura, são 4 parcelas por ano.",
+      nao:"Procure a seção de impostos da prefeitura (税務課) e peça para <b>parcelar</b> (分納, bunnō). Quem combinou o parcelamento e paga as parcelas no prazo não se enquadra no cancelamento do permanente; atrasar as parcelas várias vezes conta contra.",
+      naosei:"Peça na prefeitura o <b>納税証明書</b> (certificado de pagamento): ele mostra se há algo pendente." },
+    { id:"seguro",
+      t:"O seguro de saúde está em dia?",
+      h:"Pela empresa (社会保険, shakai hoken) ou pela prefeitura (国民健康保険, kokuho).",
+      nao:"Vá ao balcão do kokuho na prefeitura e peça parcelamento. Se a renda caiu, pergunte pela <b>redução</b> (減免).",
+      naosei:"Se é pela empresa, confira no holerite a linha 健康保険. Se é kokuho, a prefeitura informa se há atraso. Se a empresa desconta do salário e não repassa, a culpa não é sua, mas guarde os holerites." },
+    { id:"nenkin",
+      t:"O nenkin (aposentadoria japonesa) está em dia?",
+      h:"Pela empresa (厚生年金) ou por conta própria (国民年金). Isenção pedida também conta como em dia.",
+      nao:"Procure o escritório do nenkin (年金事務所) ou o balcão da prefeitura e pergunte por <b>isenção ou adiamento</b> (免除・猶予), que existem para quem tem renda baixa.",
+      naosei:"Confira seu histórico no site <b>ねんきんネット</b> (nenkin net) ou peça no escritório do nenkin." },
+    { id:"renda",
+      t:"Se você tem renda extra (bico, entregas, venda), ela foi declarada?",
+      h:"A declaração anual (確定申告, kakutei shinkoku) vai até meados de março. Se não tem renda extra, responda Sim.",
+      nao:"Renda não declarada pode virar imposto atrasado. Procure a Receita japonesa (税務署) ou um contador para declarar o que faltou.",
+      naosei:"Se recebeu fora da empresa principal, é bom confirmar com a Receita (税務署) ou um contador." },
+    { id:"endereco",
+      t:"Quando mudou de casa, avisou a prefeitura em até 14 dias?",
+      h:"É o aviso de endereço (住居地の届出). Se não mudou, responda Sim.",
+      nao:"Faça o aviso o quanto antes na prefeitura, levando o cartão de residência. O atraso é uma falha nas obrigações da lei de imigração.",
+      naosei:"Confira se o endereço no verso do seu cartão de residência é o atual." },
+    { id:"cartao",
+      t:"Seu cartão de residência (在留カード) está dentro da validade?",
+      h:"Para o permanente, o cartão também vence (em geral a cada 7 anos) e precisa ser renovado.",
+      nao:"Renove o cartão na Imigração o quanto antes. Andar com o cartão vencido é uma falha nas obrigações da lei de imigração.",
+      naosei:"A data de validade está na frente do cartão (有効期間)." }
+  ];
+
+  var DOCS = {
+    permanente: "<p>O visto permanente não é renovado, mas o <b>cartão de residência</b> sim (em geral a cada 7 anos). A partir de <b>1º de abril de 2027</b>, deixar de pagar impostos ou contribuições <b>de propósito</b> pode levar ao cancelamento do permanente. Na maioria dos casos o governo troca o visto por outro (como o 定住者) em vez de cancelar a estadia. <b>Não</b> se enquadram: desemprego, doença, desastre, parcelamento com as parcelas em dia e imposto descontado do salário que a empresa não repassou. Atrasos de antes de 2027 também podem ser considerados, junto com o que você pagou depois.</p>",
+    teijusha: "<ul class='docs'><li>Formulário de renovação e foto 4 × 3 cm</li><li>Passaporte e cartão de residência</li><li><b>住民税の課税(又は非課税)証明書</b> e <b>納税証明書</b> do último ano, de quem tem a maior renda da casa, emitidos há no máximo 3 meses, na prefeitura onde você morava em 1º de janeiro</li><li>Outros documentos dependem do seu caso (sansei, yonsei, cônjuge de nikkei): veja a <a href='https://www.moj.go.jp/isa/applications/status/longtermresident01_ex02.html' target='_blank' rel='noopener'>lista oficial</a></li></ul>",
+    conjuge: "<ul class='docs'><li>Formulário de renovação e foto 4 × 3 cm</li><li>Passaporte e cartão de residência</li><li><b>住民税の課税(又は非課税)証明書</b> e <b>納税証明書</b> do último ano, de quem sustenta a casa</li><li>Carta de garantia do cônjuge japonês (身元保証書), 住民票 da família e 戸籍謄本</li><li>Lista completa na <a href='https://www.moj.go.jp/isa/content/001426542.pdf' target='_blank' rel='noopener'>página oficial</a></li></ul>",
+    outro: "<p>Os documentos variam muito conforme o visto. Os certificados de imposto residencial (課税証明書 e 納税証明書) aparecem em quase todas as listas. Veja a lista do seu visto no <a href='https://www.moj.go.jp/isa/publications/newslist/list-procedures.html' target='_blank' rel='noopener'>site da Imigração</a>.</p>"
+  };
+
+  var visto = null, resp = {};
+  var $ = function(id){ return document.getElementById(id); };
+
+  document.querySelectorAll(".visas button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".visas button").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true"); visto = b.dataset.v; track("checklist_visto", { visto: visto });
+      $("passo2").classList.remove("hidden"); $("passo2").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  });
+
+  var html = "";
+  PERGUNTAS.forEach(function(p){
+    html += '<div class="q" data-q="'+p.id+'"><p class="t">'+p.t+'</p><p class="h">'+p.h+'</p>' +
+      '<div class="opts" role="group" aria-label="'+p.t.replace(/"/g,"")+'">' +
+      '<button type="button" data-r="sim" aria-pressed="false">Sim</button>' +
+      '<button type="button" data-r="nao" aria-pressed="false">Não</button>' +
+      '<button type="button" data-r="naosei" aria-pressed="false">Não sei</button></div></div>';
+  });
+  $("perguntas").innerHTML = html;
+  document.querySelectorAll(".q .opts button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var q = b.closest(".q");
+      q.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true"); resp[q.dataset.q] = b.dataset.r;
+      $("ver").disabled = Object.keys(resp).length < PERGUNTAS.length;
+    });
+  });
+
+  $("ver").addEventListener("click", function(){
+    var n = {ok:0, warn:0, bad:0}, itens = "";
+    PERGUNTAS.forEach(function(p){
+      var r = resp[p.id], cls = r === "sim" ? "ok" : (r === "nao" ? "bad" : "warn");
+      n[cls]++;
+      var txt = r === "sim" ? "Tudo certo neste item." : (r === "nao" ? p.nao : p.naosei);
+      itens += '<div class="item '+cls+'"><span class="it">'+p.t+'</span><p>'+txt+'</p></div>';
+    });
+    $("rtitulo").textContent = n.bad ? "Há itens para resolver antes de renovar" :
+      (n.warn ? "Quase lá: confira os itens em amarelo" : "Tudo em dia pelas suas respostas");
+    $("rsum").innerHTML = '<span class="ok-bg">'+n.ok+' em dia</span><span class="warn-bg">'+n.warn+' a conferir</span><span class="bad-bg">'+n.bad+' a resolver</span>';
+    $("ritens").innerHTML = itens;
+    $("rdocs").innerHTML = DOCS[visto] || DOCS.outro;
+    track("checklist_resultado", { visto: visto, em_dia: n.ok, conferir: n.warn, resolver: n.bad });
+    $("resultado").classList.remove("hidden"); $("resultado").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  $("denovo").addEventListener("click", function(){
+    resp = {}; $("ver").disabled = true; $("resultado").classList.add("hidden");
+    document.querySelectorAll("[aria-pressed=true]").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+    $("passo2").classList.add("hidden"); window.scrollTo({top:0, behavior:"smooth"});
+  });
+})();
+</script>
+
+</body>
+</html>
