@@ -383,7 +383,7 @@ Feita em 2026-11-03. Para repetir, rode os comandos de cada linha.
 - [x] `close_convert_lead` e `qualify_lead` deixaram de ser eventos principais.
 - [x] Search Console: o site já está no Google (confirmado na Inspeção de URL em 2026-11-03).
 - [x] `?interno=1` aberto no Firefox e no celular (2026-11-03). Repetir em navegador ou aparelho novo, ou depois de limpar os dados do navegador.
-- [ ] Abrir `?interno=1` em **todos** os aparelhos de quem testa (a análise de 2026-11-04 achou visitas internas não marcadas).
+- [x] `?interno=1` aberto em todos os aparelhos de quem testa (2026-11-04, depois da análise que achou visitas internas não marcadas). Repetir em aparelho novo ou depois de limpar os dados do navegador.
 - [ ] (Depois do alerta/webhook) Contador anônimo de **aceite × recusa** dos cookies pelo webhook do n8n, sem dado pessoal, para saber o tamanho do "piso" do GA.
 - [x] Robôs fora do GA (2026-11-04). Seção **Japão** e `GA_EXCLUIR_CIDADES` no relatório. Search Console API ligada (`sc-relatorio.py`).
 - [ ] Conferir de vez em quando se o filtro **Internal Traffic** continua **Ativo**. Manual, porque não há API para isso.
