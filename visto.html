@@ -243,6 +243,17 @@ body.embed main{margin-top:0;padding-top:12px}
   background:var(--indigo);color:var(--card);border:0;border-radius:14px;padding:13px;cursor:pointer;margin-top:10px}
 .btn2 svg{width:20px;height:20px}
 .convite{font:inherit;font-weight:700;background:transparent;border:0;color:var(--indigo);text-decoration:underline;cursor:pointer;padding:10px 0 0;width:100%}
+.parceiro{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:5px 14px 5px 5px;text-align:left}
+.parceiro .pav{width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--accent);display:grid;place-items:center;
+  font-weight:900;font-size:.9rem;color:#fff;flex:none}
+.parceiro .pav img{width:100%;height:100%;object-fit:cover}
+.parceiro .ptx{display:flex;flex-direction:column;line-height:1.2}
+.parceiro b{font-size:.95rem}
+.parceiro small{font-size:.75rem;opacity:.8}
+.pvideo{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:.92rem}
+.pvideo svg{width:28px;height:28px;flex:none;color:#fff;background:#E62117;border-radius:8px;padding:5px}
 .siga{margin-top:16px;text-align:center}
 .siga p{margin:0 0 10px;font-size:.92rem}
 .social{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
@@ -309,6 +320,7 @@ body.embed main{margin-top:0;padding-top:12px}
       <p class="hint">Mostra só quantos itens estão em dia, não quais. Bom para o status ou para um grupo.</p>
       <button type="button" class="convite" id="share">Convidar alguém a fazer o checklist</button>
     </div>
+    <a class="pvideo hidden" id="pvideo" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span></span></a>
     <div class="siga">
       <p><b>Quer mais dicas como esta?</b> Siga o Radar Nihon:</p>
       <ul class="social" aria-label="Redes sociais do Radar Nihon">
@@ -346,6 +358,26 @@ body.embed main{margin-top:0;padding-top:12px}
   // ---------- GOOGLE ANALYTICS (mesma regra do conversor) ----------
   // Só contagens: tipo de visto e quantos itens ficaram verdes, amarelos ou vermelhos. As respostas nunca saem daqui.
   var q = new URLSearchParams(location.search), GA_ID = "G-HRC1WBVL2V", CK = "ccj_consent";
+
+  // ---------- VERSÃO DE PARCEIRO (?p=código) ----------
+  // Só códigos desta lista mudam o topo; qualquer outro mostra a versão normal do Radar Nihon.
+  // Foto só com autorização do parceiro (arquivo em parceiros/). Para tirar a marca: apagar a linha.
+  var PARCEIROS = {
+    carla: { nome: "Carla no Japão", iniciais: "CS", foto: "", ref: "carla-no-japao",
+             canal: "https://www.youtube.com/@soucarlasantana",
+             video: "https://www.youtube.com/watch?v=-F1g4Aie5nQ",
+             videoTxt: "Assista ao vídeo da Carla: como renovar o cartão de residência" }
+  };
+  var PK = (q.get("p") || "").toLowerCase(), P = Object.prototype.hasOwnProperty.call(PARCEIROS, PK) ? PARCEIROS[PK] : null;
+  if (P) {
+    var hero = document.querySelector(".hero");
+    var av = P.foto ? '<img src="' + P.foto + '" alt="">' : '<span>' + P.iniciais + '</span>';
+    hero.querySelector(".badge").outerHTML =
+      '<a class="parceiro" href="' + P.canal + '" target="_blank" rel="noopener"><span class="pav">' + av + '</span>' +
+      '<span class="ptx"><b>Checklist da ' + P.nome + '</b><small>feito com Radar Nihon</small></span></a>';
+    var vb = document.getElementById("pvideo");
+    if (vb && P.video) { vb.href = P.video; vb.querySelector("span").textContent = P.videoTxt; vb.classList.remove("hidden"); }
+  }
   function getConsent(){ try{ return localStorage.getItem(CK); }catch(e){ return null; } }
   function setConsent(v){ try{ localStorage.setItem(CK, v); }catch(e){} }
   function track(ev, p){ if (window.gtag) window.gtag("event", ev, p || {}); }
@@ -361,7 +393,8 @@ body.embed main{margin-top:0;padding-top:12px}
     var INT = "ccj_interno";
     try{ if (q.get("interno") === "1") localStorage.setItem(INT, "1"); if (q.get("interno") === "0") localStorage.removeItem(INT); }catch(e){}
     var interno = false; try{ interno = localStorage.getItem(INT) === "1"; }catch(e){}
-    var cfg = { ref: q.get("ref") || "github-pages", origem: "visto" };
+    var cfg = { ref: q.get("ref") || (P ? P.ref : "github-pages"), origem: "visto" };
+    if (P) cfg.parceiro = PK;
     if (interno) cfg.traffic_type = "internal";
     gtag("config", GA_ID, cfg);
     var s = document.createElement("script"); s.async = true;
