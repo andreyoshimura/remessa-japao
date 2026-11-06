@@ -140,7 +140,7 @@ como visitas falsas dos EUA (Chrome no Linux, em inglês, num data center).
   **Não remover.** O Google confere de tempos em tempos.
 - **Vínculo com o GA:** feito. Os dados aparecem em **Relatórios → Aquisição → Search Console** depois que o site começar a aparecer no Google.
 - **Acesso pela API (2026-11-04):** `scripts/sc-relatorio.py` lê as buscas que mostram o site (consultas, países,
-  aparelho, dia), com filtro por país (`jpn` = Japão). Usa o mesmo ADC, com o escopo `webmasters.readonly`. O vínculo
+  aparelho, dia), com filtro por país (`jpn` = Japão). Usa o mesmo ADC, com o escopo `webmasters` (completo desde 2026-11-05, para enviar o sitemap pela API). O vínculo
   com o GA mostra esses dados só no painel; a API do GA não os entrega.
 - **Indexação:** a Inspeção de URL mostrou "O URL está no Google" em 2026-11-03. O Google indexou sozinho, sem precisar de "Solicitar indexação". Se o site mudar muito, dá para pedir de novo em **Inspeção de URL → Solicitar indexação**.
 
@@ -199,7 +199,7 @@ Serve para ler relatórios sem abrir o painel (pelo MCP oficial) e para automati
 |---|---|
 | Projeto do Google Cloud | `radar-nihon-analytics`, dedicado, dentro da organização do Workspace. APIs ativas: Google Analytics Data API, Google Analytics Admin API, Cloud Resource Manager API (necessária para o projeto de cota) e **Search Console API** (desde 2026-11-04). |
 | Autenticação | **ADC (Application Default Credentials) com cliente OAuth próprio**, do tipo "App para computador", com tela de consentimento **Interna**. |
-| Escopos | `analytics.readonly` (relatórios), `analytics.edit` (administração), `cloud-platform` (projeto de cota), `webmasters.readonly` (buscas do Search Console, desde 2026-11-04). |
+| Escopos | `analytics.readonly` (relatórios), `analytics.edit` (administração), `cloud-platform` (projeto de cota), `webmasters` (buscas e envio de sitemap no Search Console; leitura desde 2026-11-04, completo desde 2026-11-05). |
 | MCP | [`analytics-mcp`](https://github.com/googleanalytics/google-analytics-mcp), oficial do Google, instalado com `pipx`. Só leitura. |
 | Scripts | `scripts/*.sh`, chamam a Admin API com o token do ADC. |
 
@@ -257,7 +257,7 @@ O `.bashrc` e o `.profile` não foram alterados. O `~/.local/bin` já faz parte 
    ```sh
    gcloud-rn auth application-default login \
      --client-id-file="$HOME/.config/radar-nihon/oauth-client.json" \
-     --scopes="https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics.edit,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/webmasters.readonly"
+     --scopes="https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics.edit,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/webmasters"
    chmod 600 "$HOME/.config/radar-nihon/gcloud/application_default_credentials.json"
    gcloud-rn auth application-default set-quota-project radar-nihon-analytics
    ```
