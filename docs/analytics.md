@@ -48,6 +48,7 @@ O GA4 é carregado pelo próprio `index.html`, e não pelo snippet padrão do Go
 | `clique_afiliado` | Clique no botão da Wise (quando ligado) | pacote da conversão |
 | `checklist_visto` | `visto.html`: escolheu o tipo de visto | `visto` (`permanente`/`teijusha`/`conjuge`/`outro`) |
 | `checklist_resultado` | `visto.html`: clicou em "Ver meu resultado" | `visto`, `em_dia`, `conferir`, `resolver` (só contagens; as respostas não são enviadas) |
+| `clique_rede_social` (visto) | `visto.html`: ícones "Siga o Radar Nihon" no resultado | `rede`, `origem: "visto"` |
 | `enviar_resultado` | `visto.html`: "Mandar minha lista no WhatsApp" ou "Cartão do resultado" | `formato` (`lista`/`cartao`), `visto`. A lista e o cartão são montados no celular; o GA não recebe o conteúdo. Links com `?ref=lista` e `?ref=cartao` |
 
 **Pacote da conversão:** `direcao`, `faixa_ienes`, `valor_ienes`, `valor_reais`, `cotacao`, `cotacao_fonte` e `ref`. Ele vai em todos os eventos acima desde 2026-11-04 no fuso do GA (Tóquio), que corresponde a 03/11 à noite no Brasil.

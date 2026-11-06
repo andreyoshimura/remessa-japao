@@ -231,6 +231,8 @@ body.embed main{margin-top:0;padding-top:12px}
 .note{font-size:.84rem;color:var(--muted);background:var(--indigo-soft);border-radius:12px;padding:12px 14px;margin-top:14px}
 .srcs{font-size:.78rem;color:var(--muted);margin:16px 2px 0}
 .srcs a{color:var(--indigo)}
+.dica{border:2px solid var(--focus);background:var(--card);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:.9rem}
+.dica b{display:block;margin-bottom:4px}
 .balcao{margin-top:8px;background:var(--indigo-soft);border-radius:10px;padding:8px 10px;font-size:.84rem}
 .balcao small{display:block;color:var(--muted);font-size:.74rem;margin-bottom:2px}
 .balcao span{font-size:1rem;font-weight:700;color:var(--ink)}
@@ -241,13 +243,20 @@ body.embed main{margin-top:0;padding-top:12px}
   background:var(--indigo);color:var(--card);border:0;border-radius:14px;padding:13px;cursor:pointer;margin-top:10px}
 .btn2 svg{width:20px;height:20px}
 .convite{font:inherit;font-weight:700;background:transparent;border:0;color:var(--indigo);text-decoration:underline;cursor:pointer;padding:10px 0 0;width:100%}
+.siga{margin-top:16px;text-align:center}
+.siga p{margin:0 0 10px;font-size:.92rem}
+.social{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.social a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--indigo);
+  background:var(--card);border:1px solid var(--line);transition:background .15s,color .15s}
+.social a:hover{background:var(--indigo);color:var(--card)}
+.social svg{width:20px;height:20px}
 .again{font:inherit;font-weight:700;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px;width:100%;margin-top:14px;cursor:pointer}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .ok-bg{background:#16362A;color:#7FD3A6}
   :root:not([data-theme="light"]) .warn-bg{background:#3A3010;color:#F2CF6B}
   :root:not([data-theme="light"]) .bad-bg{background:#3E1E1A;color:#F3A093}
 }
-@media print{ .hero,footer,.go,.again,.leve{display:none} main{margin-top:0} .card{box-shadow:none} }
+@media print{ .hero,footer,.go,.again,.leve,.siga{display:none} main{margin-top:0} .card{box-shadow:none} }
 </style>
 </head>
 <body>
@@ -299,6 +308,14 @@ body.embed main{margin-top:0;padding-top:12px}
       </button>
       <p class="hint">Mostra só quantos itens estão em dia, não quais. Bom para o status ou para um grupo.</p>
       <button type="button" class="convite" id="share">Convidar alguém a fazer o checklist</button>
+    </div>
+    <div class="siga">
+      <p><b>Quer mais dicas como esta?</b> Siga o Radar Nihon:</p>
+      <ul class="social" aria-label="Redes sociais do Radar Nihon">
+        <li><a href="https://www.instagram.com/radarnihon/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram" data-rede="instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61595911931098" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook" data-rede="facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1-1h2V2.5h-3c-3 0-4 2-4 4.5v1.5H7.5V12H10v9.5h4V12h2.8l.5-3.5z"/></svg></a></li>
+        <li><a href="https://www.tiktok.com/@radar.nihon" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok" data-rede="tiktok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.2a2.8 2.8 0 1 1-2.8-2.8c.3 0 .6 0 .8.1V9.1a6.1 6.1 0 1 0 5.3 6.1V8.6a7.7 7.7 0 0 0 4.4 1.4V6.7a4.5 4.5 0 0 1-4.4-4.7z"/></svg></a></li>
+      </ul>
     </div>
     <button type="button" class="again" id="denovo">Refazer</button>
   </section>
@@ -367,12 +384,12 @@ body.embed main{margin-top:0;padding-top:12px}
     { id:"seguro",
       t:"O seguro de saúde está em dia?",
       h:"Pela empresa (社会保険, shakai hoken) ou pela prefeitura (国民健康保険, kokuho).",
-      nao:"Vá ao balcão do kokuho na prefeitura e peça parcelamento. Se a renda caiu, pergunte pela <b>redução</b> (減免).",
+      nao:"Seguro atrasado pesa na renovação: a Imigração olha se você paga o seguro de saúde. <b>Não espere chegar a renovação.</b> Vá agora ao balcão do kokuho (国民健康保険課) da prefeitura e faça um <b>acordo de parcelamento</b> (分納). Com o acordo feito e as parcelas pagas em dia, você mostra que está regularizando. Guarde a cópia do acordo (分納誓約書) e os recibos. Se a renda caiu, pergunte também pela <b>redução</b> (減免).",
       naosei:"Se é pela empresa, confira no holerite a linha 健康保険. Se é kokuho, a prefeitura informa se há atraso. Se a empresa desconta do salário e não repassa, a culpa não é sua, mas guarde os holerites." },
     { id:"nenkin",
       t:"O nenkin (aposentadoria japonesa) está em dia?",
       h:"Pela empresa (厚生年金) ou por conta própria (国民年金). Isenção pedida também conta como em dia.",
-      nao:"Procure o escritório do nenkin (年金事務所) ou o balcão da prefeitura e pergunte por <b>isenção ou adiamento</b> (免除・猶予), que existem para quem tem renda baixa.",
+      nao:"Procure logo o escritório do nenkin (年金事務所) ou o balcão da prefeitura, antes da renovação. Se a renda é baixa, peça <b>isenção ou adiamento</b> (免除・猶予): período isento conta como em dia. Se há meses atrasados, pergunte como pagar e guarde os recibos.",
       naosei:"Confira seu histórico no site <b>ねんきんネット</b> (nenkin net) ou peça no escritório do nenkin." },
     { id:"renda",
       t:"Se você tem renda extra (bico, entregas, venda), ela foi declarada?",
@@ -453,12 +470,13 @@ body.embed main{margin-top:0;padding-top:12px}
       var txt = r === "sim" ? "Tudo certo neste item." : (r === "nao" ? p.nao : p.naosei);
       var b = r !== "sim" && BALCAO[p.id][r] ? BALCAO[p.id][r][1] : null;
       itens += '<div class="item '+cls+'"><span class="it">'+p.t+'</span><p>'+txt+'</p>' +
-        (b ? '<div class="balcao"><small>Mostre no balcão:</small><span lang="ja">'+b+'</span></div>' : '') + '</div>';
+        (b ? '<div class="balcao"><small>🗣️ Mostre esta frase ao atendente no balcão para pedir ajuda:</small><span lang="ja">'+b+'</span></div>' : '') + '</div>';
     });
     $("rtitulo").textContent = n.bad ? "Há itens para resolver antes de renovar" :
       (n.warn ? "Quase lá: confira os itens em amarelo" : "Tudo em dia pelas suas respostas");
     $("rsum").innerHTML = '<span class="ok-bg">'+n.ok+' em dia</span><span class="warn-bg">'+n.warn+' a conferir</span><span class="bad-bg">'+n.bad+' a resolver</span>';
-    $("ritens").innerHTML = itens;
+    var dica = n.bad ? '<div class="dica"><b>💡 Está devendo? Negocie antes de renovar.</b> Quem procura a prefeitura, faz um acordo de parcelamento e paga as parcelas em dia mostra boa-fé, e isso conta a favor na análise. Para o visto permanente, a diretriz oficial diz que quem parcela e paga em dia não se enquadra no cancelamento. Quem deixa a dívida correr sem acordo arrisca mais. Guarde o acordo e os recibos para mostrar se pedirem.</div>' : '';
+    $("ritens").innerHTML = dica + itens;
     ultimo = n;
     $("rdocs").innerHTML = DOCS[visto] || DOCS.outro;
     track("checklist_resultado", { visto: visto, em_dia: n.ok, conferir: n.warn, resolver: n.bad });
@@ -466,19 +484,24 @@ body.embed main{margin-top:0;padding-top:12px}
   });
 
   $("lista").addEventListener("click", function(){
-    var L = ["📋 *Meu checklist do visto*" + (visto ? " (" + NOME_VISTO[visto] + ")" : ""), ""];
-    var pend = 0;
+    var L = ["📋 *Meu checklist do visto*" + (visto ? " · " + NOME_VISTO[visto] : "")];
+    var pend = [], ok = 0, resolver = 0;
     PERGUNTAS.forEach(function(p){
-      var r = resp[p.id]; if (r === "sim") return;
-      pend++;
+      var r = resp[p.id]; if (r === "sim") { ok++; return; }
+      if (r === "nao") resolver++;
       var a = BALCAO[p.id][r];
-      L.push((r === "nao" ? "🔴 " : "🟡 ") + a[0]);
-      if (a[1]) L.push("    🗣️ " + a[1]);
+      pend.push((r === "nao" ? "🔴 " : "🟡 ") + a[0] + (a[1] ? "\n🗣️ " + a[1] : ""));
     });
-    if (!pend) L.push("✅ Tudo em dia pelas minhas respostas.");
-    var ok = PERGUNTAS.length - pend;
-    L.push("", "✅ " + ok + " de " + PERGUNTAS.length + " itens em dia.");
-    L.push("", "Isto informa, não substitui a Imigração. Checklist: " + URL_VISTO + "?ref=lista");
+    L.push("✅ " + ok + " de " + PERGUNTAS.length + " itens em dia", "");
+    if (pend.length) {
+      L.push("*O que falta fazer:*", "🔴 resolver · 🟡 conferir", "");
+      if (resolver) L.push("💡 *Está devendo? Negocie antes de renovar:* faça o acordo de parcelamento (分納) na prefeitura, pague as parcelas em dia e guarde o acordo e os recibos.", "");
+      L.push("🗣️ *Como usar no balcão:* mostre a frase em japonês ao atendente do local indicado (prefeitura, Receita 税務署 ou Imigração). Ela diz o que você precisa, e o atendente te encaminha.", "");
+      L.push(pend.join("\n\n"));
+    } else {
+      L.push("Tudo em dia pelas minhas respostas. 🎉");
+    }
+    L.push("", "Isto informa, não substitui a Imigração.", "Checklist: " + URL_VISTO + "?ref=lista");
     window.open("https://wa.me/?text=" + encodeURIComponent(L.join("\n")), "_blank", "noopener");
     track("enviar_resultado", { formato: "lista", visto: visto || "" });
   });
@@ -522,6 +545,10 @@ body.embed main{margin-top:0;padding-top:12px}
         track("enviar_resultado", { formato: "cartao", visto: visto || "" });
       }, "image/png");
     });
+  });
+
+  document.querySelectorAll(".siga a").forEach(function(a){
+    a.addEventListener("click", function(){ track("clique_rede_social", { rede: a.dataset.rede, origem: "visto" }); });
   });
 
   $("share").addEventListener("click", function(){
