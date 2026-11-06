@@ -42,7 +42,7 @@ Analytics, Search Console, prévia de links e checklist de validação: **[docs/
 | Arquivo | O que é |
 |---|---|
 | `index.html` | O site inteiro: HTML, CSS e JavaScript, sem dependências além da fonte do Google Fonts. |
-| `visto.html` | Checklist "Estou em dia para renovar o visto?": tipo de visto, 6 perguntas (imposto residencial, seguro de saúde, nenkin, renda extra, endereço, cartão de residência), semáforo por item com onde resolver, documentos por visto e fontes oficiais da Imigração (conferidas em 05/11/2026). As respostas não saem do navegador; o GA recebe só o tipo de visto e a contagem de itens por cor. Botão "Mandar este checklist no WhatsApp" no resultado (envia só o link, com `?ref=whatsapp`) e imagem de prévia própria `og-visto.png`. Reconferir as regras a cada 6 meses. |
+| `visto.html` | Checklist "Estou em dia para renovar o visto?": tipo de visto, 6 perguntas (imposto residencial, seguro de saúde, nenkin, renda extra, endereço, cartão de residência), semáforo por item com onde resolver, documentos por visto e fontes oficiais da Imigração (conferidas em 05/11/2026). As respostas não saem do navegador; o GA recebe só o tipo de visto e a contagem de itens por cor. Bloco "Leve seu resultado": lista das pendências no WhatsApp com frase em japonês para mostrar no balcão (`?ref=lista`), cartão de imagem só com as contagens (`?ref=cartao`, gerado no navegador) e convite que envia só o link (`?ref=whatsapp`); cada item amarelo/vermelho mostra a frase do balcão. Imagem de prévia própria `og-visto.png`. Reconferir as regras a cada 6 meses. |
 | `og.png` | Imagem de prévia do link (1200×630, PNG, ~33 KB) usada por WhatsApp, Facebook, Instagram e X. |
 | `og-visto.png` | Imagem de prévia do link da `visto.html` (1200×630). |
 | `sitemap.xml` | Mapa do site com todas as páginas do repositório (hoje: conversor e `visto.html`). Toda página nova entra aqui com `lastmod` atualizado. Enviado na Search Console pela API em 2026-11-05 (sem erros); reenviar quando mudar. Não dá para declarar no `robots.txt`, que só vale na raiz do domínio. |
@@ -147,5 +147,6 @@ Antes de publicar:
 | 2026-11-02 | `b09daed` | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |
 | 2026-11-04 | `f7656ba` | Título, descrição e subtítulo citam "real para iene" (busca nº 1 no Japão); link do WhatsApp mantém a direção (`&de=brl`). |
 | 2026-11-04 | `2aa57a2` | Robôs fora do GA; relatório com seção Japão e `GA_EXCLUIR_CIDADES`; `sc-relatorio.py` (Search Console API). |
+| 2026-11-05 | (este) | `visto.html`: "Leve seu resultado" (lista no WhatsApp com frases em japonês para o balcão, cartão de imagem com as contagens, convite); evento `enviar_resultado`. |
 | 2026-11-05 | `1773177` | `visto.html`: imagem de prévia `og-visto.png`, botão do WhatsApp (evento `compartilhar_whatsapp` com `origem: "visto"`); `sitemap.xml` com as duas páginas. |
 | 2026-11-05 | `ad97775` | Checklist `visto.html` ("Estou em dia para renovar o visto?") com regras oficiais da Imigração, eventos `checklist_visto` e `checklist_resultado`; link no rodapé do conversor. |
