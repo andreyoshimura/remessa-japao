@@ -43,7 +43,7 @@ O GA4 é carregado pelo próprio `index.html`, e não pelo snippet padrão do Go
 | `chip_valor` | Clique num valor rápido (¥50 mil, R$ 500…) | pacote da conversão |
 | `inverter` | Clique no botão ⇅ | pacote da conversão |
 | `outra_cotacao` | Abriu "Usar outra cotação" | pacote da conversão |
-| `compartilhar_whatsapp` | Clique em "Mandar esta conversão no WhatsApp" | pacote da conversão |
+| `compartilhar_whatsapp` | Clique em "Mandar esta conversão no WhatsApp" (conversor) ou "Mandar este checklist no WhatsApp" (`visto.html`) | conversor: pacote da conversão; visto: `origem: "visto"` e `visto` (só o link vai na mensagem, com `?ref=whatsapp`; as respostas não) |
 | `clique_rede_social` | Clique num ícone do rodapé | pacote da conversão + `rede` (`instagram`/`facebook`/`tiktok`/…) |
 | `clique_afiliado` | Clique no botão da Wise (quando ligado) | pacote da conversão |
 | `checklist_visto` | `visto.html`: escolheu o tipo de visto | `visto` (`permanente`/`teijusha`/`conjuge`/`outro`) |
