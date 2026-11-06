@@ -201,6 +201,17 @@ body.embed .hero, body.embed footer{display:none}
 body.embed main{margin-top:0;padding-top:12px}
 .hidden{display:none !important}
 @media (prefers-reduced-motion: reduce){ .swap,.live,.social a{transition:none;animation:none} }
+.parceiro{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:5px 14px 5px 5px;text-align:left}
+.parceiro .pav{width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--accent);display:grid;place-items:center;
+  font-weight:900;font-size:.9rem;color:#fff;flex:none}
+.parceiro .pav img{width:100%;height:100%;object-fit:cover}
+.parceiro .ptx{display:flex;flex-direction:column;line-height:1.2}
+.parceiro b{font-size:.95rem}
+.parceiro small{font-size:.75rem;opacity:.8}
+.pvideo{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:.92rem}
+.pvideo svg{width:28px;height:28px;flex:none;color:#fff;background:#E62117;border-radius:8px;padding:5px}
 </style>
 </head>
 <body>
@@ -275,12 +286,13 @@ body.embed main{margin-top:0;padding-top:12px}
   </form>
 
   <p class="src" id="rateInfo">Buscando a cotação…</p>
+  <a class="pvideo hidden" id="pvideo" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span></span></a>
 </main>
 
 <footer>
   <ul class="social hidden" id="social" aria-label="Redes sociais"></ul>
   <p>Cotação de referência, para consulta. Não é oferta de câmbio.</p>
-  <p><a href="visto.html" style="color:inherit">Estou em dia para renovar o visto?</a> Confira em 6 perguntas.</p>
+  <p id="linkVisto"><a href="visto.html" style="color:inherit">Estou em dia para renovar o visto?</a> Confira em 6 perguntas.</p>
   <p id="ckLine" class="hidden">Usamos o Google Analytics com o seu consentimento. <button type="button" class="linkbtn" id="ckOpen">Preferências de cookies</button></p>
 </footer>
 
@@ -292,6 +304,7 @@ body.embed main{margin-top:0;padding-top:12px}
   </div>
 </div>
 
+<script src="parceiros.js"></script>
 <script>
 (function(){
   // ---------- CONFIGURAÇÃO ----------
@@ -314,6 +327,17 @@ body.embed main{margin-top:0;padding-top:12px}
   if (q.get("aff"))  CONFIG.AFFILIATE_URL = q.get("aff");
   if (q.get("hook")) CONFIG.WEBHOOK_URL   = q.get("hook");
   if (q.get("ref"))  CONFIG.REF           = q.get("ref");
+
+  // ---------- VERSÃO DE PARCEIRO (?p=código; lista em parceiros.js) ----------
+  var PP = window.RN_parceiro ? window.RN_parceiro() : null;
+  if (PP) {
+    if (!q.get("ref")) CONFIG.REF = PP.d.ref;
+    document.querySelector(".hero .badge").outerHTML = window.RN_selo(PP).replace("__TITULO__", "Conversor da");
+    var pv = document.getElementById("pvideo");
+    if (PP.d.conversor) { pv.href = PP.d.conversor.url; pv.querySelector("span").textContent = PP.d.conversor.txt; pv.classList.remove("hidden"); }
+    document.getElementById("linkVisto").innerHTML = 'Também da ' + PP.d.nome + ': <a href="visto.html?p=' + PP.k +
+      '" style="color:inherit">Estou em dia para renovar o visto?</a>';
+  }
   var EMBED = q.get("embed") === "1" || window.self !== window.top;
   if (EMBED) document.body.classList.add("embed");
 
@@ -386,6 +410,7 @@ body.embed main{margin-top:0;padding-top:12px}
     }catch(e){}
     var interno = false; try{ interno = localStorage.getItem(INT) === "1"; }catch(e){}
     var cfg = { ref: CONFIG.REF, origem: EMBED ? "embed" : "pagina" };
+    if (PP) cfg.parceiro = PP.k;
     if (interno) cfg.traffic_type = "internal";
     gtag("config", CONFIG.GA_ID, cfg);
     var s = document.createElement("script");
@@ -533,7 +558,8 @@ body.embed main{margin-top:0;padding-top:12px}
     // v= muda o link quando a prévia muda, para o WhatsApp não reaproveitar a prévia antiga do cache
     var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento&v=4" +
               (DIR === "brl" ? "&de=brl" : "") +   // quem recebe abre na mesma direção
-              (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "");
+              (CONFIG.REF ? "&ref="+encodeURIComponent(CONFIG.REF) : "") +
+              (PP ? "&p=" + PP.k : "");             // quem recebe vê a mesma versão do parceiro
     if (EMBED && document.referrer) url = document.referrer;
     var t = DIR === "jpy"
       ? "¥"+jpy.format(Math.round(last.yen||0))+" hoje valem "+brl.format(last.reais||0)+". Converta aqui: "+url

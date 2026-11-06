@@ -353,30 +353,19 @@ body.embed main{margin-top:0;padding-top:12px}
   </div>
 </div>
 
+<script src="parceiros.js"></script>
 <script>
 (function(){
   // ---------- GOOGLE ANALYTICS (mesma regra do conversor) ----------
   // Só contagens: tipo de visto e quantos itens ficaram verdes, amarelos ou vermelhos. As respostas nunca saem daqui.
   var q = new URLSearchParams(location.search), GA_ID = "G-HRC1WBVL2V", CK = "ccj_consent";
 
-  // ---------- VERSÃO DE PARCEIRO (?p=código) ----------
-  // Só códigos desta lista mudam o topo; qualquer outro mostra a versão normal do Radar Nihon.
-  // Foto só com autorização do parceiro (arquivo em parceiros/). Para tirar a marca: apagar a linha.
-  var PARCEIROS = {
-    carla: { nome: "Carla no Japão", iniciais: "CS", foto: "parceiros/carla.jpg", ref: "carla-no-japao",
-             canal: "https://www.youtube.com/@soucarlasantana",
-             video: "https://www.youtube.com/watch?v=-F1g4Aie5nQ",
-             videoTxt: "Assista ao vídeo da Carla: como renovar o cartão de residência" }
-  };
-  var PK = (q.get("p") || "").toLowerCase(), P = Object.prototype.hasOwnProperty.call(PARCEIROS, PK) ? PARCEIROS[PK] : null;
+  // ---------- VERSÃO DE PARCEIRO (?p=código; lista em parceiros.js) ----------
+  var PP = window.RN_parceiro ? window.RN_parceiro() : null, PK = PP ? PP.k : "", P = PP ? PP.d : null;
   if (P) {
-    var hero = document.querySelector(".hero");
-    var av = P.foto ? '<img src="' + P.foto + '" alt="">' : '<span>' + P.iniciais + '</span>';
-    hero.querySelector(".badge").outerHTML =
-      '<a class="parceiro" href="' + P.canal + '" target="_blank" rel="noopener"><span class="pav">' + av + '</span>' +
-      '<span class="ptx"><b>Checklist da ' + P.nome + '</b><small>feito com Radar Nihon</small></span></a>';
+    document.querySelector(".hero .badge").outerHTML = window.RN_selo(PP).replace("__TITULO__", "Checklist da");
     var vb = document.getElementById("pvideo");
-    if (vb && P.video) { vb.href = P.video; vb.querySelector("span").textContent = P.videoTxt; vb.classList.remove("hidden"); }
+    if (vb && P.visto) { vb.href = P.visto.url; vb.querySelector("span").textContent = P.visto.txt; vb.classList.remove("hidden"); }
   }
   function getConsent(){ try{ return localStorage.getItem(CK); }catch(e){ return null; } }
   function setConsent(v){ try{ localStorage.setItem(CK, v); }catch(e){} }
@@ -464,6 +453,7 @@ body.embed main{margin-top:0;padding-top:12px}
                naosei:["Conferir a validade do cartão de residência", null] }
   };
   var URL_VISTO = "https://andreyoshimura.github.io/remessa-japao/visto.html";
+  var PQ = window.RN_parceiro && window.RN_parceiro() ? "&p=" + window.RN_parceiro().k : "";   // quem recebe vê a versão do parceiro
   var NOME_VISTO = {permanente:"Permanente", teijusha:"Residente de longo prazo (定住者)", conjuge:"Cônjuge de japonês", outro:"Outro visto"};
   var ultimo = null;
   var visto = null, resp = {};
@@ -534,7 +524,7 @@ body.embed main{margin-top:0;padding-top:12px}
     } else {
       L.push("Tudo em dia pelas minhas respostas. 🎉");
     }
-    L.push("", "Isto informa, não substitui a Imigração.", "Checklist: " + URL_VISTO + "?ref=lista");
+    L.push("", "Isto informa, não substitui a Imigração.", "Checklist: " + URL_VISTO + "?ref=lista" + PQ);
     window.open("https://wa.me/?text=" + encodeURIComponent(L.join("\n")), "_blank", "noopener");
     track("enviar_resultado", { formato: "lista", visto: visto || "" });
   });
@@ -568,7 +558,7 @@ body.embed main{margin-top:0;padding-top:12px}
       var c = desenhaCartao();
       c.toBlob(function(blob){
         var f = new File([blob], "checklist-visto.png", {type:"image/png"});
-        var txt = "Fiz o checklist do visto no Japão. E você, está em dia? " + URL_VISTO + "?ref=cartao";
+        var txt = "Fiz o checklist do visto no Japão. E você, está em dia? " + URL_VISTO + "?ref=cartao" + PQ;
         if (navigator.canShare && navigator.canShare({files:[f]})) {
           navigator.share({files:[f], text:txt}).catch(function(){});
         } else {
@@ -586,7 +576,7 @@ body.embed main{margin-top:0;padding-top:12px}
 
   $("share").addEventListener("click", function(){
     var t = "Confira em 6 perguntas se você está em dia (imposto, seguro, nenkin) para renovar o visto no Japão: " +
-            "https://andreyoshimura.github.io/remessa-japao/visto.html?ref=whatsapp";
+            "https://andreyoshimura.github.io/remessa-japao/visto.html?ref=whatsapp" + PQ;
     window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank", "noopener");
     track("compartilhar_whatsapp", { origem: "visto", visto: visto || "" });
   });
