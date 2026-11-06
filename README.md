@@ -149,7 +149,7 @@ Antes de publicar:
 | 2026-11-02 | `b09daed` | Nova imagem de prévia `og.png` (fonte dos posts), texto de cookies "sem saber seu nome nem seu contato" e bolinha "ao vivo" só com cotação automática. |
 | 2026-11-04 | `f7656ba` | Título, descrição e subtítulo citam "real para iene" (busca nº 1 no Japão); link do WhatsApp mantém a direção (`&de=brl`). |
 | 2026-11-04 | `2aa57a2` | Robôs fora do GA; relatório com seção Japão e `GA_EXCLUIR_CIDADES`; `sc-relatorio.py` (Search Console API). |
-| 2026-11-05 | (este) | Conversor com versão de parceiro (`?p=carla`: selo, botão para os vídeos, link para o checklist da parceira); lista única `parceiros.js`; compartilhamentos levam o `p` junto. |
+| 2026-11-05 | `85b6b79` | Conversor com versão de parceiro (`?p=carla`: selo, botão para os vídeos, link para o checklist da parceira); lista única `parceiros.js`; compartilhamentos levam o `p` junto. |
 | 2026-11-05 | `4cb6357` | `visto.html`: versões de parceiro por `?p=` (primeira: `?p=carla`, Carla no Japão). |
 | 2026-11-05 | `9286509` | `visto.html`: orientação do balcão, aviso "Negocie antes de renovar", textos de seguro e nenkin atrasados, "Siga o Radar Nihon", mensagem do WhatsApp reorganizada. |
 | 2026-11-05 | `b752ff3` | `visto.html`: "Leve seu resultado" (lista no WhatsApp com frases em japonês para o balcão, cartão de imagem com as contagens, convite); evento `enviar_resultado`. |
