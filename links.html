@@ -58,6 +58,22 @@ a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
   if (!keep.has("utm_source")) { keep.set("utm_source", "links"); }
   var s = keep.toString();
   ["lk-visto", "lk-conversor"].forEach(function(id){ var a = document.getElementById(id); a.href = a.getAttribute("href") + "?" + s; });
+
+  // Google Analytics com Consent Mode: sem aviso nesta página. Usa a escolha já feita nas ferramentas (mesmo site);
+  // sem escolha, fica negado (sinais sem cookies), como diz a política de privacidade.
+  var GA_ID = "G-HRC1WBVL2V", ck = null, interno = false;
+  try { ck = localStorage.getItem("ccj_consent"); interno = localStorage.getItem("ccj_interno") === "1"; } catch (e) {}
+  if (navigator.webdriver === true || /HeadlessChrome|bot|crawler|spider|Lighthouse|PageSpeed|facebookexternalhit/i.test(navigator.userAgent || "")) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ window.dataLayer.push(arguments); };
+  gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: ck === "granted" ? "granted" : "denied" });
+  gtag("js", new Date());
+  var cfg = { origem: "links", ref: q.get("ref") || "links" }; if (interno) cfg.traffic_type = "internal";
+  gtag("config", GA_ID, cfg);
+  var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(g);
+  [["lk-visto", "visto"], ["lk-conversor", "conversor"]].forEach(function(p){
+    document.getElementById(p[0]).addEventListener("click", function(){ gtag("event", "clique_ferramenta", { ferramenta: p[1], transport_type: "beacon" }); });
+  });
 })();
 </script>
 </body>
