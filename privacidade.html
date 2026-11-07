@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Política de privacidade | Radar Nihon</title>
+<meta name="description" content="Como o Radar Nihon trata dados nas calculadoras e nas redes sociais: o que coleta, para quê, por quanto tempo e como pedir exclusão (LGPD e APPI).">
+<link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/privacidade.html">
+<meta name="theme-color" content="#1E3557">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#1E3557; --paper:#F3F6F9; --ink:#16202C; --muted:#5B6878; --line:#D5DDE7; --card:#FFFFFF;
+  --focus:#F2B705; color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size:17px; line-height:1.6;
+}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+header{background:var(--indigo);color:#fff;padding:28px 16px}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) header{background:#122035} }
+:root[data-theme="dark"] header{background:#122035}
+header .w, main{max-width:720px;margin:0 auto}
+header a{color:inherit;font-weight:700;text-decoration:none;font-size:.9rem;opacity:.85}
+h1{margin:8px 0 4px;font-size:1.6rem;line-height:1.25}
+header p{margin:0;opacity:.85;font-size:.9rem}
+main{padding:8px 16px 40px}
+h2{font-size:1.15rem;color:var(--indigo);margin:28px 0 8px}
+p,li{overflow-wrap:anywhere}
+ul{padding-left:1.2em}
+a{color:var(--indigo)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:700}
+.tw{overflow-x:auto}
+footer{border-top:1px solid var(--line);padding:24px 16px 32px;text-align:center;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<header>
+  <div class="w">
+    <a href="./">← Radar Nihon</a>
+    <h1>Política de privacidade</h1>
+    <p>Última atualização: 7 de novembro de 2026</p>
+  </div>
+</header>
+
+<main>
+  <div class="box">
+    <p><strong>Resumo:</strong> as calculadoras funcionam sem cadastro. Os valores que você digita ficam no seu
+    aparelho. Só usamos cookies do Google Analytics se você aceitar, para contar visitas. Não vendemos dados.</p>
+  </div>
+
+  <h2>Quem somos</h2>
+  <p>O Radar Nihon publica guias e calculadoras gratuitas para brasileiros que moram no Japão (câmbio, visto e
+  outros assuntos do dia a dia). Esta política vale para este site e para os nossos perfis nas redes sociais
+  (Instagram, TikTok, X e Facebook).</p>
+  <p>Contato para assuntos de privacidade: <a href="mailto:radarnihon@gmail.com">radarnihon@gmail.com</a></p>
+
+  <h2>O que coletamos e para quê</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Dado</th><th>Para quê</th><th>Base</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Valores digitados</strong> no conversor e <strong>respostas</strong> do teste do visto</td>
+          <td>Fazer a conta na tela. Ficam no seu navegador; não são enviados nem guardados por nós</td><td>Não há tratamento</td></tr>
+      <tr><td><strong>Google Analytics 4</strong>: páginas vistas, cliques, faixa do valor convertido (ex.: "¥50 a 100 mil"), aparelho, país e cidade aproximados</td>
+          <td>Saber quais ferramentas são usadas e melhorar o site. Nunca enviamos nome, telefone ou e-mail ao Analytics</td><td>Consentimento (aviso de cookies)</td></tr>
+      <tr><td><strong>Preferência de cookies</strong>, guardada no seu navegador (<code>localStorage</code>)</td>
+          <td>Lembrar se você aceitou ou recusou</td><td>Necessário para respeitar sua escolha</td></tr>
+      <tr><td><strong>Alerta de câmbio</strong> (quando estiver ativo): nome, WhatsApp ou e-mail e o valor-alvo</td>
+          <td>Avisar quando o iene chegar ao valor escolhido</td><td>Consentimento (caixa de aceite no formulário)</td></tr>
+      <tr><td><strong>Métricas dos nossos próprios perfis</strong> nas redes sociais (ex.: TikTok, Instagram): seguidores, visualizações, países da audiência e comentários públicos</td>
+          <td>Saber quais temas interessam ao público e planejar novos guias. Guardamos números agregados; de comentários guardamos só o tema e a data, <strong>sem nome de usuário</strong></td><td>Interesse legítimo</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Cookies e Google Analytics</h2>
+  <p>Sem o seu aceite, o Analytics roda no modo de consentimento negado: não grava cookies e recebe só sinais
+  sem identificação. Anúncios e personalização ficam sempre desligados, e o Google Signals está desativado.
+  Você pode mudar a escolha a qualquer momento em "Preferências de cookies", no rodapé de cada ferramenta.
+  Saiba como o Google usa os dados em
+  <a href="https://policies.google.com/technologies/partner-sites?hl=pt-BR" target="_blank" rel="noopener">policies.google.com</a>.</p>
+
+  <h2>Serviços de terceiros</h2>
+  <ul>
+    <li><strong>Cotação do câmbio:</strong> o seu navegador consulta a AwesomeAPI e o Banco Central do Brasil (PTAX). Esses serviços recebem o pedido técnico (como o endereço IP), não os valores que você digita.</li>
+    <li><strong>Fontes:</strong> Google Fonts.</li>
+    <li><strong>Hospedagem:</strong> GitHub Pages.</li>
+    <li><strong>Links externos</strong> (redes sociais, vídeos de parceiros, sites oficiais do governo japonês) seguem as políticas de cada site.</li>
+  </ul>
+
+  <h2>Por quanto tempo guardamos</h2>
+  <ul>
+    <li>Eventos do Google Analytics: 14 meses, depois são apagados automaticamente.</li>
+    <li>Alerta de câmbio: até você cancelar.</li>
+    <li>Respostas brutas das APIs das redes sociais: até 30 dias; ficam só os números agregados.</li>
+  </ul>
+
+  <h2>Compartilhamento</h2>
+  <p>Não vendemos nem alugamos dados. Os dados só passam pelos serviços listados acima, que trabalham para nós,
+  e podem ser entregues a autoridades quando a lei exigir. Parceiros comerciais recebem apenas números
+  agregados, nunca dados de quem usa o site.</p>
+
+  <h2>Seus direitos (LGPD e APPI)</h2>
+  <p>Pela Lei Geral de Proteção de Dados do Brasil e pela Lei de Proteção de Informações Pessoais do Japão
+  (個人情報保護法), você pode pedir para saber quais dados temos sobre você, corrigir, apagar, retirar o
+  consentimento e receber uma cópia. Escreva para o contato acima; respondemos em até 15 dias.</p>
+  <p>Os serviços que usamos (Google, GitHub) podem guardar dados fora do Brasil e do Japão, com as garantias
+  previstas nos contratos deles.</p>
+
+  <h2>Menores de idade</h2>
+  <p>O site é feito para adultos. Não coletamos de propósito dados de menores de 16 anos.</p>
+
+  <h2>Mudanças</h2>
+  <p>Se esta política mudar, a data no topo é atualizada. Mudanças importantes são avisadas nas ferramentas.</p>
+
+  <h2 lang="en">Summary in English</h2>
+  <div lang="en">
+    <p>Radar Nihon offers free calculators and guides for Brazilians living in Japan. Values typed into the tools
+    stay in your browser. Google Analytics 4 runs only with your consent (Consent Mode; ads and Google Signals
+    off; 14-month retention). We read metrics of our own social media accounts (e.g. TikTok, Instagram) through
+    their official APIs for internal reporting only: we store aggregated numbers, keep only the topic and date of
+    comments without usernames, delete raw API responses after 30 days, and never sell or share personal data.
+    You may request access, correction or deletion under Japan's APPI and Brazil's LGPD at
+    radarnihon@gmail.com.</p>
+  </div>
+</main>
+
+<footer>
+  <p><a href="./">Conversor iene ⇄ real</a> · <a href="visto.html">Teste do visto</a></p>
+</footer>
+</body>
+</html>
