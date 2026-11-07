@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radar Nihon: ferramentas grátis para quem mora no Japão</title>
+<meta name="description" content="Conversor iene ⇄ real com a cotação do dia e checklist para renovar o visto. Grátis e sem cadastro, feitos para brasileiros que moram no Japão.">
+<link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/links.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Radar Nihon">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://andreyoshimura.github.io/remessa-japao/links.html">
+<meta property="og:title" content="Radar Nihon: ferramentas grátis">
+<meta property="og:description" content="Conversor iene ⇄ real e checklist do visto. Grátis e sem cadastro.">
+<meta property="og:image" content="https://andreyoshimura.github.io/remessa-japao/og.png">
+<meta name="theme-color" content="#1E3557">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{ --indigo:#1E3557; --paper:#F3F6F9; --ink:#16202C; --muted:#5B6878; --line:#D5DDE7; --card:#FFFFFF; --accent:#C8102E; --gold:#F2B705; --focus:#F2B705; color-scheme:light }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28; --accent:#F0657A; color-scheme:dark } }
+:root[data-theme="dark"]{ --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28; --accent:#F0657A; color-scheme:dark }
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 16px calc(32px + env(safe-area-inset-bottom,0px))}
+main{width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px}
+header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:8px}
+.mark{width:64px;height:64px;border-radius:50%;background:#1E3557;display:grid;place-items:center;position:relative}
+.mark::after{content:"";width:16px;height:16px;border-radius:50%;background:#C8102E}
+h1{font-size:1.4rem;margin:6px 0 0;color:var(--indigo)}
+header p{margin:0;color:var(--muted)}
+a.tool{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-decoration:none;color:inherit;box-shadow:0 6px 18px rgba(22,32,44,.07);transition:transform .15s}
+a.tool:hover{transform:translateY(-2px)}
+a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.ic{width:52px;height:52px;border-radius:12px;background:var(--indigo);color:#fff;display:grid;place-items:center;font-size:1.6rem}
+.tool b{display:block;font-size:1.08rem;color:var(--indigo)}
+.tool span{color:var(--muted);font-size:.92rem}
+.note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+.note a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="mark" aria-hidden="true"></div>
+    <h1>Radar Nihon</h1>
+    <p>Ferramentas grátis para quem mora no Japão. Sem cadastro.</p>
+  </header>
+  <a class="tool" id="lk-visto" href="visto.html"><span class="ic" aria-hidden="true">🛂</span><span><b>Estou em dia para renovar o visto?</b><span>Imposto, seguro, nenkin e cartão em 6 perguntas, com frase em japonês para o balcão</span></span></a>
+  <a class="tool" id="lk-conversor" href="./"><span class="ic" aria-hidden="true">💴</span><span><b>Conversor iene ⇄ real</b><span>Quanto valem seus ienes hoje, com a cotação do dia</span></span></a>
+  <p class="note">Informação de referência, conferida em fontes oficiais. <a href="privacidade.html">Política de privacidade</a></p>
+</main>
+<script>
+// Repassa a origem da visita (utm_*, ref, p) para as ferramentas, para o Google Analytics saber de onde veio.
+(function(){
+  var q = new URLSearchParams(location.search), keep = new URLSearchParams();
+  q.forEach(function(v, k){ if (/^(utm_\w+|ref|p)$/.test(k)) keep.set(k, v); });
+  if (!keep.has("utm_source")) { keep.set("utm_source", "links"); }
+  var s = keep.toString();
+  ["lk-visto", "lk-conversor"].forEach(function(id){ var a = document.getElementById(id); a.href = a.getAttribute("href") + "?" + s; });
+})();
+</script>
+</body>
+</html>
