@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Conversor iene ⇄ real hoje: ienes em reais e real para iene</title>
-<meta name="description" content="Converta ienes em reais e real para iene com a cotação de hoje. Feito para quem está no Japão: rápido, sem cadastro.">
+<title>Conversor iene (yen) ⇄ real hoje: ienes em reais e real para iene</title>
+<meta name="description" content="Converta iene (yen, ¥) em reais e real para iene com a cotação de hoje. Feito para quem está no Japão: rápido, sem cadastro.">
 <link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Radar Nihon">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:url" content="https://andreyoshimura.github.io/remessa-japao/">
-<meta property="og:title" content="Conversor iene ⇄ real">
+<meta property="og:title" content="Conversor iene (yen) ⇄ real">
 <meta property="og:description" content="Quanto valem seus ienes em reais hoje? Cotação do dia, sem cadastro.">
 <meta property="og:image" content="https://andreyoshimura.github.io/remessa-japao/og.png">
 <meta property="og:image:type" content="image/png">
@@ -172,6 +172,15 @@ details input, .lead input{
 .msg.ok{color:var(--gain)} .msg.err{color:var(--loss)}
 
 .src{font-size:.78rem;color:var(--muted);margin:18px 2px 0}
+.ref{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.ref h2{font-size:1rem;margin:0 0 4px}
+.ref p{font-size:.85rem;color:var(--muted);margin:0 0 10px}
+.ref table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.92rem}
+.ref th,.ref td{padding:7px 4px;border-top:1px solid var(--line);text-align:left}
+.ref th{font-size:.78rem;color:var(--muted);font-weight:700;border-top:0}
+.ref td:last-child,.ref th:last-child{text-align:right}
+.ref .q{margin-top:12px}
+body.embed .ref{display:none}
 
 /* ---------- rodapé ---------- */
 footer{border-top:1px solid var(--line);padding:24px 16px calc(28px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--muted);font-size:.82rem}
@@ -284,6 +293,19 @@ body.embed main{margin-top:0;padding-top:12px}
     <button type="submit" id="send">Quero o aviso</button>
     <p class="msg" id="msg" role="status"></p>
   </form>
+
+  <section class="ref" aria-labelledby="refTit">
+    <h2 id="refTit">Cotação do iene hoje em reais</h2>
+    <p id="refSub">Valores comuns, com a cotação de hoje.</p>
+    <table>
+      <thead><tr><th scope="col">Ienes (¥)</th><th scope="col">Em reais (R$)</th></tr></thead>
+      <tbody id="refBody">
+        <tr><td>¥ 1.000</td><td>—</td></tr><tr><td>¥ 5.000</td><td>—</td></tr><tr><td>¥ 10.000</td><td>—</td></tr>
+        <tr><td>¥ 50.000</td><td>—</td></tr><tr><td>¥ 100.000</td><td>—</td></tr><tr><td>¥ 200.000</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="q"><strong>Iene ou yen?</strong> É a mesma moeda do Japão (円, código JPY). Em português o nome é iene; yen é a grafia em inglês.</p>
+  </section>
 
   <p class="src" id="rateInfo">Buscando a cotação…</p>
   <a class="pvideo hidden" id="pvideo" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span></span></a>
@@ -513,6 +535,9 @@ body.embed main{margin-top:0;padding-top:12px}
     if (DIR === "jpy"){ yen = v; reais = v*rate; $("res").textContent = brl.format(reais); }
     else { reais = v; yen = v/rate; $("res").textContent = "¥ " + jpy.format(Math.round(yen)); }
     $("unit").textContent = "¥1 = R$ "+fmtRate(rate)+"  ·  R$ 1 = ¥"+(1/rate).toLocaleString("pt-BR",{maximumFractionDigits:2});
+    $("refBody").innerHTML = [1000,5000,10000,50000,100000,200000].map(function(y){
+      return "<tr><td>¥ "+jpy.format(y)+"</td><td>"+brl.format(y*rate)+"</td></tr>";
+    }).join("");
     if (!$("alvo").value) $("alvo").value = (100000*rate*1.03).toFixed(0);
     last = {yen:yen, reais:reais, rate:rate};
     resize();
