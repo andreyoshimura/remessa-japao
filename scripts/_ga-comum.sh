@@ -5,14 +5,14 @@
 # Variáveis (todas opcionais):
 #   GA_PROPERTY      ID numérico da propriedade (padrão: 561947228, "Calculadora remessa")
 #   GA_QUOTA_PROJECT projeto do Google Cloud usado para cota (padrão: radar-nihon-analytics)
-#   CLOUDSDK_CONFIG  pasta de configuração do gcloud (padrão: ~/.config/radar-nihon/gcloud)
+#   CLOUDSDK_CONFIG  pasta de configuração do gcloud (padrão: ~/.config/radar-mercado/radar-nihon/gcloud)
 #   GCLOUD           caminho do gcloud (padrão: ~/.local/opt/google-cloud-sdk/bin/gcloud)
 
 set -eu
 
 GA_PROPERTY="${GA_PROPERTY:-561947228}"
 GA_QUOTA_PROJECT="${GA_QUOTA_PROJECT:-radar-nihon-analytics}"
-export CLOUDSDK_CONFIG="${CLOUDSDK_CONFIG:-$HOME/.config/radar-nihon/gcloud}"
+export CLOUDSDK_CONFIG="${CLOUDSDK_CONFIG:-$HOME/.config/radar-mercado/radar-nihon/gcloud}"
 GCLOUD="${GCLOUD:-$HOME/.local/opt/google-cloud-sdk/bin/gcloud}"
 ADMIN="https://analyticsadmin.googleapis.com"
 PROP="properties/$GA_PROPERTY"

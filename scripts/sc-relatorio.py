@@ -15,7 +15,7 @@ import datetime, json, os, subprocess, sys, urllib.parse, urllib.request
 SITE = os.environ.get("SC_SITE", "https://andreyoshimura.github.io/remessa-japao/")
 PROJETO_COTA = os.environ.get("GA_QUOTA_PROJECT", "radar-nihon-analytics")
 GCLOUD = os.environ.get("GCLOUD", os.path.expanduser("~/.local/opt/google-cloud-sdk/bin/gcloud"))
-os.environ.setdefault("CLOUDSDK_CONFIG", os.path.expanduser("~/.config/radar-nihon/gcloud"))
+os.environ.setdefault("CLOUDSDK_CONFIG", os.path.expanduser("~/.config/radar-mercado/radar-nihon/gcloud"))
 
 pais = sys.argv[1].lower() if len(sys.argv) > 1 and sys.argv[1] != "-" else ""
 hoje = datetime.date.today()

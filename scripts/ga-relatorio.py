@@ -18,7 +18,7 @@ import json, os, subprocess, sys, urllib.request
 PROPRIEDADE = os.environ.get("GA_PROPERTY", "561947228")
 PROJETO_COTA = os.environ.get("GA_QUOTA_PROJECT", "radar-nihon-analytics")
 GCLOUD = os.environ.get("GCLOUD", os.path.expanduser("~/.local/opt/google-cloud-sdk/bin/gcloud"))
-os.environ.setdefault("CLOUDSDK_CONFIG", os.path.expanduser("~/.config/radar-nihon/gcloud"))
+os.environ.setdefault("CLOUDSDK_CONFIG", os.path.expanduser("~/.config/radar-mercado/radar-nihon/gcloud"))
 # A captura completa do valor (valor_reais, cotacao, sem o valor padrão da página) começou aqui
 # (publicada em 03/11 às ~22h no Brasil, que já é 04/11 no fuso da propriedade):
 INICIO_CAPTURA_NOVA = "2026-11-04"  # no fuso do GA (Tóquio); 03/11 à noite no Brasil
