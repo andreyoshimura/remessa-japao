@@ -26,11 +26,32 @@ INICIO_CAPTURA_NOVA = "2026-11-04"  # no fuso do GA (Tóquio); 03/11 à noite no
 inicio = sys.argv[1] if len(sys.argv) > 1 else "2026-11-02"
 fim = sys.argv[2] if len(sys.argv) > 2 else "today"
 
-try:
-    TOKEN = subprocess.run([GCLOUD, "auth", "application-default", "print-access-token"],
-                           capture_output=True, text=True, check=True).stdout.strip()
-except Exception:
-    sys.exit("Sem credencial ADC. Rode: radar-nihon-adc-login")
+# Credencial: conta de serviço de leitura (chave fora do repositório, não expira).
+# Precisa da biblioteca google-auth; rode com ~/.local/share/pipx/venvs/analytics-mcp/bin/python.
+# Sem a chave ou sem a biblioteca, cai no login pessoal (ADC), que expira em 16 h.
+SA_CHAVE = os.environ.get("RN_SA_KEY", os.path.expanduser("~/.config/radar-mercado/radar-nihon/sa-leitor.json"))
+
+def obter_token():
+    if os.path.exists(SA_CHAVE):
+        try:
+            from google.oauth2 import service_account
+            from google.auth.transport.requests import Request
+            cred = service_account.Credentials.from_service_account_file(SA_CHAVE, scopes=[
+                "https://www.googleapis.com/auth/analytics.readonly",
+                "https://www.googleapis.com/auth/webmasters.readonly"])
+            cred.refresh(Request())
+            global PROJETO_COTA
+            PROJETO_COTA = None  # a conta de serviço já cobra a cota no próprio projeto
+            return cred.token
+        except ImportError:
+            pass
+    try:
+        return subprocess.run([GCLOUD, "auth", "application-default", "print-access-token"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+    except Exception:
+        sys.exit("Sem credencial. Rode com o Python do analytics-mcp (conta de serviço) ou: radar-nihon-adc-login")
+
+TOKEN = obter_token()
 
 
 def relatorio(dims, mets, filtro=None, ordem=None, periodo=None, limite=50):
@@ -43,7 +64,7 @@ def relatorio(dims, mets, filtro=None, ordem=None, periodo=None, limite=50):
     req = urllib.request.Request(
         f"https://analyticsdata.googleapis.com/v1beta/properties/{PROPRIEDADE}:runReport",
         data=json.dumps(corpo).encode(), method="POST",
-        headers={"Authorization": f"Bearer {TOKEN}", "x-goog-user-project": PROJETO_COTA,
+        headers={"Authorization": f"Bearer {TOKEN}", **({"x-goog-user-project": PROJETO_COTA} if PROJETO_COTA else {}),
                  "Content-Type": "application/json"})
     with urllib.request.urlopen(req) as r:
         d = json.load(r)

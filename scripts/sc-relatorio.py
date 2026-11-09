@@ -22,11 +22,32 @@ hoje = datetime.date.today()
 inicio = sys.argv[2] if len(sys.argv) > 2 else str(hoje - datetime.timedelta(days=28))
 fim = str(hoje)
 
-try:
-    TOKEN = subprocess.run([GCLOUD, "auth", "application-default", "print-access-token"],
-                           capture_output=True, text=True, check=True).stdout.strip()
-except Exception:
-    sys.exit("Sem credencial ADC. Rode: radar-nihon-adc-login")
+# Credencial: conta de serviço de leitura (chave fora do repositório, não expira).
+# Precisa da biblioteca google-auth; rode com ~/.local/share/pipx/venvs/analytics-mcp/bin/python.
+# Sem a chave ou sem a biblioteca, cai no login pessoal (ADC), que expira em 16 h.
+SA_CHAVE = os.environ.get("RN_SA_KEY", os.path.expanduser("~/.config/radar-mercado/radar-nihon/sa-leitor.json"))
+
+def obter_token():
+    if os.path.exists(SA_CHAVE):
+        try:
+            from google.oauth2 import service_account
+            from google.auth.transport.requests import Request
+            cred = service_account.Credentials.from_service_account_file(SA_CHAVE, scopes=[
+                "https://www.googleapis.com/auth/analytics.readonly",
+                "https://www.googleapis.com/auth/webmasters.readonly"])
+            cred.refresh(Request())
+            global PROJETO_COTA
+            PROJETO_COTA = None  # a conta de serviço já cobra a cota no próprio projeto
+            return cred.token
+        except ImportError:
+            pass
+    try:
+        return subprocess.run([GCLOUD, "auth", "application-default", "print-access-token"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+    except Exception:
+        sys.exit("Sem credencial. Rode com o Python do analytics-mcp (conta de serviço) ou: radar-nihon-adc-login")
+
+TOKEN = obter_token()
 
 
 def consulta(dims, limite=25):
@@ -36,7 +57,7 @@ def consulta(dims, limite=25):
     url = ("https://searchconsole.googleapis.com/webmasters/v3/sites/"
            + urllib.parse.quote(SITE, safe="") + "/searchAnalytics/query")
     req = urllib.request.Request(url, data=json.dumps(corpo).encode(), method="POST",
-                                 headers={"Authorization": f"Bearer {TOKEN}", "x-goog-user-project": PROJETO_COTA,
+                                 headers={"Authorization": f"Bearer {TOKEN}", **({"x-goog-user-project": PROJETO_COTA} if PROJETO_COTA else {}),
                                           "Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req) as r:

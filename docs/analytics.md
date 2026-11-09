@@ -202,6 +202,7 @@ Serve para ler relatórios sem abrir o painel (pelo MCP oficial) e para automati
 |---|---|
 | Projeto do Google Cloud | `radar-nihon-analytics`, dedicado, dentro da organização do Workspace. APIs ativas: Google Analytics Data API, Google Analytics Admin API, Cloud Resource Manager API (necessária para o projeto de cota) e **Search Console API** (desde 2026-11-04). |
 | Autenticação | **ADC (Application Default Credentials) com cliente OAuth próprio**, do tipo "App para computador", com tela de consentimento **Interna**. |
+| Leitura sem login (desde 2026-11-09) | **Conta de serviço `radar-nihon-leitor`**, sem papel no projeto, Leitor no GA e usuário no Search Console. A chave fica fora do repositório e não expira. Usada pelo MCP do Analytics (`.mcp.json`) e por `ga-relatorio.py` e `sc-relatorio.py` (rodar com `~/.local/share/pipx/venvs/analytics-mcp/bin/python`). O login pessoal (ADC) cai a cada 16 h pela regra de sessão do Google Cloud no Workspace e fica só para a administração (`ga-*.sh`, envio de sitemap). |
 | Escopos | `analytics.readonly` (relatórios), `analytics.edit` (administração), `cloud-platform` (projeto de cota), `webmasters` (buscas e envio de sitemap no Search Console; leitura desde 2026-11-04, completo desde 2026-11-05). |
 | MCP | [`analytics-mcp`](https://github.com/googleanalytics/google-analytics-mcp), oficial do Google, instalado com `pipx`. Só leitura. |
 | Scripts | `scripts/*.sh`, chamam a Admin API com o token do ADC. |
