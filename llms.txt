@@ -1,0 +1,19 @@
+# Radar Nihon
+
+> Ferramentas gratuitas, em português, para brasileiros que moram no Japão. Sem cadastro; nada do que a pessoa digita sai do celular. As informações são conferidas em fontes oficiais japonesas (Agência de Imigração, prefeituras, Receita do Japão).
+
+Público: brasileiros residentes no Japão (cerca de 210 mil, 56% na região de Tokai: Aichi, Shizuoka, Mie e Gifu). Não é um serviço de visto nem consultoria jurídica: para casos específicos, a orientação é procurar a Imigração (出入国在留管理庁), a prefeitura (市役所) ou um 行政書士.
+
+## Ferramentas
+
+- [Conversor iene ⇄ real](https://andreyoshimura.github.io/remessa-japao/): quanto valem os ienes em reais (e o contrário) com a cotação do dia; dá para mandar o resultado pelo WhatsApp.
+- [Estou em dia para renovar o visto?](https://andreyoshimura.github.io/remessa-japao/visto.html): checklist de 6 perguntas (imposto, seguro de saúde, nenkin, endereço, cartão de residência) antes de renovar o visto ou pedir o permanente; no fim mostra o que resolver e uma frase em japonês para mostrar no balcão. Inclui as taxas da Imigração em vigor desde 01/10/2026 e a regra de cancelamento do permanente por imposto ou seguro não pago de propósito (a partir de 01/04/2027).
+
+## Páginas
+
+- [Todas as ferramentas](https://andreyoshimura.github.io/remessa-japao/links.html)
+- [Política de privacidade](https://andreyoshimura.github.io/remessa-japao/privacidade.html)
+
+## Contato
+
+- Instagram: @radarnihon · TikTok: @radar.nihon · YouTube: @RadarNihon · e-mail: radarnihon@gmail.com

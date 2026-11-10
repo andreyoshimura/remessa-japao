@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página não encontrada · Radar Nihon</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/remessa-japao/favicon.ico" sizes="any">
+<link rel="icon" href="/remessa-japao/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/remessa-japao/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3557">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{ --indigo:#1E3557; --paper:#F3F6F9; --ink:#16202C; --muted:#5B6878; --line:#D5DDE7; --card:#FFFFFF; --accent:#C8102E; --gold:#F2B705; --focus:#F2B705; color-scheme:light }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28; --accent:#F0657A; color-scheme:dark } }
+:root[data-theme="dark"]{ --indigo:#9DB7DD; --paper:#0E141B; --ink:#E8EDF3; --muted:#9AA7B7; --line:#2A3646; --card:#151D28; --accent:#F0657A; color-scheme:dark }
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 16px calc(32px + env(safe-area-inset-bottom,0px))}
+main{width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px}
+header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:8px}
+.mark{width:64px;height:64px;border-radius:50%;background:#1E3557;display:grid;place-items:center;position:relative}
+.mark::after{content:"";width:16px;height:16px;border-radius:50%;background:#C8102E}
+h1{font-size:1.4rem;margin:6px 0 0;color:var(--indigo)}
+header p{margin:0;color:var(--muted)}
+a.tool{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-decoration:none;color:inherit;box-shadow:0 6px 18px rgba(22,32,44,.07);transition:transform .15s}
+a.tool:hover{transform:translateY(-2px)}
+a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.ic{width:52px;height:52px;border-radius:12px;background:var(--indigo);color:#fff;display:grid;place-items:center;font-size:1.6rem}
+.tool b{display:block;font-size:1.08rem;color:var(--indigo)}
+.tool span{color:var(--muted);font-size:.92rem}
+.note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+.note a{color:inherit}
+.mark{background:#1E3557}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="mark" aria-hidden="true"></div>
+    <h1>Página não encontrada</h1>
+    <p>O link pode estar errado ou a página mudou de lugar. As ferramentas continuam aqui, grátis e sem cadastro:</p>
+  </header>
+  <a class="tool" id="lk-visto" href="/remessa-japao/visto.html?utm_source=404"><span class="ic" aria-hidden="true">🛂</span><span><b>Estou em dia para renovar o visto?</b><span>Imposto, seguro, nenkin e cartão em 6 perguntas, com frase em japonês para o balcão</span></span></a>
+  <a class="tool" id="lk-conversor" href="/remessa-japao/?utm_source=404"><span class="ic" aria-hidden="true">💴</span><span><b>Conversor iene ⇄ real</b><span>Quanto valem seus ienes hoje, com a cotação do dia</span></span></a>
+  <a class="tool" href="/remessa-japao/links.html?utm_source=404"><span class="ic" aria-hidden="true">🐱</span><span><b>Todas as ferramentas</b><span>Página inicial do Radar Nihon</span></span></a>
+  <p class="note"><a href="/remessa-japao/privacidade.html">Política de privacidade</a></p>
+</main>
+<script>
+// Conta a página 404 no GA (com Consent Mode, igual às outras páginas), para achar links quebrados.
+(function(){
+  var GA_ID = "G-HRC1WBVL2V", ck = null, interno = false;
+  try { ck = localStorage.getItem("ccj_consent"); interno = localStorage.getItem("ccj_interno") === "1"; } catch (e) {}
+  if (navigator.webdriver === true || /HeadlessChrome|bot|crawler|spider|Lighthouse|PageSpeed|facebookexternalhit/i.test(navigator.userAgent || "")) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ window.dataLayer.push(arguments); };
+  gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: ck === "granted" ? "granted" : "denied" });
+  gtag("js", new Date());
+  var cfg = { origem: "404" }; if (interno) cfg.traffic_type = "internal";
+  gtag("config", GA_ID, cfg);
+  gtag("event", "pagina_404", { caminho: location.pathname.slice(0, 100) });
+  var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(g);
+})();
+</script>
+</body>
+</html>
