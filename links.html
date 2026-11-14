@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Radar Nihon: ferramentas grátis para quem mora no Japão</title>
-<meta name="description" content="Conversor iene ⇄ real com a cotação do dia e checklist para renovar o visto. Grátis e sem cadastro, feitos para brasileiros que moram no Japão.">
+<meta name="description" content="Conversor iene ⇄ real com a cotação do dia, checklist para renovar o visto e conferência do holerite. Grátis e sem cadastro, feitos para brasileiros que moram no Japão.">
 <link rel="canonical" href="https://andreyoshimura.github.io/remessa-japao/links.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -50,6 +50,7 @@ a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
     <p>Ferramentas grátis para quem mora no Japão. Sem cadastro.</p>
   </header>
   <a class="tool" id="lk-visto" href="visto.html"><span class="ic" aria-hidden="true">🛂</span><span><b>Estou em dia para renovar o visto?</b><span>Imposto, seguro, nenkin e cartão em 6 perguntas, com frase em japonês para o balcão</span></span></a>
+  <a class="tool" id="lk-holerite" href="holerite.html"><span class="ic" aria-hidden="true">🧾</span><span><b>Confira seu holerite</b><span>Soma os itens, confere se a conta fecha e explica cada desconto em japonês e português</span></span></a>
   <a class="tool" id="lk-conversor" href="./"><span class="ic" aria-hidden="true">💴</span><span><b>Conversor iene ⇄ real</b><span>Quanto valem seus ienes hoje, com a cotação do dia</span></span></a>
   <p class="note">Informação de referência, conferida em fontes oficiais. <a href="privacidade.html">Política de privacidade</a></p>
 </main>
@@ -60,7 +61,7 @@ a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
   q.forEach(function(v, k){ if (/^(utm_\w+|ref|p)$/.test(k)) keep.set(k, v); });
   if (!keep.has("utm_source")) { keep.set("utm_source", "links"); }
   var s = keep.toString();
-  ["lk-visto", "lk-conversor"].forEach(function(id){ var a = document.getElementById(id); a.href = a.getAttribute("href") + "?" + s; });
+  ["lk-visto", "lk-holerite", "lk-conversor"].forEach(function(id){ var a = document.getElementById(id); a.href = a.getAttribute("href") + "?" + s; });
 
   // Google Analytics com Consent Mode: sem aviso nesta página. Usa a escolha já feita nas ferramentas (mesmo site);
   // sem escolha, fica negado (sinais sem cookies), como diz a política de privacidade.
@@ -74,7 +75,7 @@ a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
   var cfg = { origem: "links", ref: q.get("ref") || "links" }; if (interno) cfg.traffic_type = "internal";
   gtag("config", GA_ID, cfg);
   var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID; document.head.appendChild(g);
-  [["lk-visto", "visto"], ["lk-conversor", "conversor"]].forEach(function(p){
+  [["lk-visto", "visto"], ["lk-holerite", "holerite"], ["lk-conversor", "conversor"]].forEach(function(p){
     document.getElementById(p[0]).addEventListener("click", function(){ gtag("event", "clique_ferramenta", { ferramenta: p[1], transport_type: "beacon" }); });
   });
 })();
