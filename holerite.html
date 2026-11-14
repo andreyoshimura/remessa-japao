@@ -165,6 +165,7 @@ footer { margin-top: 28px; font-size: .85rem; color: var(--muted); }
       <div><span>Valor informado no holerite</span><strong id="informado">—</strong></div>
     </div>
     <p id="veredito" style="margin-top:14px"></p>
+    <p style="margin-top:12px"><button type="button" id="zap" style="font:inherit;font-weight:700;padding:10px 16px;border-radius:10px;border:0;background:var(--gain);color:#fff;cursor:pointer">Mandar para alguém no WhatsApp</button></p>
   </section>
 
   <section class="card" aria-labelledby="entenda">
@@ -226,6 +227,12 @@ footer { margin-top: 28px; font-size: .85rem; color: var(--muted); }
       out.textContent = "Não fecha: " + problemas.join("; ") + ". Confira os números digitados. Se os números estiverem certos, leve o holerite ao setor de pagamento.";
     }
   }
+
+  document.getElementById("zap").addEventListener("click", function () {
+    var url = location.origin + location.pathname + "?utm_source=whatsapp&utm_medium=compartilhamento";
+    var texto = "Confira seu holerite no Japão, dá para ver se a conta fecha e o que é cada desconto: " + url;
+    window.open("https://wa.me/?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
 
   campos.forEach(function (id) {
     document.getElementById(id).addEventListener("input", atualizar);
