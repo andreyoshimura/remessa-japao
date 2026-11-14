@@ -55,7 +55,7 @@ a.tool:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
   if (navigator.webdriver === true || /HeadlessChrome|bot|crawler|spider|Lighthouse|PageSpeed|facebookexternalhit/i.test(navigator.userAgent || "")) return;
   window.dataLayer = window.dataLayer || [];
   window.gtag = function(){ window.dataLayer.push(arguments); };
-  gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: ck === "granted" ? "granted" : "denied" });
+  gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: ck === "denied" ? "denied" : "granted" });
   gtag("js", new Date());
   var cfg = { origem: "404" }; if (interno) cfg.traffic_type = "internal";
   gtag("config", GA_ID, cfg);

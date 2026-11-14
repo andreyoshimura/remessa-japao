@@ -455,7 +455,7 @@ body.embed main{margin-top:0;padding-top:12px}
     var ck = getConsent();
     gtag("consent","default",{
       ad_storage:"denied", ad_user_data:"denied", ad_personalization:"denied",
-      analytics_storage: ck === "granted" ? "granted" : "denied"
+      analytics_storage: ck === "denied" ? "denied" : "granted"
     });
     gtag("js", new Date());
     // ?interno=1 marca este navegador como tráfego interno (filtrado no GA); ?interno=0 desmarca

@@ -457,7 +457,7 @@ body.embed main{margin-top:0;padding-top:12px}
     window.gtag = function(){ window.dataLayer.push(arguments); };
     var ck = getConsent();
     gtag("consent","default",{ ad_storage:"denied", ad_user_data:"denied", ad_personalization:"denied",
-      analytics_storage: ck === "granted" ? "granted" : "denied" });
+      analytics_storage: ck === "denied" ? "denied" : "granted" });
     gtag("js", new Date());
     var INT = "ccj_interno";
     try{ if (q.get("interno") === "1") localStorage.setItem(INT, "1"); if (q.get("interno") === "0") localStorage.removeItem(INT); }catch(e){}
