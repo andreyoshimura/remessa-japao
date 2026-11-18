@@ -2,7 +2,9 @@
 
 Conversor de ienes para reais (e de reais para ienes) com a cotação do dia, feito para brasileiros no Japão. Página única, sem cadastro, publicada no GitHub Pages.
 
-**Site:** https://andreyoshimura.github.io/remessa-japao/
+> **Mudou em 19/11/2026:** as ferramentas agora ficam em **https://radarnihon.com.br/ferramentas/** e o código delas mora no repo `radar-mercado` (`clientes/radar-nihon/portal/ferramentas/`). As páginas daqui só redirecionam para lá, mantendo `?ref=`, `?p=` e `utm_`. O texto abaixo é histórico.
+
+**Site (antigo):** https://andreyoshimura.github.io/remessa-japao/
 **Redes:** [Instagram](https://www.instagram.com/radarnihon/) · [TikTok](https://www.tiktok.com/@radar.nihon) · [Facebook](https://www.facebook.com/profile.php?id=61595911931098)
 
 > O repositório se chama `remessa-japao` porque começou como calculadora de remessa. O nome foi mantido para não quebrar links já compartilhados.
