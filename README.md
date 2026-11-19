@@ -2,7 +2,7 @@
 
 Conversor de ienes para reais (e de reais para ienes) com a cotação do dia, feito para brasileiros no Japão. Página única, sem cadastro, publicada no GitHub Pages.
 
-> **Mudou em 19/11/2026:** as ferramentas agora ficam em **https://radarnihon.com.br/ferramentas/** e o código delas mora no repo `radar-mercado` (`clientes/radar-nihon/portal/ferramentas/`). As páginas daqui só redirecionam para lá, mantendo `?ref=`, `?p=` e `utm_`. O texto abaixo é histórico.
+> **Mudou em 18/11/2026 (19/11 no Japão):** as ferramentas agora ficam em **https://radarnihon.com.br/ferramentas/** e o código delas mora no repo `radar-mercado` (`clientes/radar-nihon/portal/ferramentas/`). As páginas daqui só redirecionam para lá, mantendo `?ref=`, `?p=` e `utm_`. Também redirecionam `termos.html` (para radarnihon.com.br/termos.html); o `sitemap.xml` está vazio e o `llms.txt` aponta para o domínio novo. `BingSiteAuth.xml` e o arquivo de verificação do TikTok ficam aqui enquanto o app do TikTok estiver em revisão. O texto abaixo é histórico.
 
 **Site (antigo):** https://andreyoshimura.github.io/remessa-japao/
 **Redes:** [Instagram](https://www.instagram.com/radarnihon/) · [TikTok](https://www.tiktok.com/@radar.nihon) · [Facebook](https://www.facebook.com/profile.php?id=61595911931098)
